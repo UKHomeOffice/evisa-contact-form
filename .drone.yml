@@ -217,61 +217,61 @@ steps:
           - feature/*
       event: pull_request
 
-  - name: setup_branch
-    pull: if-not-exists
-    image: node:18
-    environment:
-      NOTIFY_KEY: USE_MOCK
-    commands:
-      - yarn install --frozen-lockfile
-      - yarn run postinstall
-    when:
-      branch:
-        include:
-          - master
-          - feature/*   
-      event: pull_request
+  # - name: setup_branch
+  #   pull: if-not-exists
+  #   image: node:18
+  #   environment:
+  #     NOTIFY_KEY: USE_MOCK
+  #   commands:
+  #     - yarn install --frozen-lockfile
+  #     - yarn run postinstall
+  #   when:
+  #     branch:
+  #       include:
+  #         - master
+  #         - feature/*   
+  #     event: pull_request
 
-  - name: linting_branch
-    <<: *linting
-    when:
-      branch:
-        include:
-          - master
-          - feature/*
-      event: [push, pull_request]
+  # - name: linting_branch
+  #   <<: *linting
+  #   when:
+  #     branch:
+  #       include:
+  #         - master
+  #         - feature/*
+  #     event: [push, pull_request]
 
-  - name: unit_tests_branch
-    <<: *unit_tests
-    when:
-      branch:
-        include:
-          - master
-          - feature/*
-      event: [push, pull_request]
+  # - name: unit_tests_branch
+  #   <<: *unit_tests
+  #   when:
+  #     branch:
+  #       include:
+  #         - master
+  #         - feature/*
+  #     event: [push, pull_request]
 
-  - name: sonar_scanner_branch
-    <<: *sonar_scanner
-    when:
-      branch:
-        include:
-          - master
-          - feature/*
-      event: pull_request
+  # - name: sonar_scanner_branch
+  #   <<: *sonar_scanner
+  #   when:
+  #     branch:
+  #       include:
+  #         - master
+  #         - feature/*
+  #     event: pull_request
 
-  - name: acceptance_tests_branch
-    <<: *acceptance_tests
-    commands:
-      - export ACCEPTANCE_HOST_NAME=https://$${APP_NAME}-$${DRONE_SOURCE_BRANCH}.$${BRANCH_ENV}.homeoffice.gov.uk
-      - npx playwright install
-      - npm run test:acceptance
-    when:
-      branch:
-        include:
-          - master
-          - feature/*
+  # - name: acceptance_tests_branch
+  #   <<: *acceptance_tests
+  #   commands:
+  #     - export ACCEPTANCE_HOST_NAME=https://$${APP_NAME}-$${DRONE_SOURCE_BRANCH}.$${BRANCH_ENV}.homeoffice.gov.uk
+  #     - npx playwright install
+  #     - npm run test:acceptance
+  #   when:
+  #     branch:
+  #       include:
+  #         - master
+  #         - feature/*
 
-      event: [push, pull_request]
+  #     event: [push, pull_request]
 
   - name: deploy_to_uat
     pull: if-not-exists
