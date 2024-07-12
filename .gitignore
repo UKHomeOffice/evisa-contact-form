@@ -7,7 +7,6 @@ coverage
 .env
 output/
 *.iml
-anchore-reports
 .nyc_output
 dump.rdb
 yarn-error.log
