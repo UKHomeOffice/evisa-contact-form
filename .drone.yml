@@ -6,13 +6,13 @@ type: kubernetes
 environment:
   APP_NAME: evc
   PROD_ENV: sas-evc-prod
-  STG_ENV: sas-evc-stg
   BRANCH_ENV: sas-evc-branch
   UAT_ENV: sas-evc-uat
-  IMAGE_URL: 340268328991.dkr.ecr.eu-west-2.amazonaws.com
-  IMAGE_REPO: sas/evc
+  PRODUCTION_URL: www.update-my-details.homeoffice.gov.uk
+  IMAGE_URL: quay.io/ukhomeofficedigital
+  IMAGE_REPO: evc
   GIT_REPO: UKHomeOffice/evc
-  HOF_CONFIG: hof-services-config/E_Visa_Contact_Us
+  HOF_CONFIG: hof-services-config/Change_Of_Address
   NON_PROD_AVAILABILITY: Mon-Sun 08:00-23:00 Europe/London
   READY_FOR_TEST_DELAY: 20s
 
@@ -20,13 +20,33 @@ trigger:
   branch:
     - feature/*
     - master
+  
+linting: &linting
+  pull: if-not-exists
+  image: node:18
+  environment:
+    NOTIFY_KEY: USE_MOCK
+  commands:
+    - yarn run test:lint
+
+unit_tests: &unit_tests
+  pull: if-not-exists
+  image: node:18
+  environment:
+    NOTIFY_KEY: USE_MOCK
+  commands:
+    - yarn run test:unit
 
 sonar_scanner: &sonar_scanner
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/sonar-scanner-nodejs:latest
   commands:
     - sonar-scanner -Dproject.settings=./sonar-project.properties
-  
+
+acceptance_tests: &acceptance_tests
+  pull: if-not-exists
+  image: mcr.microsoft.com/playwright:v1.12.3-focal
+
 steps:
   - name: clone_repos
     image: alpine/git
@@ -62,6 +82,39 @@ steps:
     when:
       event: [push, pull_request]
 
+  - name: setup_deploy
+    pull: if-not-exists
+    image: node:18
+    environment:
+      NOTIFY_KEY: USE_MOCK
+    commands:
+      - yarn install --frozen-lockfile
+      - yarn run postinstall
+    when:
+      branch:
+        include:
+        - master
+        - feature/*
+      event: [push, pull_request]
+
+  - name: linting_deploy
+    <<: *linting
+    when:
+      branch:
+        include:
+          - master
+          - feature/*
+      event: push
+
+  - name: unit_tests_deploy
+    <<: *unit_tests
+    when:
+      branch:
+        include:
+          - master
+          - feature/*
+      event: push
+
   - name: sonar_scanner_deploy
     <<: *sonar_scanner
     when:
@@ -73,8 +126,8 @@ steps:
   - name: build_image
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     environment:
-      #DOCKER_PASSWORD:
-       # from_secret: DOCKER_PASSWORD
+      DOCKER_PASSWORD:
+        from_secret: DOCKER_PASSWORD
     commands:
       - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
       - docker build --no-cache -t $${IMAGE_REPO}:$${DRONE_COMMIT_SHA} .
@@ -96,17 +149,33 @@ steps:
       secret_key:
         from_secret: aws_secret_access_key
       region: eu-west-2
-      repo: sas/evc 
+      #repo: ${IMAGE_REPO}
+      repo: sas/acrs 
       registry: 340268328991.dkr.ecr.eu-west-2.amazonaws.com
       tags:
         - latest_${DRONE_BRANCH}
         - ${DRONE_COMMIT_SHA}
     when:
-      branch: 
-        include: 
-          - master
-          - feature/*
+      branch: master
       event: [push, pull_request]
+
+  # - name: image_to_quay
+  #   pull: if-not-exists
+  #   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+  #   environment:
+  #     DOCKER_PASSWORD:
+  #       from_secret: DOCKER_PASSWORD
+  #   commands:
+  #   - docker login -u="ukhomeofficedigital+evc" -p=$${DOCKER_PASSWORD} quay.io
+  #   - docker tag $${IMAGE_REPO}:$${DRONE_COMMIT_SHA} $${IMAGE_URL}/$${IMAGE_REPO}:$${DRONE_COMMIT_SHA}
+  #   - docker push $${IMAGE_URL}/$${IMAGE_REPO}:$${DRONE_COMMIT_SHA}
+  #   when:
+  #     branch:
+  #       include:
+  #         - master
+  #         - feature/*
+  #     event: [push, pull_request]
+
 
   # Trivy Security Scannner for scanning nodejs packages in Yarn
   - name: scan_node_packages
@@ -117,11 +186,11 @@ steps:
         cpu: 1000
         memory: 1024Mi
     environment:
-      IMAGE_NAME: sas/evc:${DRONE_COMMIT_SHA}
+      IMAGE_NAME: evc:${DRONE_COMMIT_SHA}
       SEVERITY: MEDIUM,HIGH,CRITICAL  --dependency-tree --format table
       FAIL_ON_DETECTION: false
       IGNORE_UNFIXED: false
-      ALLOW_CVE_LIST_FILE: hof-services-config/E_Visa_Contact_Us/trivy/.trivyignore.yaml
+      ALLOW_CVE_LIST_FILE: hof-services-config/e-visa contact us/trivy/.trivyignore.yaml
     when:
       event: [push, pull_request]
 
@@ -144,6 +213,39 @@ steps:
           - feature/*
       event: pull_request
 
+  - name: setup_branch
+    pull: if-not-exists
+    image: node:18
+    environment:
+      NOTIFY_KEY: USE_MOCK
+    commands:
+      - yarn install --frozen-lockfile
+      - yarn run postinstall
+    when:
+      branch:
+        include:
+          - master
+          - feature/*   
+      event: pull_request
+
+  - name: linting_branch
+    <<: *linting
+    when:
+      branch:
+        include:
+          - master
+          - feature/*
+      event: [push, pull_request]
+
+  - name: unit_tests_branch
+    <<: *unit_tests
+    when:
+      branch:
+        include:
+          - master
+          - feature/*
+      event: [push, pull_request]
+
   - name: sonar_scanner_branch
     <<: *sonar_scanner
     when:
@@ -152,6 +254,20 @@ steps:
           - master
           - feature/*
       event: pull_request
+
+  - name: acceptance_tests_branch
+    <<: *acceptance_tests
+    commands:
+      - export ACCEPTANCE_HOST_NAME=https://$${APP_NAME}-$${DRONE_SOURCE_BRANCH}.$${BRANCH_ENV}.homeoffice.gov.uk
+      - npx playwright install
+      - npm run test:acceptance
+    when:
+      branch:
+        include:
+          - master
+          - feature/*
+
+      event: [push, pull_request]
 
   - name: deploy_to_uat
     pull: if-not-exists
@@ -246,6 +362,16 @@ steps:
       target: PROD
       event: promote
 
+  - name: acceptance_tests_deploy
+    <<: *acceptance_tests
+    commands:
+      - export ACCEPTANCE_HOST_NAME=https://$${PRODUCTION_URL}
+      - npx playwright install
+      - npm run test:acceptance
+    when:
+      branch: master
+      event: push
+
   # CRON job step that tears down our pull request UAT environments
   - name: cron_tear_down
     pull: if-not-exists
@@ -278,8 +404,7 @@ steps:
   - name: cron_build_image
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     commands:
-      - docker build --no-cache -t $${IMAGE_REPO}:$${DRONE_COMMIT_SHA} .
-      #- docker build --no-cache  --build-arg BASE_IMAGE=${BASE_IMAGE} -t $${IMAGE_REPO}:$${DRONE_COMMIT_SHA} .
+      - docker build --no-cache  --build-arg BASE_IMAGE=${BASE_IMAGE} -t $${IMAGE_REPO}:$${DRONE_COMMIT_SHA} .
     volumes:
       - name: dockersock
         path: /var/run
@@ -291,7 +416,7 @@ steps:
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/trivy/client:latest
     pull: always
     environment:
-        IMAGE_NAME: sas/evc:${DRONE_COMMIT_SHA}
+        IMAGE_NAME: evc:${DRONE_COMMIT_SHA}
         SERVICE_URL: https://acp-trivy.acp-trivy.svc.cluster.local:443
         SEVERITY: UNKOWN,LOW,MEDIUM,HIGH,CRITICAL
         FAIL_ON_DETECTION: false
@@ -319,18 +444,14 @@ steps:
     pull: if-not-exists
     image: plugins/slack
     settings:
-      channel: sas-hof-build-notify
+      channel: sas-build
       failure: ignore
-      icon.url: https://readme.drone.io/logo.svg
-      template: >
-            *✘ {{ uppercasefirst build.status }}*: CRON Job `tear_down_pr_envs` for *E-Visa Contact Us (EVC)* has failed.
-
-            Branch <https://github.com/{{ repo.owner }}/{{ repo.name }}/commits/{{ build.branch }}|{{build.branch}}> | Commit <https://github.com/{{ repo.owner }}/{{ repo.name }}/commit/{{ build.commit }}|{{ truncate build.commit 8 }}>
-            
-            *Build <{{build.link}}|#{{build.number}}>*
-      username: Drone_CI
+      icon_url: http://readme.drone.io/0.5/logo_dark.svg
+      icon.url: http://readme.drone.io/0.5/logo_dark.svg
+      template: "CRON Job {{build.deployTo}} of E-Visa Contact Us has {{build.status}} - <{{build.link}}|#{{build.number}}> {{#success build.status}}\n  :thumbsup: :thumbsup: :thumbsup:\n{{else}}\n  :x: :x: :x:\n{{/success}} Author: {{build.author}}\n\nDuration: {{since job.started}}\n\nJob: <{{build.link}}|#{{build.number}}>\n\nCommit: {{build.commit}}\n"
+      username: Drone
       webhook:
-        from_secret: slack_sas_hof_build_notify_webhook
+        from_secret: slack_webhook
     when:
       cron: tear_down_pr_envs
       event: cron
@@ -342,16 +463,12 @@ steps:
     settings:
       channel: sas-hof-security
       failure: ignore
-      icon.url: https://readme.drone.io/logo.svg
-      template: >
-            *✘ {{ uppercasefirst build.status }}*: CRON Job `security_scans` for *E-Visa Contact Us (EVC)* has failed.
-
-            Branch <https://github.com/{{ repo.owner }}/{{ repo.name }}/commits/{{ build.branch }}|{{build.branch}}> | Commit <https://github.com/{{ repo.owner }}/{{ repo.name }}/commit/{{ build.commit }}|{{ truncate build.commit 8 }}>
-            
-            *Build <{{build.link}}|#{{build.number}}>*
-      username: Drone_CI
+      icon_url: http://readme.drone.io/0.5/logo_dark.svg
+      icon.url: http://readme.drone.io/0.5/logo_dark.svg
+      template: "CRON Job {{build.deployTo}} of E-Visa Contact Us has {{build.status}} - <{{build.link}}|#{{build.number}}> {{#success build.status}}\n  :thumbsup: :thumbsup: :thumbsup:\n{{else}}\n  :x: :x: :x:\n{{/success}} Author: {{build.author}}\n\nDuration: {{since job.started}}\n\nJob: <{{build.link}}|#{{build.number}}>\n\nCommit: {{build.commit}}\n"
+      username: Drone
       webhook:
-        from_secret: slack_sas_hof_security_webhook
+        from_secret: slack_webhook
     when:
       cron: security_scans
       event: cron

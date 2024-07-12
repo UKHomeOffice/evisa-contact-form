@@ -3,9 +3,8 @@ FROM node:18-alpine@sha256:2322b1bb3917b313f2e9308395aa5c39d51b91cc92a5d4d5be6d0
 USER root
 
 # Update packages as a result of Anchore security vulnerability checks
-RUN apk update 
- RUN apk update && \
-     apk add --upgrade gnutls binutils nodejs npm apk-tools libjpeg-turbo libcurl libx11 libxml2
+RUN apk update && \
+    apk add --upgrade gnutls binutils nodejs npm apk-tools libjpeg-turbo libcurl libx11 libxml2
 
 
 # Setup nodejs group & nodejs user
@@ -19,9 +18,8 @@ WORKDIR /app
 
 COPY --chown=999:998 . /app
 
-RUN yarn cache clean && \
-yarn install --frozen-lockfile --ignore-optional --verbose
-RUN yarn run postinstall
+RUN yarn install --frozen-lockfile --production --ignore-optional && \
+    yarn run postinstall
 
 HEALTHCHECK --interval=5m --timeout=3s \
  CMD curl --fail http://localhost:8080 || exit 1
