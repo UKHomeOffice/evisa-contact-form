@@ -19,8 +19,14 @@ WORKDIR /app
 
 COPY --chown=999:998 . /app
 
-RUN yarn install --frozen-lockfile --production --ignore-optional && \
-    yarn run postinstall
+RUN yarn cache clean && \
+yarn install --frozen-lockfile --ignore-optional --verbose
+
+# Temporarily disable postinstall script to test installation
+#RUN yarn run postinstall
+
+# RUN yarn install --frozen-lockfile --production --ignore-optional && \
+#     yarn run postinstall
 
 HEALTHCHECK --interval=5m --timeout=3s \
  CMD curl --fail http://localhost:8080 || exit 1
