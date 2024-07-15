@@ -22,7 +22,7 @@ trigger:
     - feature/*
     - master
   
-## linting: &linting
+# linting: &linting
 #   pull: if-not-exists
 #   image: node:18
 #   environment:
@@ -83,7 +83,7 @@ steps:
     when:
       event: [push, pull_request]
 
-  # - name: setup_deploy
+  ## - name: setup_deploy
   #   pull: if-not-exists
   #   image: node:18
   #   environment:
