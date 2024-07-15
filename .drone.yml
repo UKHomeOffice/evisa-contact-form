@@ -22,7 +22,7 @@ trigger:
     - feature/*
     - master
   
-# linting: &linting
+## linting: &linting
 #   pull: if-not-exists
 #   image: node:18
 #   environment:
