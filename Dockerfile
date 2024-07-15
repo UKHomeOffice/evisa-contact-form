@@ -11,7 +11,7 @@ RUN apk update
 # Setup nodejs group & nodejs user
 RUN addgroup --system nodejs --gid 998 && \
     adduser --system nodejs --uid 999 --home /app/ && \
-    #chown -R 999:998 /app/
+    chown -R 999:998 /app/
 
 USER 999
 
