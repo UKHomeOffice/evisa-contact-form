@@ -249,16 +249,6 @@ steps:
       target: PROD
       event: promote
 
-  # - name: acceptance_tests_deploy
-  #   <<: *acceptance_tests
-  #   commands:
-  #     - export ACCEPTANCE_HOST_NAME=https://$${PRODUCTION_URL}
-  #     - npx playwright install
-  #     - npm run test:acceptance
-  #   when:
-  #     branch: master
-  #     event: push
-
   # CRON job step that tears down our pull request UAT environments
   - name: cron_tear_down
     pull: if-not-exists
