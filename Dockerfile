@@ -4,8 +4,8 @@ USER root
 
 # Update packages as a result of Anchore security vulnerability checks
 RUN apk update 
-# RUN apk update && \
-#     apk add --upgrade gnutls binutils nodejs npm apk-tools libjpeg-turbo libcurl libx11 libxml2
+ RUN apk update && \
+     apk add --upgrade gnutls binutils nodejs npm apk-tools libjpeg-turbo libcurl libx11 libxml2
 
 
 # Setup nodejs group & nodejs user
@@ -21,12 +21,7 @@ COPY --chown=999:998 . /app
 
 RUN yarn cache clean && \
 yarn install --frozen-lockfile --ignore-optional --verbose
-
-# Temporarily disable postinstall script to test installation
-#RUN yarn run postinstall
-
-# RUN yarn install --frozen-lockfile --production --ignore-optional && \
-#     yarn run postinstall
+RUN yarn run postinstall
 
 HEALTHCHECK --interval=5m --timeout=3s \
  CMD curl --fail http://localhost:8080 || exit 1

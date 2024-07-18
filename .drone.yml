@@ -23,32 +23,6 @@ trigger:
     - feature/*
     - master
   
-# linting: &linting
-#   pull: if-not-exists
-#   image: node:18
-#   environment:
-#     NOTIFY_KEY: USE_MOCK
-#   commands:
-#     - yarn run test:lint
-
-# unit_tests: &unit_tests
-#   pull: if-not-exists
-#   image: node:18
-#   environment:
-#     NOTIFY_KEY: USE_MOCK
-#   commands:
-#     - yarn run test:unit
-
-# sonar_scanner: &sonar_scanner
-#   pull: if-not-exists
-#   image: quay.io/ukhomeofficedigital/sonar-scanner-nodejs:latest
-#   commands:
-#     - sonar-scanner -Dproject.settings=./sonar-project.properties
-
-# acceptance_tests: &acceptance_tests
-#   pull: if-not-exists
-#   image: mcr.microsoft.com/playwright:v1.12.3-focal
-
 steps:
   - name: clone_repos
     image: alpine/git
@@ -84,46 +58,13 @@ steps:
     when:
       event: [push, pull_request]
 
-  ## - name: setup_deploy
-  #   pull: if-not-exists
-  #   image: node:18
-  #   environment:
-  #     NOTIFY_KEY: USE_MOCK
-  #   commands:
-  #     - yarn install --frozen-lockfile
-  #     - yarn run postinstall
-  #   when:
-  #     branch:
-  #       include:
-  #       - master
-  #       - feature/*
-  #     event: [push, pull_request]
-
-  # - name: linting_deploy
-  #   <<: *linting
-  #   when:
-  #     branch:
-  #       include:
-  #         - master
-  #         - feature/*
-  #     event: push
-
-  # - name: unit_tests_deploy
-  #   <<: *unit_tests
-  #   when:
-  #     branch:
-  #       include:
-  #         - master
-  #         - feature/*
-  #     event: push
-
-  # - name: sonar_scanner_deploy
-  #   <<: *sonar_scanner
-  #   when:
-  #     branch:
-  #       include:
-  #         - master
-  #     event: push
+  - name: sonar_scanner_deploy
+    <<: *sonar_scanner
+    when:
+      branch:
+        include:
+          - master
+      event: push
 
   - name: build_image
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
@@ -164,24 +105,6 @@ steps:
           - feature/*
       event: [push, pull_request]
 
-  # - name: image_to_quay
-  #   pull: if-not-exists
-  #   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
-  #   environment:
-  #     DOCKER_PASSWORD:
-  #       from_secret: DOCKER_PASSWORD
-  #   commands:
-  #   - docker login -u="ukhomeofficedigital+evc" -p=$${DOCKER_PASSWORD} quay.io
-  #   - docker tag $${IMAGE_REPO}:$${DRONE_COMMIT_SHA} $${IMAGE_URL}/$${IMAGE_REPO}:$${DRONE_COMMIT_SHA}
-  #   - docker push $${IMAGE_URL}/$${IMAGE_REPO}:$${DRONE_COMMIT_SHA}
-  #   when:
-  #     branch:
-  #       include:
-  #         - master
-  #         - feature/*
-  #     event: [push, pull_request]
-
-
   # Trivy Security Scannner for scanning nodejs packages in Yarn
   - name: scan_node_packages
     pull: always
@@ -218,61 +141,14 @@ steps:
           - feature/*
       event: pull_request
 
-  # - name: setup_branch
-  #   pull: if-not-exists
-  #   image: node:18
-  #   environment:
-  #     NOTIFY_KEY: USE_MOCK
-  #   commands:
-  #     - yarn install --frozen-lockfile
-  #     - yarn run postinstall
-  #   when:
-  #     branch:
-  #       include:
-  #         - master
-  #         - feature/*
-  #     event: pull_request
-
-  # - name: linting_branch
-  #   <<: *linting
-  #   when:
-  #     branch:
-  #       include:
-  #         - master
-  #         - feature/*
-  #     event: [push, pull_request]
-
-  # - name: unit_tests_branch
-  #   <<: *unit_tests
-  #   when:
-  #     branch:
-  #       include:
-  #         - master
-  #         - feature/*
-  #     event: [push, pull_request]
-
-  # - name: sonar_scanner_branch
-  #   <<: *sonar_scanner
-  #   when:
-  #     branch:
-  #       include:
-  #         - master
-  #         - feature/*
-  #     event: pull_request
-
-  # - name: acceptance_tests_branch
-  #   <<: *acceptance_tests
-  #   commands:
-  #     - export ACCEPTANCE_HOST_NAME=https://$${APP_NAME}-$${DRONE_SOURCE_BRANCH}.$${BRANCH_ENV}.homeoffice.gov.uk
-  #     - npx playwright install
-  #     - npm run test:acceptance
-  #   when:
-  #     branch:
-  #       include:
-  #         - master
-  #         - feature/*
-
-  #     event: [push, pull_request]
+  - name: sonar_scanner_branch
+    <<: *sonar_scanner
+    when:
+      branch:
+        include:
+          - master
+          - feature/*
+      event: pull_request
 
   - name: deploy_to_uat
     pull: if-not-exists
