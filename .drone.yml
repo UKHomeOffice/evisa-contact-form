@@ -58,13 +58,13 @@ steps:
     when:
       event: [push, pull_request]
 
-  - name: sonar_scanner_deploy
-    <<: *sonar_scanner
-    when:
-      branch:
-        include:
-          - master
-      event: push
+  # - name: sonar_scanner_deploy
+  #   <<: *sonar_scanner
+  #   when:
+  #     branch:
+  #       include:
+  #         - master
+  #     event: push
 
   - name: build_image
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
@@ -141,14 +141,14 @@ steps:
           - feature/*
       event: pull_request
 
-  - name: sonar_scanner_branch
-    <<: *sonar_scanner
-    when:
-      branch:
-        include:
-          - master
-          - feature/*
-      event: pull_request
+  # - name: sonar_scanner_branch
+  #   <<: *sonar_scanner
+  #   when:
+  #     branch:
+  #       include:
+  #         - master
+  #         - feature/*
+  #     event: pull_request
 
   - name: deploy_to_uat
     pull: if-not-exists
