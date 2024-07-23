@@ -1,0 +1,57 @@
+{
+  "sent-email": {
+    "legend": "Has the home office sent you an email",
+    "validate": ["required"],
+    "options": {
+      "yes": {
+        "label": "Yes"
+      },
+      "no": {
+        "label": "No"
+      }
+    }
+  },
+  "tech-problem": {
+    "legend": "Do you have a technical problem?",
+    "validate": ["required"],
+    "options": {
+      "yes": {
+        "label": "Yes"
+      },
+      "no": {
+        "label": "No"
+      }
+    }
+  },
+  "full-name": {
+    "label": "Full name"
+  },
+  "email": {
+    "label": "Email address",
+    "hint": "We will reply to this email address"
+  },
+  "contact-number": {
+    "label": "Contact number (optional)",
+    "hint": "We may call you to ask for more details"
+  },
+  "ref-number": {
+    "label": "Reference number (optional)",
+    "hint": "For exmaple, 2021-1111-1111"
+  },
+  "question": {
+    "label": "Enter your question below. Provide as much detail as possible"
+  },
+  "contacted": {
+    "legend": "The Home Office conducts research about experiences using products and services. Would you like to be contacted further about your experience using this service",
+    "hint": "IF you agree to take part in the future research blah blah blah...",
+    "validate": ["required"],
+    "options": {
+      "yes": {
+        "label": "Yes"
+      },
+      "no": {
+        "label": "No"
+      }
+    }
+  }
+}

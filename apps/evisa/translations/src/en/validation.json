@@ -1,0 +1,12 @@
+{
+  "tech-problem" : {
+    "required": "Do you have a technical problem?"
+  },
+  "contact-number": {
+    "ukPhoneNumber": "Enter a valid UK telephone number"
+  },
+  "ref-number": {
+    "minLength": "Please enter a valid reference number",
+    "maxLength": "Please enter a valid reference number"
+  }
+}
