@@ -1,4 +1,12 @@
 {
+  "start": {
+    "header": "Ask a question about getting access to your eVisa",
+    "paragraph-1": "Use this service if you have a question about creating your UK Visas and Immigration (UKVI) account and getting access to your online immigration status (eVisa).",
+    "paragraph-2": "We will reply within 3 working days (Monday to Friday).",
+    "sub-header-1": "What you need",
+    "paragraph-3": "You will need an email address where we can send our reply.",
+    "paragraph-4": "If you do not do anything for 20 minutes, your answers will not be saved. Your question is only saved when you submit the form"
+  },
   "start1": {
     "header": "Get access to your eVisa",
     "paragraph-1": "This application must be completed by anyone who applies to work for Border Force.",
@@ -12,16 +20,6 @@
   "start2": {
     "header": "Get access to your eVisa2",
     "paragraph-1": "This application must be completed by anyone who applies to work for Border Force.",
-    "paragraph-2": "You have 5 working days from the day you were first sent a link to the service to complete your application.",
-    "paragraph-3": "We will use the answers you provide in this application for security checks that you must pass in order to be offered employment with Border Force.",
-    "paragraph-4": "To be offered a position, you must also pass United Kingdom Security Vetting (UKSV) and standard pre-employment and right to work checks.",
-    "paragraph-5": "If you fail one of these checks, your job offer with Border Force will be withdrawn.",
-    "paragraph-6": "Border Force is entitled to expect staff to have high standards and integrity. If relevant information in this application has not been declared, this may bring into question someone's honesty and trustworthiness. This can lead to clearance being refused. You therefore must be thorough, open and sincere.",
-    "paragraph-7": "If you declare something which is irrelevant, it will be discounted."
-  },
-  "start": {
-    "header": "Using this form ======",
-    "paragraph-1": "YYY",
     "paragraph-2": "You have 5 working days from the day you were first sent a link to the service to complete your application.",
     "paragraph-3": "We will use the answers you provide in this application for security checks that you must pass in order to be offered employment with Border Force.",
     "paragraph-4": "To be offered a position, you must also pass United Kingdom Security Vetting (UKSV) and standard pre-employment and right to work checks.",

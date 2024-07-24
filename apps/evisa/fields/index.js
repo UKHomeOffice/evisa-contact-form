@@ -1,6 +1,4 @@
-function Ref(value) {   // TODO remove this
-    return value.match( /^((\d{4}[\-]?\d{4}[\-]?\d{4}[\-]?\d{4}(?:[\/]?\d{2})?)?)$/ );
-}
+'use strict';
 
 module.exports = {
     'sent-email': {

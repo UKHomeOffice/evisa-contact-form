@@ -1,3 +1,5 @@
+'use strict';
+
 const config = require('../../config');
 const agentEmail = require('./behaviours/agent-email')(config.email);
 const limitDocument = require('./behaviours/limit-documents');
@@ -8,6 +10,9 @@ module.exports = {
   name: 'evisa',
   baseUrl: '/',
   steps: {
+    '/start': {
+      next: '/start1'
+    },
     '/start1': {
       next: '/start2',
     },
@@ -16,7 +21,7 @@ module.exports = {
     },
     '/invite': {
       fields: ['sent-email'],
-      next: '/start',
+      next: '/technical',
       forks: [
           {
             target: '/no-invite',
@@ -26,10 +31,6 @@ module.exports = {
             }
           }
       ]
-    },
-    '/start': {
-      next: '/technical'
-
     },
     '/no-invite': {
       backLink: false
