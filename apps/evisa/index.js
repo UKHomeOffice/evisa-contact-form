@@ -11,8 +11,16 @@ module.exports = {
   baseUrl: '/',
   steps: {
     '/start': {
+      next: '/biometric-residence-permit-number'
+    },
+    '/biometric-residence-permit-number': {
+      fields: [
+        'biometric-residence-permit-number-options',
+        'biometric-residence-permit-number-number'
+      ],
       next: '/start1'
     },
+    
     '/start1': {
       next: '/start2',
     },

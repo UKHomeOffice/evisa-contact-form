@@ -7,6 +7,10 @@
     "paragraph-3": "You will need an email address where we can send our reply.",
     "paragraph-4": "If you do not do anything for 20 minutes, your answers will not be saved. Your question is only saved when you submit the form"
   },
+  "biometric-residence-permit-number": {
+    "header": "Do you know your biometric residence permit number?",
+    "paragraph": "You can find this in the top right corner on the front panel of the permit."
+  },
   "start1": {
     "header": "Get access to your eVisa",
     "paragraph-1": "This application must be completed by anyone who applies to work for Border Force.",

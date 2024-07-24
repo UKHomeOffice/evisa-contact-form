@@ -1,4 +1,19 @@
 {
+  "biometric-residence-permit-number-options": {
+    "options": {
+        "yes": {
+          "label": "Yes"
+        },
+        "no": {
+          "label": "No"
+        }
+      }
+  },
+  "biometric-residence-permit-number-number": {
+    "label": "Biometric residence permit number",
+    "hint": "For example ‘RAX203829’"
+  },  
+
   "sent-email": {
     "legend": "Has the home office sent you an email",
     "validate": ["required"],
