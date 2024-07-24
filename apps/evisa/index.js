@@ -1,6 +1,5 @@
 const config = require('../../config');
 const agentEmail = require('./behaviours/agent-email')(config.email);
-const clearSession = require('./behaviours/clear-session'); // TODO check is used and remove
 const limitDocument = require('./behaviours/limit-documents');
 const removeImage = require('./behaviours/remove-image');
 const saveImage = require('./behaviours/save-image');
@@ -46,6 +45,7 @@ module.exports = {
     },
     '/confirmation': {
       behaviours: [],
+      clearSession: true, // triggers hof/components/clear-session to clear the session
       backLink: false
     },
   }
