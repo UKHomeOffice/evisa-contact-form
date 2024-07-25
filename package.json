@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "postinstall": "echo 'running fake postinstall'"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
