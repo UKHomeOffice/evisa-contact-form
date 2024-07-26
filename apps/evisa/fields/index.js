@@ -33,8 +33,8 @@ module.exports = {
     validate: ['required', BRPValidator]
   },
 
-  // /reference-number
-  'reference-number-options': {
+  // /reference-numbers
+  'reference-numbers-options': {
     mixin: 'radio-group',
     options: [
       {
@@ -63,7 +63,7 @@ module.exports = {
   },
   'urn-number': {
     dependent: {
-      field: 'reference-number-options',
+      field: 'reference-numbers-options',
       value: 'opt-unique-ref',
     },
     labelClassName: 'visuallyhidden',
@@ -71,7 +71,7 @@ module.exports = {
   },
   'passport-number': {
     dependent: {
-      field: 'reference-number-options',
+      field: 'reference-numbers-options',
       value: 'opt-passport-number',
     },
     labelClassName: 'visuallyhidden',
@@ -79,7 +79,7 @@ module.exports = {
   },
   'other-reference-number': {
     dependent: {
-      field: 'reference-number-options',
+      field: 'reference-numbers-options',
       value: 'opt-other-ref',
     },
     labelClassName: 'visuallyhidden',

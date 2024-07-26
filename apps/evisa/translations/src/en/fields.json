@@ -14,7 +14,7 @@
     "hint": "For example ‘RAX203829’"
   },  
 
-  "reference-number-options": {
+  "reference-numbers-options": {
     "options": {
         "opt-unique-ref": {
           "label": "Unique reference number",
