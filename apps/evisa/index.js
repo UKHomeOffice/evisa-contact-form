@@ -19,6 +19,15 @@ module.exports = {
         'biometric-residence-permit-number-options',
         'biometric-residence-permit-number-number'
       ],
+      next: '/reference-number'
+    },
+    '/reference-number': {
+      fields: [
+        'reference-number-options',
+        'urn-number',
+        'passport-number',
+        'other-reference-number',
+      ],
       next: '/start1'
     },
 

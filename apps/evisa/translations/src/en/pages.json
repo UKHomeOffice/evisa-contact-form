@@ -11,6 +11,10 @@
     "header": "Do you know your biometric residence permit number?",
     "paragraph": "You can find this in the top right corner on the front panel of the permit."
   },
+  "reference-number": {
+    "header": "Do you have any of the following reference numbers?",
+    "paragraph": "This will help us link your enquiry to your account."
+  },
   "start1": {
     "header": "Get access to your eVisa",
     "paragraph-1": "This application must be completed by anyone who applies to work for Border Force.",

@@ -3,8 +3,11 @@
 
 // Biometric Residence Permit validator
 const BRPValidator = { type: 'regex', arguments: /^r[a-z](\d|X)\d{6}$/gi };
+const URNValidator = { type: 'regex', arguments: /^[a-z0-9]{1,10}$/gi }; // TODO correct URN regex
+const PassportValidator = { type: 'regex', arguments: /^[a-z0-9]{1,10}$/gi }; // TODO correct Passport regex
 
 module.exports = {
+  // /biometric-residence-permit-number
   'biometric-residence-permit-number-options': {
     mixin: 'radio-group',
     options: [
@@ -30,6 +33,60 @@ module.exports = {
     validate: ['required', BRPValidator]
   },
 
+  // /reference-number
+  'reference-number-options': {
+    mixin: 'radio-group',
+    options: [
+      {
+        value: 'opt-unique-ref',
+        toggle: 'urn-number',
+        child: 'input-text',
+      },
+      {
+        value: 'opt-passport-number',
+        toggle: 'passport-number',
+        child: 'input-text',
+      },
+      {
+        value: 'opt-other-ref',
+        toggle: 'other-reference-number',
+        child: 'input-text',
+      },
+      {
+        value: 'opt-none',
+      },
+    ],
+    validate: 'required',
+    legend: {
+      className: 'visuallyhidden',
+    },
+  },
+  'urn-number': {
+    dependent: {
+      field: 'reference-number-options',
+      value: 'opt-unique-ref',
+    },
+    labelClassName: 'visuallyhidden',
+    validate: ['required', URNValidator],
+  },
+  'passport-number': {
+    dependent: {
+      field: 'reference-number-options',
+      value: 'opt-passport-number',
+    },
+    labelClassName: 'visuallyhidden',
+    validate: ['required', PassportValidator],
+  },
+  'other-reference-number': {
+    dependent: {
+      field: 'reference-number-options',
+      value: 'opt-other-ref',
+    },
+    labelClassName: 'visuallyhidden',
+    validate: ['required', 'notUrl', { type: 'maxlength', arguments: 16 }],
+  },
+
+  // ---------------------------------------
   'sent-email': {
     isPageHeading: 'true',
     mixin: 'radio-group',

@@ -14,6 +14,34 @@
     "hint": "For example ‘RAX203829’"
   },  
 
+  "reference-number-options": {
+    "options": {
+        "opt-unique-ref": {
+          "label": "Unique reference number",
+          "hint": "You can find this in the email we sent you when you first created an eVisa account."
+        },
+        "opt-passport-number": {
+          "label": "Passport number",
+          "hint": "This can contain letters and numbers For example. ‘120383978A’."
+        },
+        "opt-other-ref": {
+          "label": "Other",
+          "hint": "This could be an Incident Number (INC), National ID card number or a Global Web Form (GWF) number."
+        },
+        "opt-none": {
+          "label": "None of the above"
+        }
+      }
+  },
+  "urn-number": {
+    "label": "Unique reference number"
+  },  
+  "passport-number": {
+    "label": "Passport number"
+  },  
+  "other-reference-number": {
+    "label": "Other reference number"
+  },
   "sent-email": {
     "legend": "Has the home office sent you an email",
     "validate": ["required"],

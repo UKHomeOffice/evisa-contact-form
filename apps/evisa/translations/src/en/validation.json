@@ -1,10 +1,26 @@
 {
   "biometric-residence-permit-number-options": {
-    "required": "Tell us if you can provide a biometric residence permit number"
+    "required": "// TODO Tell us if you can provide a biometric residence permit number"
   },
   "biometric-residence-permit-number-number": {
-    "required": "Enter a biometric residence permit number",
-    "regex": "Enter a valid BRP number. For example, RAX203829"
+    "required": "// TODO Enter a biometric residence permit number",
+    "regex": "// TODO Enter a valid BRP number. For example, RAX203829"
+  },
+  "reference-number-options": {
+    "required": "// TODO Tell us if you can provide a unique reference number"
+  },
+  "urn-number": {
+    "required": "// TODO Enter a urn number",
+    "regex": "// TODO Enter a valid URN number"
+  },
+  "passport-number": {
+    "required": "// TODO Enter a passport number",
+    "regex": "// TODO Enter a valid PASSPORT number"
+  },
+  "other-reference-number": {
+    "required": "// TODO Enter a reference number",
+    "notUrl": "// TODO don't enter a url",
+    "maxlength": "// TODO no more than 16 characters"
   },
   "tech-problem" : {
     "required": "Do you have a technical problem?"
