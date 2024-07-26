@@ -1,4 +1,5 @@
 'use strict';
+/* eslint-disable comma-dangle */
 
 const config = require('../../config');
 const agentEmail = require('./behaviours/agent-email')(config.email);
@@ -20,7 +21,7 @@ module.exports = {
       ],
       next: '/start1'
     },
-    
+
     '/start1': {
       next: '/start2',
     },
@@ -31,13 +32,13 @@ module.exports = {
       fields: ['sent-email'],
       next: '/technical',
       forks: [
-          {
-            target: '/no-invite',
-            condition: {
-              field: 'sent-email',
-              value: 'no',
-            }
+        {
+          target: '/no-invite',
+          condition: {
+            field: 'sent-email',
+            value: 'no',
           }
+        }
       ]
     },
     '/no-invite': {
