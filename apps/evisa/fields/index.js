@@ -8,12 +8,12 @@ const PassportValidator = { type: 'regex', arguments: /^[a-z0-9]{1,10}$/gi }; //
 
 module.exports = {
   // /biometric-residence-permit-number
-  'biometric-residence-permit-number-options': {
+  'brp-options': {
     mixin: 'radio-group',
     options: [
       {
         value: 'yes',
-        toggle: 'biometric-residence-permit-number-number',
+        toggle: 'brp-number',
         child: 'input-text'
       },
       {
@@ -25,9 +25,9 @@ module.exports = {
       className: 'visuallyhidden'
     }
   },
-  'biometric-residence-permit-number-number': {
+  'brp-number': {
     dependent: {
-      field: 'biometric-residence-permit-number-options',
+      field: 'brp-options',
       value: 'yes'
     },
     validate: ['required', BRPValidator]

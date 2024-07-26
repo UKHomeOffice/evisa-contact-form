@@ -1,8 +1,8 @@
 {
-  "biometric-residence-permit-number-options": {
+  "brp-options": {
     "required": "// TODO Tell us if you can provide a biometric residence permit number"
   },
-  "biometric-residence-permit-number-number": {
+  "brp-number": {
     "required": "// TODO Enter a biometric residence permit number",
     "regex": "// TODO Enter a valid BRP number. For example, RAX203829"
   },

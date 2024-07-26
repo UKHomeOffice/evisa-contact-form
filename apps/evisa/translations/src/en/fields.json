@@ -1,5 +1,5 @@
 {
-  "biometric-residence-permit-number-options": {
+  "brp-options": {
     "options": {
         "yes": {
           "label": "Yes"
@@ -9,7 +9,7 @@
         }
       }
   },
-  "biometric-residence-permit-number-number": {
+  "brp-number": {
     "label": "Biometric residence permit number",
     "hint": "For example ‘RAX203829’"
   },  
