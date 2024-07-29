@@ -75,6 +75,7 @@ steps:
     environment:
       #DOCKER_PASSWORD:
        #from_secret: DOCKER_PASSWORD
+       # from_secret: DOCKER_PASSWORD
     commands:
       - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
       - docker build --no-cache -t $${IMAGE_REPO}:$${DRONE_COMMIT_SHA} .
