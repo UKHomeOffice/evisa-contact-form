@@ -13,7 +13,6 @@ spec:
   tls:
     - hosts:
       {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
-        - {{ .DRONE_BUILD_NUMBER }}.internal.branch.sas-notprod.homeoffice.gov.uk
         - {{ .APP_NAME }}-{{ .DRONE_SOURCE_BRANCH }}.internal.branch.sas-notprod.homeoffice.gov.uk
       {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
         - {{ .APP_NAME }}.internal.uat.sas-notprod.homeoffice.gov.uk
