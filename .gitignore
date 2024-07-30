@@ -1,12 +1,13 @@
 .DS_Store
 node_modules
-#public
+public
 .idea
 .vscode
 coverage
 .env
 output/
 *.iml
+anchore-reports
 .nyc_output
 dump.rdb
 yarn-error.log
