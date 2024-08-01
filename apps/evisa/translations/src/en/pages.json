@@ -1,7 +1,8 @@
 {
   "start": {
     "header": "Ask a question about getting access to your eVisa",
-    "paragraph-1": "Use this service if you have a question about creating your UK Visas and Immigration (UKVI) account and getting access to your online immigration status (eVisa).",
+    "paragraph-1": "Use this service if you have a question about creating your UK Visas and Immigration (UKVI) account and ",
+    "paragraph-1-link-text": "getting access to your online immigration status (eVisa)",
     "paragraph-2": "We will reply within 3 working days (Monday to Friday).",
     "sub-header-1": "What you need",
     "paragraph-3": "You will need an email address where we can send our reply.",
