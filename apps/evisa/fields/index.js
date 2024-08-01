@@ -2,7 +2,13 @@
 /* eslint-disable comma-dangle */
 
 // Biometric Residence Permit validator
+// BRP number format: RAXnnnnnn 
+// R = the letter 'r' (allow lower and uppercase)
+// A = any alphabetical character [a-z] (upper or lowercase)
+// X = the letter 'X' or any number [0-9]
+// n = any number [0-9]
 const BRPValidator = { type: 'regex', arguments: /^r[a-z](\d|X)\d{6}$/gi };
+
 const URNValidator = { type: 'regex', arguments: /^[a-z0-9]{1,10}$/gi }; // TODO correct URN regex
 const PassportValidator = { type: 'regex', arguments: /^[a-z0-9]{1,10}$/gi }; // TODO correct Passport regex
 
@@ -30,7 +36,12 @@ module.exports = {
       field: 'brp-options',
       value: 'yes'
     },
-    validate: ['required', BRPValidator]
+    validate: [
+      'required', 
+      { type: 'minlength', arguments: [9] },
+      { type: 'maxlength', arguments: [9] },
+      BRPValidator
+    ]
   },
 
   // /reference-numbers
