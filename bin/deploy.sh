@@ -16,7 +16,7 @@ if [[ $1 == 'tear_down' ]]; then
 
   $kd --delete -f kube/configmaps/configmap.yml
   $kd --delete -f kube/file-vault -f kube/app -f kube/redis 
-  echo "Torn Down UAT Branch - evc-$DRONE_SOURCE_BRANCH.internal.sas-evc-branch.homeoffice.gov.uk"
+  echo "Torn Down UAT Branch - evc-$DRONE_SOURCE_BRANCH.internal.branch.sas-notprod.homeoffice.gov.uk"
   exit 0
 fi
 
@@ -41,6 +41,6 @@ fi
 sleep $READY_FOR_TEST_DELAY
 
 if [[ ${KUBE_NAMESPACE} == ${BRANCH_ENV} ]]; then
-  echo "App Branch - evc-$DRONE_SOURCE_BRANCH.internal.sas-evc-branch.homeoffice.gov.uk"
-  echo "File Vault Branch - fv-$DRONE_SOURCE_BRANCH.sas-evc-branch.homeoffice.gov.uk"
+  echo "App Branch - evc-$DRONE_SOURCE_BRANCH.internal.branch.sas-notprod.homeoffice.gov.uk"
+  echo "File Vault Branch - fv-$DRONE_SOURCE_BRANCH.branch.sas-notprod.homeoffice.gov.uk"
 fi

@@ -1,0 +1,40 @@
+{{<partials-page}}
+{{$encoding}}enctype="multipart/form-data" name="file-upload-form"{{/encoding}}
+  {{$page-content}}
+    {{#renderField}}full-name{{/renderField}}
+    {{#renderField}}email{{/renderField}}
+    {{#renderField}}contact-number{{/renderField}}
+    {{#renderField}}ref-number{{/renderField}}
+    {{#renderField}}question{{/renderField}}
+<h2 class="govuk-heading-m">Upload a file</h2>
+    {{#renderField}}image{{/renderField}}
+<button class="govuk-button govuk-button--secondary" name="upload-file" value="upload-file">
+  {{#t}}buttons.upload-file{{/t}}
+</button>
+
+<br><br>
+{{^values.images}}
+<h2 class="govuk-heading-m">No files uploaded</h2>
+{{/values.images}}
+
+{{#values.images.length}}
+<br>
+<h2 class="govuk-heading-m">Files uploaded</h2>
+<table class="table-address-loop">
+  <tbody>
+  {{#values.images}}
+  <tr class="images-summary">
+    <td>{{name}}</td>
+    <td><a href="?delete={{id}}" class="govuk-link">{{#t}}buttons.remove{{/t}}</a></td>
+  </tr>
+  {{/values.images}}
+  </tbody>
+</table>
+{{/values.images.length}}
+<br>
+<p class="govuk-body">For evidence that is not in English, you must upload a translation.</p>
+<br><br>
+    {{#renderField}}contacted{{/renderField}}
+    {{#input-submit}}continue-only{{/input-submit}}
+  {{/page-content}}
+{{/partials-page}}

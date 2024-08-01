@@ -1,0 +1,16 @@
+{
+  "appName": "eVisa contact form",
+  "theme": "govUK",
+  "behaviours": [
+    "hof/components/clear-session"
+  ],
+  "translations": "./apps/evisa/translations",
+  "routes": [
+    "./apps/evisa"
+  ],
+  "session": {
+    "name": "evisa.hof.sid"
+  },
+  "getAccessibility": true,
+  "emailerFallback": true
+}
