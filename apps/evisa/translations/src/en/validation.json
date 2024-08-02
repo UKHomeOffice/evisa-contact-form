@@ -18,8 +18,10 @@
     "regex": "Enter a unique reference number in the correct format. For example 1111-2222-3333-4444"
   },
   "passport-number": {
-    "required": "// TODO Enter a passport number",
-    "regex": "// TODO Enter a valid PASSPORT number"
+    "required": "Enter a passport number",
+    "minlength": "Passport number must be 9 or 10 characters",
+    "maxlength": "Passport number must be 9 or 10 characters",
+    "regex": "Enter a valid passport number"
   },
   "other-reference-number": {
     "required": "// TODO Enter a reference number",

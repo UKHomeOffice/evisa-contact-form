@@ -2,18 +2,19 @@
 /* eslint-disable comma-dangle */
 
 // Biometric Residence Permit validator
-// BRP number format: RAXnnnnnn
+// BRP number format: RAXnnnnnn      (9 characters)
 // R = the letter 'r' (allow lower and uppercase)
 // A = any alphabetical character [a-z] (upper or lowercase)
 // X = the letter 'X' or any number [0-9]
 // n = any number [0-9]
-const BRPValidator = { type: 'regex', arguments: /^r[a-z](\d|X)\d{6}$/gi };
+const BRPValidator = { type: 'regex', arguments: /^r[a-z](\d|X)\d{6}$/i };
 
 // Unique Reference Number validator
-// URN number format: 1111-2222-3333-4444 with dash - or slash / optional
+// URN number format: 1111-2222-3333-4444 with optional dash - or slash / group separators
 const URNValidator = { type: 'regex', arguments: /^\d{4}(?:[-\/]?)\d{4}(?:[-\/]?)\d{4}(?:[-\/]?)\d{4}$/ };
 
-const PassportValidator = { type: 'regex', arguments: /^[a-z0-9]{1,10}$/gi }; // TODO correct Passport regex
+// Passport number validator
+const PassportValidator = { type: 'regex', arguments: /^[a-z0-9]{9,10}$/i };
 
 module.exports = {
   // /biometric-residence-permit-number
@@ -94,7 +95,12 @@ module.exports = {
       value: 'opt-passport-number',
     },
     labelClassName: 'visuallyhidden',
-    validate: ['required', PassportValidator],
+    validate: [
+      'required', 
+      { type: 'minlength', arguments: [9] },
+      { type: 'maxlength', arguments: [10] },
+      PassportValidator
+    ],
   },
   'other-reference-number': {
     dependent: {
@@ -102,7 +108,11 @@ module.exports = {
       value: 'opt-other-ref',
     },
     labelClassName: 'visuallyhidden',
-    validate: ['required', 'notUrl', { type: 'maxlength', arguments: 16 }],
+    validate: [
+      'required', 
+      'notUrl', 
+      { type: 'maxlength', arguments: 16 }
+    ],
   },
 
   // ---------------------------------------
