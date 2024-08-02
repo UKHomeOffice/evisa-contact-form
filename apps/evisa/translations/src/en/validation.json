@@ -12,8 +12,10 @@
     "required": "// TODO Tell us if you can provide a unique reference number"
   },
   "urn-number": {
-    "required": "// TODO Enter a urn number",
-    "regex": "// TODO Enter a valid URN number"
+    "required": "Enter a unique reference number",
+    "minlength": "Unique reference number must be between 16 and 22 characters",
+    "maxlength": "Unique reference number must be between 16 and 22 characters",
+    "regex": "Enter a unique reference number in the correct format. For example 1111-2222-3333-4444"
   },
   "passport-number": {
     "required": "// TODO Enter a passport number",
