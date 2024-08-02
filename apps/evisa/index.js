@@ -19,7 +19,6 @@ module.exports = {
         'brp-options',
         'brp-number'
       ],
-      // next: '/reference-numbers'
       forks: [
         {
           target: '/contact-details',
@@ -47,28 +46,6 @@ module.exports = {
       next: '/contact-details'
     },
 
-    '/start1': {
-      next: '/start2',
-    },
-    '/start2': {
-      next: '/invite',
-    },
-    '/invite': {
-      fields: ['sent-email'],
-      next: '/technical',
-      forks: [
-        {
-          target: '/no-invite',
-          condition: {
-            field: 'sent-email',
-            value: 'no',
-          }
-        }
-      ]
-    },
-    '/no-invite': {
-      backLink: false
-    },
     '/technical': {
       fields: ['tech-problem'],
       next: '/contact-details',

@@ -96,7 +96,7 @@ module.exports = {
     },
     labelClassName: 'visuallyhidden',
     validate: [
-      'required', 
+      'required',
       { type: 'minlength', arguments: [9] },
       { type: 'maxlength', arguments: [10] },
       PassportValidator
@@ -109,27 +109,13 @@ module.exports = {
     },
     labelClassName: 'visuallyhidden',
     validate: [
-      'required', 
-      'notUrl', 
+      'required',
+      'notUrl',
       { type: 'maxlength', arguments: 16 }
     ],
   },
 
   // ---------------------------------------
-  'sent-email': {
-    isPageHeading: 'true',
-    mixin: 'radio-group',
-    validate: 'required',
-    className: ['block', 'form-group'],
-    options: ['yes', 'no']
-  },
-  'tech-problem': {
-    isPageHeading: 'true',
-    mixin: 'radio-group',
-    validate: 'required',
-    className: ['block', 'form-group'],
-    options: ['yes', 'no']
-  },
   'full-name': {
     mixin: 'input-text',
     validate: ['required', 'notUrl'],

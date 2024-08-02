@@ -16,36 +16,6 @@
     "header": "Do you have any of the following reference numbers?",
     "paragraph": "This will help us link your enquiry to your account."
   },
-  "start1": {
-    "header": "Get access to your eVisa",
-    "paragraph-1": "This application must be completed by anyone who applies to work for Border Force.",
-    "paragraph-2": "You have 5 working days from the day you were first sent a link to the service to complete your application.",
-    "paragraph-3": "We will use the answers you provide in this application for security checks that you must pass in order to be offered employment with Border Force.",
-    "paragraph-4": "To be offered a position, you must also pass United Kingdom Security Vetting (UKSV) and standard pre-employment and right to work checks.",
-    "paragraph-5": "If you fail one of these checks, your job offer with Border Force will be withdrawn.",
-    "paragraph-6": "Border Force is entitled to expect staff to have high standards and integrity. If relevant information in this application has not been declared, this may bring into question someone's honesty and trustworthiness. This can lead to clearance being refused. You therefore must be thorough, open and sincere.",
-    "paragraph-7": "If you declare something which is irrelevant, it will be discounted."
-  },
-  "start2": {
-    "header": "Get access to your eVisa2",
-    "paragraph-1": "This application must be completed by anyone who applies to work for Border Force.",
-    "paragraph-2": "You have 5 working days from the day you were first sent a link to the service to complete your application.",
-    "paragraph-3": "We will use the answers you provide in this application for security checks that you must pass in order to be offered employment with Border Force.",
-    "paragraph-4": "To be offered a position, you must also pass United Kingdom Security Vetting (UKSV) and standard pre-employment and right to work checks.",
-    "paragraph-5": "If you fail one of these checks, your job offer with Border Force will be withdrawn.",
-    "paragraph-6": "Border Force is entitled to expect staff to have high standards and integrity. If relevant information in this application has not been declared, this may bring into question someone's honesty and trustworthiness. This can lead to clearance being refused. You therefore must be thorough, open and sincere.",
-    "paragraph-7": "If you declare something which is irrelevant, it will be discounted."
-  },
-  "no-invite": {
-    "header": "Using this form",
-    "paragraph-1": "XXX",
-    "paragraph-2": "You have 5 working days from the day you were first sent a link to the service to complete your application.",
-    "paragraph-3": "We will use the answers you provide in this application for security checks that you must pass in order to be offered employment with Border Force.",
-    "paragraph-4": "To be offered a position, you must also pass United Kingdom Security Vetting (UKSV) and standard pre-employment and right to work checks.",
-    "paragraph-5": "If you fail one of these checks, your job offer with Border Force will be withdrawn.",
-    "paragraph-6": "Border Force is entitled to expect staff to have high standards and integrity. If relevant information in this application has not been declared, this may bring into question someone's honesty and trustworthiness. This can lead to clearance being refused. You therefore must be thorough, open and sincere.",
-    "paragraph-7": "If you declare something which is irrelevant, it will be discounted."
-  },
   "contact-details": {
     "header": "Your details",
     "intro": "Enter your contact details below. We will use ..."

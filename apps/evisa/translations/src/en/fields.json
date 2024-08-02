@@ -54,18 +54,6 @@
       }
     }
   },
-  "tech-problem": {
-    "legend": "Do you have a technical problem?",
-    "validate": ["required"],
-    "options": {
-      "yes": {
-        "label": "Yes"
-      },
-      "no": {
-        "label": "No"
-      }
-    }
-  },
   "full-name": {
     "label": "Full name"
   },
