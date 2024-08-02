@@ -19,7 +19,23 @@ module.exports = {
         'brp-options',
         'brp-number'
       ],
-      next: '/reference-numbers'
+      // next: '/reference-numbers'
+      forks: [
+        {
+          target: '/contact-details',
+          condition: {
+            field: 'brp-options',
+            value: 'yes'
+          }
+        },
+        {
+          target: '/reference-numbers',
+          condition: {
+            field: 'brp-options',
+            value: 'no'
+          }
+        }
+      ],
     },
     '/reference-numbers': {
       fields: [
@@ -28,7 +44,7 @@ module.exports = {
         'passport-number',
         'other-reference-number',
       ],
-      next: '/start1'
+      next: '/contact-details'
     },
 
     '/start1': {
