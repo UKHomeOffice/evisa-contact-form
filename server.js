@@ -1,3 +1,17 @@
+const http = require('http');
+const port = 8080;
+
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end(`Hello World ${new Date().toISOString()}\n`);
+});
+
+server.listen(port, '127.0.0.1', () => {
+    console.log(`Server running at http://127.0.0.1:${port}/`);
+});
+
+/*
 'use strict';
 
 const hof = require('hof');
@@ -84,3 +98,4 @@ app.use((req, res, next) => {
 });
 
 module.exports = app;
+*/
