@@ -4,7 +4,38 @@ const port = 8080;
 const server = http.createServer((req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
-    res.end(`Hello World ${new Date().toISOString()}\n`);
+
+    const envVars = Object.keys(process.env)
+        .filter(k => k.startsWith('HOF_'))
+        .map(k => `${k}=${process.env[k]}`)
+        .join('\n');
+
+    const osVars = Object.keys(process.env)
+        .filter(k => !k.startsWith('HOF_'))
+        .map(k => `${k}=${process.env[k]}`)
+        .join('\n');
+
+    const message = `Hello World ${new Date().toISOString()}\n` +
+        `Environment Variables:\n${envVars}\n` +
+        `Operating System Variables:\n${osVars}\n` +
+        `Server Software: ${process.env.SERVER_SOFTWARE}\n` +
+        `Server Signature: ${process.env.SERVER_SIGNATURE}\n` +
+        `Server Port: ${process.env.SERVER_PORT}\n` +
+        `Server Protocol: ${process.env.SERVER_PROTOCOL}\n` +
+        `Document Root: ${process.env.DOCUMENT_ROOT}\n` +
+        `Script Filename: ${process.env.SCRIPT_FILENAME}\n` +
+        `Script Name: ${process.env.SCRIPT_NAME}\n` +
+        `Request URI: ${process.env.REQUEST_URI}\n` +
+        `Query String: ${process.env.QUERY_STRING}\n` +
+        `Hostname: ${process.env.HOSTNAME}\n` +
+        `Container ID: ${process.env.HOSTNAME}\n` +
+        `Kubernetes Container Name: ${process.env.KUBERNETES_CONTAINER_NAME}\n` +
+        `Kubernetes Container Image: ${process.env.KUBERNETES_CONTAINER_IMAGE}\n` +
+        `Kubernetes Pod Name: ${process.env.KUBERNETES_POD_NAME}\n` +
+        `Kubernetes Pod Namespace: ${process.env.KUBERNETES_POD_NAMESPACE}\n` +
+        `Kubernetes Pod IP: ${process.env.KUBERNETES_POD_IP}\n`;
+
+    res.end(message);
 });
 
 server.listen(port, '127.0.0.1', () => {
