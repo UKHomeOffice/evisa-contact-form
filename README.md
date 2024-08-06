@@ -38,6 +38,10 @@ Choose this option if you if you are using VSCode, have Docker installed and wis
 
 4. Install dependencies with `yarn`, then launch the application in dev mode with `yarn start:dev`
 
+### Additional Services
+
+The [Redis Insight](https://redis.io/insight/) tool is available on [http://localhost:5540/](http://localhost:5540/)
+
 
 ## Install & Run using locally installed services
 
