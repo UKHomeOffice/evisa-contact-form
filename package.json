@@ -4,7 +4,7 @@
   "description": "Contact form for eVisa when online chat is not available",
   "main": "index.js",
   "engines": {
-    "node": ">=18.12.1"
+    "node": ">=20.15"
   },
   "scripts": {
     "start": "node server.js",
