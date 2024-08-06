@@ -2,7 +2,8 @@
 
 ## Getting Started
 
-- [Install & run locally](#install--run-the-application-locally)
+- [Install & run with VSCode Dev Containers](#install--run-using-docker--vscode-dev-containers)
+- [Install & run with locally installed Services](#install--run-using-locally-installed-services)
 
 ### Dependencies
 
@@ -18,7 +19,29 @@ This form is built using
 - hof v20.5.6
 
 
-## Install & Run the Application locally
+
+## Install & Run using Docker & VSCode Dev Containers
+
+Choose this option if you if you are using VSCode, have Docker installed and wish to run containerized Servers.
+
+### Prerequisites
+   - [Docker](https://www.docker.com)
+   - [VS Code Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) 
+
+### Setup
+
+1. Copy `./.devcontainer/devcontainer.env` to `./.env` and populate the values.
+
+2. Open the project in a VSCode Dev Container with the command `Dev Containers: Reopen in Container`
+
+3. Open a terminal on the application server container through VScode `View -> Terminal`
+
+4. Install dependencies with `yarn`, then launch the application in dev mode with `yarn start:dev`
+
+
+## Install & Run using locally installed services
+
+Choose this option if you want to use services installed directly on your development machine.
 
 ### Prerequisites
 

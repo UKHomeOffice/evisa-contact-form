@@ -19,5 +19,4 @@ test/_accessibility/tmp/*
 ~$*
 *.xlsx
 data/*
-.devcontainer/*.env
 .ash_history
