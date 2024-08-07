@@ -198,8 +198,6 @@ spec:
             - --tls-cert=/certs/tls.crt
             - --tls-private-key=/certs/tls.key
             - --enable-default-deny=false
-            - --enable-json-logging=true
-            - --enable-logging=true
             - --http-only-cookie=true
             - --enable-security-filter=true
             - --enable-request-id=true
