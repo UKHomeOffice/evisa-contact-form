@@ -182,7 +182,7 @@ spec:
               value: https://acp-sso.notprod.acp.homeoffice.gov.uk/realms/evc-notprod
             {{ end }}
           args:
-            # - --listen=:10443
+            - --listen=0.0.0.0:3000
             # the url which is used to retrieve the OpenID configuration
             - --discovery-url=$(PROXY_DISCOVERY_URL)
             # the endpoint where requests are proxied to
@@ -202,6 +202,10 @@ spec:
             {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
             - --verbose=true
             {{ end }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
           # ports:
           #   - containerPort: 10080
           #   - containerPort: 10443
