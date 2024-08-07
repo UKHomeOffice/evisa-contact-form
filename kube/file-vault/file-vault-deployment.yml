@@ -136,7 +136,7 @@ spec:
             runAsNonRoot: true
 
         - name: keycloak-proxy
-          image:  quay.io/ukhomeofficedigital/gogatekeeper:2.9.2
+          image: quay.io/ukhomeofficedigital/gogatekeeper:v2.14.0
           resources:
             limits:
               memory: 1024Mi
@@ -198,10 +198,13 @@ spec:
             - --tls-cert=/certs/tls.crt
             - --tls-private-key=/certs/tls.key
             - --enable-default-deny=false
+            - --enable-json-logging=true
+            - --enable-logging=true
             - --http-only-cookie=true
             - --enable-security-filter=true
             - --enable-request-id=true
             - --redirection-url=$(PROXY_REDIRECTION_URL)
+            - --preserve-host=true
             - --tls-min-version=tlsv1.2
             {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
             - --verbose=true
