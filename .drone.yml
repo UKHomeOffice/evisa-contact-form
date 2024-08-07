@@ -60,7 +60,7 @@ steps:
       IGNORE_UNFIXED: false
       ALLOW_CVE_LIST_FILE: hof-services-config/infrastructure/trivy/.trivyignore.yaml
     when:
-      event: [push, pull_request]
+      event: push
 
   - name: sonar_scanner_deploy
     <<: *sonar_scanner
@@ -119,7 +119,7 @@ steps:
       IGNORE_UNFIXED: false
       ALLOW_CVE_LIST_FILE: hof-services-config/E_Visa_Contact_Us/trivy/.trivyignore.yaml
     when:
-      event: [push, pull_request]
+      event: push
 
   # Deploy to pull request UAT environment
   - name: deploy_to_branch
