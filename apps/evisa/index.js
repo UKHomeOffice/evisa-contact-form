@@ -16,34 +16,36 @@ module.exports = {
     },
     '/biometric-residence-permit-number': {
       fields: [
-        'biometric-residence-permit-number-options',
-        'biometric-residence-permit-number-number'
+        'brp-options',
+        'brp-number'
       ],
-      next: '/start1'
-    },
-
-    '/start1': {
-      next: '/start2',
-    },
-    '/start2': {
-      next: '/invite',
-    },
-    '/invite': {
-      fields: ['sent-email'],
-      next: '/technical',
       forks: [
         {
-          target: '/no-invite',
+          target: '/contact-details',
           condition: {
-            field: 'sent-email',
-            value: 'no',
+            field: 'brp-options',
+            value: 'yes'
+          }
+        },
+        {
+          target: '/reference-numbers',
+          condition: {
+            field: 'brp-options',
+            value: 'no'
           }
         }
-      ]
+      ],
     },
-    '/no-invite': {
-      backLink: false
+    '/reference-numbers': {
+      fields: [
+        'reference-numbers-options',
+        'urn-number',
+        'passport-number',
+        'other-reference-number',
+      ],
+      next: '/contact-details'
     },
+
     '/technical': {
       fields: ['tech-problem'],
       next: '/contact-details',
