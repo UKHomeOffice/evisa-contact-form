@@ -136,7 +136,7 @@ spec:
             runAsNonRoot: true
 
         - name: keycloak-proxy
-          image: quay.io/ukhomeofficedigital/gogatekeeper:v2.14.0
+          image: quay.io/ukhomeofficedigital/gogatekeeper:2.9.2
           resources:
             limits:
               memory: 1024Mi
