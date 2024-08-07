@@ -161,10 +161,6 @@ spec:
                 secretKeyRef:
                   name: keycloak-client
                   key: id
-            - name: PROXY_LISTEN
-              value: 127.0.0.1:3001
-            - name: PROXY_UPSTREAM_URL
-              value: "http://127.0.0.1:3000"
             - name: PROXY_REDIRECTION_URL
             {{ if eq .KUBE_NAMESPACE .PROD_ENV }}           
               value: https://fv-{{ .APP_NAME }}.sas.homeoffice.gov.uk
@@ -202,7 +198,6 @@ spec:
             - --enable-security-filter=true
             - --enable-request-id=true
             - --redirection-url=$(PROXY_REDIRECTION_URL)
-            - --preserve-host=true
             - --tls-min-version=tlsv1.2
             {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
             - --verbose=true
