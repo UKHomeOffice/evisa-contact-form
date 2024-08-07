@@ -5,6 +5,7 @@ public
 .vscode
 coverage
 .env
+.devcontainer/devcontainer.env
 output/
 *.iml
 anchore-reports

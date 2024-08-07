@@ -9,14 +9,10 @@
 
 This form is built using
 - [HOF framework](https://github.com/UKHomeOfficeForms/hof)
+   - hof v21.0.1
 - [Gov.uk Notify](https://www.notifications.service.gov.uk) to send notification emails
 - [File Vault](https://github.com/UKHomeOffice/file-vault) to store and retrieve uploaded files
 
-### Versions
-
-- Node v20.15.1 (LTS)
-- yarn v1.22 (not npm)
-- hof v20.5.6
 
 
 
@@ -30,13 +26,13 @@ Choose this option if you if you are using VSCode, have Docker installed and wis
 
 ### Setup
 
-1. Copy `./.devcontainer/devcontainer.env` to `./.env` and populate the values.
+1. Copy `./.devcontainer/devcontainer.env.sample` to `./.devcontainer/devcontainer.env` and populate the values.
 
 2. Open the project in a VSCode Dev Container with the command `Dev Containers: Reopen in Container`
 
 3. Open a terminal on the application server container through VScode `View -> Terminal`
 
-4. Install dependencies with `yarn`, then launch the application in dev mode with `yarn start:dev`
+4. Install dependencies with `yarn`, then launch the application in dev mode with `yarn start:devcontainer`
 
 ### Additional Services
 
@@ -50,6 +46,7 @@ Choose this option if you want to use services installed directly on your develo
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/en/)
+   - Node v20.15.1 (LTS)
 - [Redis server](http://redis.io/download) running on default port 6379
 - [File Vault](https://github.com/UKHomeOffice/file-vault) Service - running port 3000
 

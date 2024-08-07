@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "start:dev": "hof-build watch --env",
+    "start:dev": "hof-build watch --env ./.env",
+    "start:devcontainer": "hof-build watch --env ./.devcontainer/devcontainer.env",
     "build": "hof-build",
     "postinstall": "hof-build",
     "test:lint": "eslint . --config ./node_modules/eslint-config-hof/default.js",
