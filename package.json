@@ -4,11 +4,12 @@
   "description": "Contact form for eVisa when online chat is not available",
   "main": "index.js",
   "engines": {
-    "node": ">=18.12.1"
+    "node": ">=20.15"
   },
   "scripts": {
     "start": "node server.js",
-    "start:dev": "hof-build watch --env",
+    "start:dev": "hof-build watch --env ./.env",
+    "start:devcontainer": "hof-build watch --env ./.devcontainer/devcontainer.env",
     "build": "hof-build",
     "postinstall": "hof-build",
     "test:lint": "eslint . --config ./node_modules/eslint-config-hof/default.js",
