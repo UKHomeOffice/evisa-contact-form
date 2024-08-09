@@ -21,7 +21,7 @@ module.exports = {
       ],
       forks: [
         {
-          target: '/contact-details',
+          target: '/your-details',
           condition: {
             field: 'brp-options',
             value: 'yes'
@@ -43,17 +43,19 @@ module.exports = {
         'passport-number',
         'other-reference-number',
       ],
-      next: '/contact-details'
+      next: '/your-details'
+    },
+    '/your-details': {
+      behaviours: [],
+      // behaviours: [agentEmail, 'complete', saveImage('image'), removeImage, limitDocument],
+      fields: ['full-name', 'email-field', 'contact-number', 'question-field'],
+      // fields: ['full-name', 'email', 'contact-number', 'ref-number', 'question', 'image', 'contacted'],
+      next: '/confirmation',
     },
 
     '/technical': {
       fields: ['tech-problem'],
-      next: '/contact-details',
-    },
-    '/contact-details': {
-      behaviours: [agentEmail, 'complete', saveImage('image'), removeImage, limitDocument],
-      fields: ['full-name', 'email', 'contact-number', 'ref-number', 'question', 'image', 'contacted'],
-      next: '/confirmation',
+      next: '/your-details',
     },
     '/confirmation': {
       behaviours: [],

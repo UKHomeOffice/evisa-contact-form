@@ -58,8 +58,8 @@ module.exports = name => superclass => class extends superclass {
         return model.save()
           .then(() => {
             req.sessionModel.set('images', [...images, model.toJSON()]);
-            if (req.form.options.route === '/contact-details') {    // TODO replace /contact-details with a constant
-              return res.redirect('/contact-details');            // TODO replace /contact-details with a constant and check if redirect requires the /evisa/ path
+            if (req.form.options.route === '/your-details') {    // TODO replace /your-details with a constant
+              return res.redirect('/your-details');            // TODO replace /your-details with a constant and check if redirect requires the /evisa/ path
             }
             return super.saveValues(req, res, next);
           })

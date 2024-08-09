@@ -118,11 +118,16 @@ module.exports = {
   // ---------------------------------------
   'full-name': {
     mixin: 'input-text',
-    validate: ['required', 'notUrl'],
+    validate: [
+      'required', 
+      'notUrl', 
+      { type: 'maxlength', arguments: 250 },
+      { type: 'regex', arguments: /^[^\[\]\|\/<>]+$/ },
+    ],
     labelClassName: 'govuk-label--s',
     className: ['govuk-input', 'govuk-!-width-two-thirds']
   },
-  email: {
+  'email-field': {
     mixin: 'input-text',
     validate: ['required', 'email'],
     labelClassName: 'govuk-label--s'
@@ -133,28 +138,10 @@ module.exports = {
     labelClassName: 'govuk-label--s',
     className: ['govuk-input', 'govuk-!-width-two-thirds']
   },
-  'ref-number': {
-    mixin: 'input-text',
-    validate: ['notUrl'],
-    labelClassName: 'govuk-label--s',
-    className: ['govuk-input', 'govuk-!-width-two-thirds'],
-    html: undefined
-  },
-  question: {
+  'question-field': {
     mixin: 'textarea',
     validate: ['required', 'notUrl', { type: 'maxlength', arguments: 2000 }],
     labelClassName: 'govuk-label--s'
-  },
-  image: {
-    mixin: 'input-file',
-    labelClassName: 'visuallyhidden'
-  },
-  contacted: {
-    isPageHeading: 'true',
-    mixin: 'radio-group',
-    validate: 'required',
-    className: ['block', 'form-group'],
-    options: ['yes', 'no']
   },
 
   URNValidator: match => URNValidator.arguments.test(match),   // Exported for test access

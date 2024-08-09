@@ -16,9 +16,9 @@
     "header": "Do you have any of the following reference numbers?",
     "paragraph": "This will help us link your enquiry to your account."
   },
-  "contact-details": {
+  "your-details": {
     "header": "Your details",
-    "intro": "Enter your contact details below. We will use ..."
+    "intro": "Enter your contact details below. We will use these to respond to your question."
   },
   "confirmation": {
     "header": "Question sent",

@@ -28,11 +28,13 @@
     "notUrl": "// TODO don't enter a url",
     "maxlength": "// TODO no more than 16 characters"
   },
+  "full-name": {
+    "required": "Enter your full name",
+    "notUrl": "Please do not enter a link/url into your answers",
+    "maxlength": "Full name must be 250 characters or less",
+    "regex": "Name must not include these characters: [ ] < > / |"
+  },
   "contact-number": {
     "ukPhoneNumber": "Enter a valid UK telephone number"
-  },
-  "ref-number": {
-    "minLength": "Please enter a valid reference number",
-    "maxLength": "Please enter a valid reference number"
   }
 }
