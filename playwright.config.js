@@ -1,4 +1,6 @@
 // @ts-check
+/* eslint-disable comma-dangle */
+
 const { defineConfig, devices } = require('@playwright/test');
 
 /**
@@ -79,4 +81,3 @@ module.exports = defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
