@@ -34,6 +34,11 @@
     "maxlength": "Full name must be 250 characters or less",
     "regex": "Name must not include these characters: [ ] < > / |"
   },
+  "email-field": {
+    "required": "Enter your email address",
+    "minlength": "Email address must be between 6 and 254 characters",
+    "email": "Enter a real email address"
+  },
   "contact-number": {
     "ukPhoneNumber": "Enter a valid UK telephone number"
   }

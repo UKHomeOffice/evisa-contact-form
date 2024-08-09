@@ -129,7 +129,11 @@ module.exports = {
   },
   'email-field': {
     mixin: 'input-text',
-    validate: ['required', 'email'],
+    validate: [
+      'required',
+      { type: 'minlength', arguments: [6] },
+      'email'
+    ],
     labelClassName: 'govuk-label--s'
   },
   'contact-number': {
