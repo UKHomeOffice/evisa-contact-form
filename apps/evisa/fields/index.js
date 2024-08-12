@@ -149,7 +149,6 @@ module.exports = {
   },
   'question-field': {
     mixin: 'textarea',
-    // validate: ['required'],
     validate: [
       'required',
       'notUrl',
