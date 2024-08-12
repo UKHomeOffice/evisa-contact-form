@@ -40,6 +40,7 @@
     "email": "Enter a real email address"
   },
   "contact-number": {
+    "notUrl": "Please do not enter a link/url into your answers",
     "ukPhoneNumber": "Enter a valid UK telephone number"
   }
 }

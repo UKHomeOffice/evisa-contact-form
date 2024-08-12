@@ -32,6 +32,7 @@ test('test', async ({ page }) => {
   await page.getByLabel('Full name').click();
   await page.getByLabel('Full name').fill('some full name');
   await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#full-name-group')).not.toHaveClass(/error/);
 
 
   // /your-details - email-field
@@ -52,7 +53,21 @@ test('test', async ({ page }) => {
 
   await page.getByLabel('Email address').fill('someone@example.com');
   await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#email-field-group')).not.toHaveClass(/error/);
 
+  // /your-details - contact-number (optional)
+  await page.getByLabel('Contact number (optional)').click();
+  await page.getByLabel('Contact number (optional)').fill('https://www.example.com');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#contact-number-group')).toContainText('Error: Please do not enter a link/url into your answers');
+  await page.getByLabel('Contact number (optional)').fill('aphonenumber');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByLabel('Contact number (optional)').fill('123456789');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#contact-number-group')).toHaveClass(/error/);
+  await expect(page.locator('#contact-number-group')).toContainText('Error: Enter a valid UK telephone number');
+  await page.getByLabel('Contact number (optional)').fill('07930555666');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#contact-number-group')).not.toHaveClass(/error/);
 
-  // /your-details - contact-number
 });

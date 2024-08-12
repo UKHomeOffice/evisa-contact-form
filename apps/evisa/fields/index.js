@@ -138,7 +138,7 @@ module.exports = {
   },
   'contact-number': {
     mixin: 'input-text',
-    validate: ['ukPhoneNumber'],
+    validate: ['notUrl', 'ukPhoneNumber'],
     labelClassName: 'govuk-label--s',
     className: ['govuk-input', 'govuk-!-width-two-thirds']
   },
