@@ -1,11 +1,13 @@
 'use strict';
 /* eslint-disable comma-dangle */
 
+/* // TODO
 const config = require('../../config');
 const agentEmail = require('./behaviours/agent-email')(config.email);
 const limitDocument = require('./behaviours/limit-documents');
 const removeImage = require('./behaviours/remove-image');
 const saveImage = require('./behaviours/save-image');
+*/
 
 module.exports = {
   name: 'evisa',

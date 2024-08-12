@@ -21,8 +21,6 @@ function invalidCharactersValidator(value) {
   return value.match( /^[^\[\]\|\/<>]+$/ );
 }
 
-
-
 module.exports = {
   // /biometric-residence-permit-number
   'brp-options': {
