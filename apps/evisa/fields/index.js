@@ -16,6 +16,11 @@ const URNValidator = { type: 'regex', arguments: /^\d{4}(?:[-\/]?)\d{4}(?:[-\/]?
 // Passport number validator
 const PassportValidator = { type: 'regex', arguments: /^[a-z0-9]{9,10}$/i };
 
+// Invalid Characters validator [ ] < > / |
+function invalidCharactersValidator(value) {
+  return value.match( /^[^\[\]\|\/<>]+$/ );
+}
+
 module.exports = {
   // /biometric-residence-permit-number
   'brp-options': {
@@ -118,43 +123,40 @@ module.exports = {
   // ---------------------------------------
   'full-name': {
     mixin: 'input-text',
-    validate: ['required', 'notUrl'],
+    validate: [
+      'required',
+      'notUrl',
+      { type: 'maxlength', arguments: 250 },
+      invalidCharactersValidator,
+    ],
     labelClassName: 'govuk-label--s',
     className: ['govuk-input', 'govuk-!-width-two-thirds']
   },
-  email: {
+  'email-field': {
     mixin: 'input-text',
-    validate: ['required', 'email'],
+    validate: [
+      'required',
+      { type: 'minlength', arguments: [6] },
+      'email'
+    ],
     labelClassName: 'govuk-label--s'
   },
   'contact-number': {
     mixin: 'input-text',
-    validate: ['ukPhoneNumber'],
+    validate: ['notUrl', 'ukPhoneNumber'],
     labelClassName: 'govuk-label--s',
     className: ['govuk-input', 'govuk-!-width-two-thirds']
   },
-  'ref-number': {
-    mixin: 'input-text',
-    validate: ['notUrl'],
-    labelClassName: 'govuk-label--s',
-    className: ['govuk-input', 'govuk-!-width-two-thirds'],
-    html: undefined
-  },
-  question: {
+  'question-field': {
     mixin: 'textarea',
-    validate: ['required', 'notUrl', { type: 'maxlength', arguments: 2000 }],
+    validate: [
+      'required',
+      'notUrl',
+      { type: 'minlength', arguments: 6 },
+      { type: 'maxlength', arguments: 2000 },
+      invalidCharactersValidator
+    ],
     labelClassName: 'govuk-label--s'
-  },
-  image: {
-    mixin: 'input-file',
-    labelClassName: 'visuallyhidden'
-  },
-  contacted: {
-    isPageHeading: 'true',
-    mixin: 'radio-group',
-    validate: 'required',
-    className: ['block', 'form-group'],
-    options: ['yes', 'no']
   },
 
   URNValidator: match => URNValidator.arguments.test(match),   // Exported for test access

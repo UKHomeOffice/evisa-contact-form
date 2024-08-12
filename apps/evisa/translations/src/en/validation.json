@@ -28,11 +28,26 @@
     "notUrl": "// TODO don't enter a url",
     "maxlength": "// TODO no more than 16 characters"
   },
+  "full-name": {
+    "required": "Enter your full name",
+    "notUrl": "Please do not enter a link/url into your answers",
+    "maxlength": "Full name must be 250 characters or less",
+    "invalidCharactersValidator": "Name must not include these characters: [ ] < > / |"
+  },
+  "email-field": {
+    "required": "Enter your email address",
+    "minlength": "Email address must be between 6 and 254 characters",
+    "email": "Enter a real email address"
+  },
   "contact-number": {
+    "notUrl": "Please do not enter a link/url into your answers",
     "ukPhoneNumber": "Enter a valid UK telephone number"
   },
-  "ref-number": {
-    "minLength": "Please enter a valid reference number",
-    "maxLength": "Please enter a valid reference number"
+  "question-field": {
+    "required": "Enter your question",
+    "notUrl": "Please do not enter a link/url into your answers",
+    "minlength": "Enter your question",
+    "maxlength": "Your question must be 2,000 characters or less",
+    "invalidCharactersValidator": "Your question must not include these characters: [ ] < > / |"
   }
 }

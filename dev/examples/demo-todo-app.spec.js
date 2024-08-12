@@ -1,4 +1,6 @@
 // @ts-check
+/* eslint-disable comma-dangle, no-use-before-define, semi, no-trailing-spaces, indent, padded-blocks, spaced-comment */
+
 const { test, expect } = require('@playwright/test');
 
 test.beforeEach(async ({ page }) => {
