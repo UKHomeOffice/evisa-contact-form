@@ -47,9 +47,7 @@ module.exports = {
     },
     '/your-details': {
       behaviours: [],
-      // behaviours: [agentEmail, 'complete', saveImage('image'), removeImage, limitDocument],
       fields: ['full-name', 'email-field', 'contact-number', 'question-field'],
-      // fields: ['full-name', 'email', 'contact-number', 'ref-number', 'question', 'image', 'contacted'],
       next: '/confirmation',
     },
 

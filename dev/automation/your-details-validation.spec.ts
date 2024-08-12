@@ -9,6 +9,13 @@ test('test', async ({ page }) => {
   await page.getByLabel('None of the above').check();
   await page.getByRole('button', { name: 'Continue' }).click();
 
+
+  // your-details
+  await page.getByLabel('Full name').fill('');
+  await page.getByLabel('Email address').fill('');
+  await page.getByLabel('Contact number (optional)').fill('');
+  await page.getByLabel('Enter your question below.').fill('');
+
   // your-details - full-name
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.locator('#full-name-group')).toContainText('Error: Enter your full name');
@@ -70,4 +77,29 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.locator('#contact-number-group')).not.toHaveClass(/error/);
 
+  // /your-details - question-field
+  await page.getByLabel('Enter your question below.').click();
+  await expect(page.locator('#question-field-group')).toContainText('Error:Enter your question');
+  await page.getByLabel('Enter your question below.').click();
+  await page.getByLabel('Enter your question below.').fill('https://www.example.com');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#question-field-group')).toContainText('Error:Please do not enter a link/url into your answers');
+  await page.getByLabel('Enter your question below.').fill('[]<>|/');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#question-field-group')).toContainText('Error:Your question must not include these characters: [ ] < > / |');
+  await page.getByLabel('Enter your question below.').fill('12345');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#question-field-group')).toContainText('Error:Enter your question');
+  await page.getByLabel('Enter your question below.').fill('a'.repeat(2001));
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#question-field-group')).toContainText('Error:Your question must be 2,000 characters or less');
+
+  await page.getByLabel('Full name').fill('');  // reset the full name so the error shifts away from question-field
+  await page.getByLabel('Enter your question below.').fill('b'.repeat(2000));
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.locator('#question-field-group')).not.toHaveClass(/error/);
+  await page.getByLabel('Full name').fill('some full name');
+
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.waitForURL('**/confirmation');
 });

@@ -16,6 +16,13 @@ const URNValidator = { type: 'regex', arguments: /^\d{4}(?:[-\/]?)\d{4}(?:[-\/]?
 // Passport number validator
 const PassportValidator = { type: 'regex', arguments: /^[a-z0-9]{9,10}$/i };
 
+// Invalid Characters validator [ ] < > / |
+function invalidCharactersValidator(value) {
+  return value.match( /^[^\[\]\|\/<>]+$/ );
+}
+
+
+
 module.exports = {
   // /biometric-residence-permit-number
   'brp-options': {
@@ -119,10 +126,10 @@ module.exports = {
   'full-name': {
     mixin: 'input-text',
     validate: [
-      'required', 
-      'notUrl', 
+      'required',
+      'notUrl',
       { type: 'maxlength', arguments: 250 },
-      { type: 'regex', arguments: /^[^\[\]\|\/<>]+$/ },
+      invalidCharactersValidator,
     ],
     labelClassName: 'govuk-label--s',
     className: ['govuk-input', 'govuk-!-width-two-thirds']
@@ -144,7 +151,14 @@ module.exports = {
   },
   'question-field': {
     mixin: 'textarea',
-    validate: ['required', 'notUrl', { type: 'maxlength', arguments: 2000 }],
+    // validate: ['required'],
+    validate: [
+      'required',
+      'notUrl',
+      { type: 'minlength', arguments: 6 },
+      { type: 'maxlength', arguments: 2000 },
+      invalidCharactersValidator
+    ],
     labelClassName: 'govuk-label--s'
   },
 

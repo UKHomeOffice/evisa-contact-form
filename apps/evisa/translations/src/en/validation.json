@@ -32,7 +32,7 @@
     "required": "Enter your full name",
     "notUrl": "Please do not enter a link/url into your answers",
     "maxlength": "Full name must be 250 characters or less",
-    "regex": "Name must not include these characters: [ ] < > / |"
+    "invalidCharactersValidator": "Name must not include these characters: [ ] < > / |"
   },
   "email-field": {
     "required": "Enter your email address",
@@ -42,5 +42,12 @@
   "contact-number": {
     "notUrl": "Please do not enter a link/url into your answers",
     "ukPhoneNumber": "Enter a valid UK telephone number"
+  },
+  "question-field": {
+    "required": "Enter your question",
+    "notUrl": "Please do not enter a link/url into your answers",
+    "minlength": "Enter your question",
+    "maxlength": "Your question must be 2,000 characters or less",
+    "invalidCharactersValidator": "Your question must not include these characters: [ ] < > / |"
   }
 }
