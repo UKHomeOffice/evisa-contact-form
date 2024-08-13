@@ -202,9 +202,6 @@ spec:
             {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
             - --verbose=true
             {{ end }}
-          ports:
-            - containerPort: 20080
-            - containerPort: 20443
           securityContext:
             runAsNonRoot: true
           terminationMessagePath: /dev/termination-log
