@@ -1,11 +1,13 @@
 'use strict';
 /* eslint-disable comma-dangle */
 
+/* // TODO
 const config = require('../../config');
 const agentEmail = require('./behaviours/agent-email')(config.email);
 const limitDocument = require('./behaviours/limit-documents');
 const removeImage = require('./behaviours/remove-image');
 const saveImage = require('./behaviours/save-image');
+*/
 
 module.exports = {
   name: 'evisa',
@@ -16,42 +18,44 @@ module.exports = {
     },
     '/biometric-residence-permit-number': {
       fields: [
-        'biometric-residence-permit-number-options',
-        'biometric-residence-permit-number-number'
+        'brp-options',
+        'brp-number'
       ],
-      next: '/start1'
-    },
-
-    '/start1': {
-      next: '/start2',
-    },
-    '/start2': {
-      next: '/invite',
-    },
-    '/invite': {
-      fields: ['sent-email'],
-      next: '/technical',
       forks: [
         {
-          target: '/no-invite',
+          target: '/your-details',
           condition: {
-            field: 'sent-email',
-            value: 'no',
+            field: 'brp-options',
+            value: 'yes'
+          }
+        },
+        {
+          target: '/reference-numbers',
+          condition: {
+            field: 'brp-options',
+            value: 'no'
           }
         }
-      ]
+      ],
     },
-    '/no-invite': {
-      backLink: false
+    '/reference-numbers': {
+      fields: [
+        'reference-numbers-options',
+        'urn-number',
+        'passport-number',
+        'other-reference-number',
+      ],
+      next: '/your-details'
     },
+    '/your-details': {
+      behaviours: [],
+      fields: ['full-name', 'email-field', 'contact-number', 'question-field'],
+      next: '/confirmation',
+    },
+
     '/technical': {
       fields: ['tech-problem'],
-      next: '/contact-details',
-    },
-    '/contact-details': {
-      behaviours: [agentEmail, 'complete', saveImage('image'), removeImage, limitDocument],
-      fields: ['full-name', 'email', 'contact-number', 'ref-number', 'question', 'image', 'contacted'],
-      next: '/confirmation',
+      next: '/your-details',
     },
     '/confirmation': {
       behaviours: [],

@@ -5,6 +5,7 @@ public
 .vscode
 coverage
 .env
+.devcontainer/devcontainer.env
 output/
 *.iml
 anchore-reports
@@ -19,4 +20,8 @@ test/_accessibility/tmp/*
 ~$*
 *.xlsx
 data/*
-.devcontainer/*.env
+.ash_history
+dev/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

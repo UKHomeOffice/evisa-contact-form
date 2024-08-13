@@ -166,6 +166,7 @@ steps:
           - feature/* # this feature is to be removed when merging to master
       event: pull_request
 
+
   # Get pull request branch so correct PR UAT environment is torn down in the tear_down_branch step that follows
   - name: get_pr_branch
     pull: if-not-exists
