@@ -182,11 +182,7 @@ spec:
               value: https://acp-sso.notprod.acp.homeoffice.gov.uk/realms/evc-notprod
             {{ end }}
           args:
-<<<<<<< HEAD
             - --listen=10443
-=======
-            - --listen=0.0.0.0:3003
->>>>>>> master
             # the url which is used to retrieve the OpenID configuration
             - --discovery-url=$(PROXY_DISCOVERY_URL)
             # the endpoint where requests are proxied to
