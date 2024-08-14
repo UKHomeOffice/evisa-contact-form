@@ -1,19 +1,53 @@
 {
-  "biometric-residence-permit-number-options": {
+  "brp-options": {
     "required": "Tell us if you can provide a biometric residence permit number"
   },
-  "biometric-residence-permit-number-number": {
+  "brp-number": {
     "required": "Enter a biometric residence permit number",
-    "regex": "Enter a valid BRP number. For example, RAX203829"
+    "minlength": "BRP number must be 9 characters",
+    "maxlength": "BRP number must be 9 characters",
+    "regex": "Enter a BRP number in the correct format"
   },
-  "tech-problem" : {
-    "required": "Do you have a technical problem?"
+  "reference-numbers-options": {
+    "required": "Tell us if you can provide a unique reference number"
+  },
+  "urn-number": {
+    "required": "Enter a unique reference number",
+    "minlength": "Unique reference number must be between 16 and 22 characters",
+    "maxlength": "Unique reference number must be between 16 and 22 characters",
+    "regex": "Enter a unique reference number in the correct format. For example 1111-2222-3333-4444"
+  },
+  "passport-number": {
+    "required": "Enter a passport number",
+    "minlength": "Passport number must be 9 or 10 characters",
+    "maxlength": "Passport number must be 9 or 10 characters",
+    "regex": "Enter a valid passport number"
+  },
+  "other-reference-number": {
+    "required": "// TODO Enter a reference number",
+    "notUrl": "// TODO don't enter a url",
+    "maxlength": "// TODO no more than 16 characters"
+  },
+  "full-name": {
+    "required": "Enter your full name",
+    "notUrl": "Please do not enter a link/url into your answers",
+    "maxlength": "Full name must be 250 characters or less",
+    "invalidCharactersValidator": "Name must not include these characters: [ ] < > / |"
+  },
+  "email-field": {
+    "required": "Enter your email address",
+    "minlength": "Email address must be between 6 and 254 characters",
+    "email": "Enter a real email address"
   },
   "contact-number": {
+    "notUrl": "Please do not enter a link/url into your answers",
     "ukPhoneNumber": "Enter a valid UK telephone number"
   },
-  "ref-number": {
-    "minLength": "Please enter a valid reference number",
-    "maxLength": "Please enter a valid reference number"
+  "question-field": {
+    "required": "Enter your question",
+    "notUrl": "Please do not enter a link/url into your answers",
+    "minlength": "Enter your question",
+    "maxlength": "Your question must be 2,000 characters or less",
+    "invalidCharactersValidator": "Your question must not include these characters: [ ] < > / |"
   }
 }

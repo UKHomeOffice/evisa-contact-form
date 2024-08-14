@@ -1,11 +1,11 @@
 FROM node:20.15.0-alpine3.20@sha256:24c14a8a192a6e81d0942929a344f7a4bdf0db8e3b3c77d64a5eb8a4b0c759b7
+#FROM node:20.16.0-alpine3.20@sha256:eb8101caae9ac02229bd64c024919fe3d4504ff7f329da79ca60a04db08cef52
 
 USER root
 
 # Update packages as a result of Anchore security vulnerability checks
-RUN apk update 
- RUN apk update && \
-     apk add --upgrade gnutls binutils nodejs npm apk-tools libjpeg-turbo libcurl libx11 libxml2
+RUN apk update && \
+    apk add --upgrade gnutls binutils nodejs npm apk-tools libjpeg-turbo libcurl libx11 libxml2
 
 
 # Setup nodejs group & nodejs user
@@ -20,11 +20,11 @@ WORKDIR /app
 COPY --chown=999:998 . /app
 
 RUN yarn cache clean && \
-yarn install --frozen-lockfile --ignore-optional --verbose
-RUN yarn run postinstall
+    yarn install --frozen-lockfile --production --ignore-optional && \
+    yarn run postinstall
 
 HEALTHCHECK --interval=5m --timeout=3s \
- CMD curl --fail http://localhost:8080 || exit 1
+CMD curl --fail http://localhost:8080 || exit 1
 
 CMD ["sh", "/app/run.sh"]
 

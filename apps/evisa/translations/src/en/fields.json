@@ -1,5 +1,5 @@
 {
-  "biometric-residence-permit-number-options": {
+  "brp-options": {
     "options": {
         "yes": {
           "label": "Yes"
@@ -9,25 +9,41 @@
         }
       }
   },
-  "biometric-residence-permit-number-number": {
+  "brp-number": {
     "label": "Biometric residence permit number",
     "hint": "For example ‘RAX203829’"
   },  
 
+  "reference-numbers-options": {
+    "options": {
+        "opt-unique-ref": {
+          "label": "Unique reference number",
+          "hint": "You can find this in the email we sent you when you first created an eVisa account."
+        },
+        "opt-passport-number": {
+          "label": "Passport number",
+          "hint": "This can contain letters and numbers For example. ‘120383978A’."
+        },
+        "opt-other-ref": {
+          "label": "Other",
+          "hint": "This could be an Incident Number (INC), National ID card number or a Global Web Form (GWF) number."
+        },
+        "opt-none": {
+          "label": "None of the above"
+        }
+      }
+  },
+  "urn-number": {
+    "label": "Unique reference number"
+  },  
+  "passport-number": {
+    "label": "Passport number"
+  },  
+  "other-reference-number": {
+    "label": "Other reference number"
+  },
   "sent-email": {
     "legend": "Has the home office sent you an email",
-    "validate": ["required"],
-    "options": {
-      "yes": {
-        "label": "Yes"
-      },
-      "no": {
-        "label": "No"
-      }
-    }
-  },
-  "tech-problem": {
-    "legend": "Do you have a technical problem?",
     "validate": ["required"],
     "options": {
       "yes": {
@@ -41,32 +57,15 @@
   "full-name": {
     "label": "Full name"
   },
-  "email": {
+  "email-field": {
     "label": "Email address",
-    "hint": "We will reply to this email address"
+    "hint": "Use an email you used in a past UK visa or immigration application"
   },
   "contact-number": {
     "label": "Contact number (optional)",
     "hint": "We may call you to ask for more details"
   },
-  "ref-number": {
-    "label": "Reference number (optional)",
-    "hint": "For exmaple, 2021-1111-1111"
-  },
-  "question": {
+  "question-field": {
     "label": "Enter your question below. Provide as much detail as possible"
-  },
-  "contacted": {
-    "legend": "The Home Office conducts research about experiences using products and services. Would you like to be contacted further about your experience using this service",
-    "hint": "IF you agree to take part in the future research blah blah blah...",
-    "validate": ["required"],
-    "options": {
-      "yes": {
-        "label": "Yes"
-      },
-      "no": {
-        "label": "No"
-      }
-    }
   }
 }
