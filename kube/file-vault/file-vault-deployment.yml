@@ -182,7 +182,7 @@ spec:
               value: https://acp-sso.notprod.acp.homeoffice.gov.uk/realms/evc-notprod
             {{ end }}
           args:
-            - --listen=127.0.0.1:3001
+            - --listen=:10443
             # the url which is used to retrieve the OpenID configuration
             - --discovery-url=$(PROXY_DISCOVERY_URL)
             # the endpoint where requests are proxied to
@@ -203,8 +203,8 @@ spec:
             - --verbose=true
             {{ end }}
           ports:
-            - containerPort: 30080
-            - containerPort: 30443
+            - containerPort: 10080
+            - containerPort: 10443
           securityContext:
             runAsNonRoot: true
           terminationMessagePath: /dev/termination-log
@@ -221,7 +221,7 @@ spec:
           image: quay.io/ukhomeofficedigital/nginx-proxy-govuk@sha256:4470064d0b1d20ae08c5fd85551576cb687f342a22d6cb456fda9b2c4ce8c8df
           resources:
             limits:
-              memory: 1024Mi
+              memory: "1024Mi"
               cpu: 200m
             requests:
               memory: 512Mi
