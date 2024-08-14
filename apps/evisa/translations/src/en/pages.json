@@ -20,6 +20,17 @@
     "header": "Your details",
     "intro": "Enter your contact details below. We will use these to respond to your question."
   },
+  "upload": {
+    "header": "Upload files (optional)",
+    "intro": "Upload screenshots or images of the problem, if you have them.",
+    "cannot-upload-para": "You cannot upload:",
+    "cannot-upload-larger": "files larger than 25MB",
+    "cannot-upload-videos": "videos",
+    "accepted-types": "Accepted files types are JPG, PNG or GIF",
+    "upload-image": "Upload an image",
+    "no-files-uploaded": "No files uploaded",
+    "files-uploaded": "Files uploaded"
+  },
   "confirmation": {
     "header": "Question sent",
     "content-copy-sent": "We have sent you a confirmation email",

@@ -120,7 +120,6 @@ module.exports = {
     ],
   },
 
-  // ---------------------------------------
   'full-name': {
     mixin: 'input-text',
     validate: [
@@ -157,6 +156,10 @@ module.exports = {
       invalidCharactersValidator
     ],
     labelClassName: 'govuk-label--s'
+  },
+  'image-upload': {
+    mixin: 'input-file',
+    labelClassName: 'visuallyhidden',
   },
 
   URNValidator: match => URNValidator.arguments.test(match),   // Exported for test access

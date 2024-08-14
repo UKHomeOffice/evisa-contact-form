@@ -1,13 +1,11 @@
 'use strict';
-/* eslint-disable comma-dangle */
+/* eslint-disable comma-dangle, spaced-comment*/
 
-/* // TODO
-const config = require('../../config');
-const agentEmail = require('./behaviours/agent-email')(config.email);
-const limitDocument = require('./behaviours/limit-documents');
-const removeImage = require('./behaviours/remove-image');
+// const config = require('../../config');
 const saveImage = require('./behaviours/save-image');
-*/
+//const limitDocument = require('./behaviours/limit-documents');
+//const removeImage = require('./behaviours/remove-image');
+//const agentEmail = require('./behaviours/agent-email')(config.email);
 
 module.exports = {
   name: 'evisa',
@@ -50,13 +48,14 @@ module.exports = {
     '/your-details': {
       behaviours: [],
       fields: ['full-name', 'email-field', 'contact-number', 'question-field'],
+      next: '/upload',
+    },
+    '/upload': {
+      behaviours: [saveImage('image-upload') /* TODO, RemoveImage, LimitDocument */],
+      fields: ['image-upload'],
       next: '/confirmation',
     },
 
-    '/technical': {
-      fields: ['tech-problem'],
-      next: '/your-details',
-    },
     '/confirmation': {
       behaviours: [],
       clearSession: true, // triggers hof/components/clear-session to clear the session
