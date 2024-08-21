@@ -4,6 +4,7 @@
 const _ = require('lodash');
 const config = require('../../../config');
 const ImageUpload = require('../models/image-upload');
+const { SESSION } = require('../constants');
 
 module.exports = fieldName => superclass => class extends superclass {
   process(req) {
@@ -60,7 +61,7 @@ module.exports = fieldName => superclass => class extends superclass {
 
   async saveValues(req, res, next) {
     if (req.body['upload-file']) {
-      const images = req.sessionModel.get('images-uploaded') || [];
+      const images = req.sessionModel.get(SESSION.IMAGES_UPLOADED) || [];
 
       if (_.get(req.files, fieldName)) {
         req.log('info', `Saving image: ${req.files[fieldName].name}`);
@@ -71,7 +72,7 @@ module.exports = fieldName => superclass => class extends superclass {
           // TODO enable saving to file-vault
           // await model.save();
 
-          req.sessionModel.set('images-uploaded', [...images, uploader.toJSON()]);
+          req.sessionModel.set(SESSION.IMAGES_UPLOADED, [...images, uploader.toJSON()]);
           return res.redirect(`${req.baseUrl}${req.path}`);
         } catch (error) {
           return next(new Error(`Failed to save image, error: ${error}`));

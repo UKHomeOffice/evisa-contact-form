@@ -2,9 +2,9 @@
 /* eslint-disable comma-dangle, spaced-comment*/
 
 // const config = require('../../config');
-const saveImage = require('./behaviours/save-image');
+const SaveImage = require('./behaviours/save-image');
+const RemoveImage = require('./behaviours/remove-image');
 //const limitDocument = require('./behaviours/limit-documents');
-//const removeImage = require('./behaviours/remove-image');
 //const agentEmail = require('./behaviours/agent-email')(config.email);
 
 module.exports = {
@@ -51,7 +51,7 @@ module.exports = {
       next: '/upload',
     },
     '/upload': {
-      behaviours: [saveImage('image-upload') /* TODO, RemoveImage, LimitDocument */],
+      behaviours: [SaveImage('image-upload'), RemoveImage /* TODO, LimitDocument */],
       fields: ['image-upload'],
       next: '/confirmation',
     },
