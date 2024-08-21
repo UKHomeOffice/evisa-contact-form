@@ -3,7 +3,7 @@
 
 const _ = require('lodash');
 const config = require('../../../config');
-const Model = require('../models/image-upload');
+const ImageUpload = require('../models/image-upload');
 
 module.exports = fieldName => superclass => class extends superclass {
   process(req) {
@@ -64,17 +64,17 @@ module.exports = fieldName => superclass => class extends superclass {
 
       if (_.get(req.files, fieldName)) {
         req.log('info', `Saving image: ${req.files[fieldName].name}`);
-        const imageFile = _.pick(req.files[fieldName], ['name', 'data', 'mimetype']);
-        const model = new Model(imageFile);
+        const image = _.pick(req.files[fieldName], ['name', 'data', 'mimetype']);
+        const uploader = new ImageUpload(image);
 
         try {
           // TODO enable saving to file-vault
           // await model.save();
 
-          req.sessionModel.set('images-uploaded', [...images, model.toJSON()]);
+          req.sessionModel.set('images-uploaded', [...images, uploader.toJSON()]);
           return res.redirect(`${req.baseUrl}${req.path}`);
         } catch (error) {
-          return next(new Error(`Failed to save image: ${error}`));
+          return next(new Error(`Failed to save image, error: ${error}`));
         }
       }
     }

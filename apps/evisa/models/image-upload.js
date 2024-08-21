@@ -8,7 +8,7 @@ const uuid = require('uuid').v4;
 const config = require('../../../config');
 const logger = require('hof/lib/logger')({ env: config.env });
 
-module.exports = class UploadModel extends Model {  // TODO either rename the class or rename the file
+module.exports = class ImageUpload extends Model {
   constructor(...args) {
     super(...args);
     this.set('id', uuid());
@@ -53,18 +53,17 @@ module.exports = class UploadModel extends Model {  // TODO either rename the cl
         return resolve(response);
       });
     })
-      .then(result => {
-        return this.set({
-          url: result.url.replace('/file/', '/file/generate-link/').split('?')[0]
-        });
-      })
-      .then(() => {
-        return this.unset('data');
+    .then(result => {
+      return this.set({
+        url: result.url.replace('/file/', '/file/generate-link/').split('?')[0]
       });
+    })
+    .then(() => {
+      return this.unset('data');
+    });
   }
 
   auth() {
-    // #NEXT
     const requiredProperties = ['tokenUrl', 'username', 'password', 'clientId', 'secret'];
     for (const property of requiredProperties) {
       if (!config.keycloak[property]) {
