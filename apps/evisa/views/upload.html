@@ -18,9 +18,14 @@
       {{#renderField}}{{/renderField}}
     {{/fields}}
 
-    <button class="govuk-button govuk-button--secondary" name="upload-file" value="upload-file">
-      {{#t}}buttons.upload-file{{/t}}
-    </button>
+    <div>
+      <button class="govuk-button govuk-button--secondary" name="upload-file-button" value="upload-file-button">
+        {{#t}}buttons.upload-file{{/t}}
+      </button>
+      {{#noMoreUploads}}
+        <p class="bold" data-max-uploads="{{maxUploads}}" id="no-more-uploads">{{#t}}pages.upload.upload-maximum{{/t}}</p>
+      {{/noMoreUploads}}
+    </div>
 
     <br><br>
     {{^values.images-uploaded}}

@@ -4,7 +4,7 @@
 // const config = require('../../config');
 const SaveImage = require('./behaviours/save-image');
 const RemoveImage = require('./behaviours/remove-image');
-//const limitDocument = require('./behaviours/limit-documents');
+const LimitDocument = require('./behaviours/limit-documents');
 //const agentEmail = require('./behaviours/agent-email')(config.email);
 
 module.exports = {
@@ -51,7 +51,7 @@ module.exports = {
       next: '/upload',
     },
     '/upload': {
-      behaviours: [SaveImage('image-upload'), RemoveImage /* TODO, LimitDocument */],
+      behaviours: [SaveImage('image-upload'), RemoveImage, LimitDocument],
       fields: ['image-upload'],
       next: '/confirmation',
     },

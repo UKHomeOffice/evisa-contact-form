@@ -1,9 +1,17 @@
-const { SESSION } = require('../constants');
+const { at } = require('lodash');
+const { SESSION, MAX_FILE_UPLOADS } = require('../constants');
+
+const uploadsInfo = session => {
+  const images = session.get(SESSION.IMAGES_UPLOADED);
+  const uploadCount = images && images.length ? images.length : 0;
+  const atLimit = images && images.length >= MAX_FILE_UPLOADS;
+  return { uploadCount, atLimit };
+};
 
 module.exports = superclass => class LimitDocs extends superclass {
   validate(req, res, next) {
-    const images = req.sessionModel.get(SESSION.IMAGES_UPLOADED);
-    if (images && images.length >= 2) { // TODO replace magic number with config
+    const { atLimit } = uploadsInfo(req.sessionModel);
+    if (atLimit) {
       return next({
         image: new this.ValidationError(
           'image',
@@ -14,5 +22,14 @@ module.exports = superclass => class LimitDocs extends superclass {
       });
     } super.validate(req, res, next);
     return next;
+  }
+
+  locals(req, res) {
+    const { uploadCount, atLimit } = uploadsInfo(req.sessionModel);
+    return { ...super.locals(req, res), ...{
+      uploadCount,
+      maxUploads: MAX_FILE_UPLOADS,
+      noMoreUploads: atLimit
+    }};
   }
 };

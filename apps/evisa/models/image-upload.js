@@ -16,8 +16,9 @@ module.exports = class ImageUpload extends Model {
 
   save() {
     if (!config.upload.hostname) {
-      logger.error('File-vault `hostname` is not defined');
-      throw new Error('File-vault `hostname` is not defined');
+      const errorMsg = 'File-vault hostname is not defined';
+      logger.error(errorMsg);
+      throw new Error(errorMsg);
     }
 
     return new Promise((resolve, reject) => {

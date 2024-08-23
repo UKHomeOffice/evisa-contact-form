@@ -28,12 +28,12 @@ module.exports = fieldName => superclass => class extends superclass {
    */
   validateField(key, req) {
     // TODO check the key is the same as `fieldName`
-    if (req.body['upload-file']) {
+    if (req.body['upload-file-button']) {
       const fileToBeValidated = _.get(req.files, `${fieldName}`);
 
       if (fileToBeValidated) {
         const size = fileToBeValidated.size;
-        const sizeTooBig = size > config.upload.maxFileSizeInBytes;
+        const sizeTooBig = size > config.upload.maxFileSizeInBytes; // TODO test max file size
         const sizeBeyondServerLimits = fileToBeValidated.truncated;
         const invalidSize = sizeTooBig || sizeBeyondServerLimits;
 
@@ -60,7 +60,7 @@ module.exports = fieldName => superclass => class extends superclass {
   }
 
   async saveValues(req, res, next) {
-    if (req.body['upload-file']) {
+    if (req.body['upload-file-button']) {
       const images = req.sessionModel.get(SESSION.IMAGES_UPLOADED) || [];
 
       if (_.get(req.files, fieldName)) {

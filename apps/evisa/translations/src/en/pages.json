@@ -29,7 +29,8 @@
     "accepted-types": "Accepted files types are JPG, PNG or GIF",
     "upload-image": "Upload an image",
     "no-files-uploaded": "No files uploaded",
-    "files-uploaded": "Files uploaded"
+    "files-uploaded": "Files uploaded",
+    "upload-maximum": "You may upload a maximum of {{maxUploads}} files"
   },
   "confirmation": {
     "header": "Question sent",

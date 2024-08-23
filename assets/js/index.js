@@ -13,4 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
       selectElement: element
     });
   });
+
+  const fileSelector = document.getElementById('image-upload');
+  const uploadButton = document.getElementsByName('upload-file-button')[0];
+
+  if (fileSelector && uploadButton) {
+    const noMoreUploads = document.getElementById('no-more-uploads');
+    const maxUploads = parseInt(noMoreUploads.getAttribute('data-max-uploads'), 10);
+    if (noMoreUploads) {
+      fileSelector.disabled = fileSelector.ariaDisabled = true;
+      uploadButton.disabled = uploadButton.ariaDisabled = true;
+    }
+  }
 });
