@@ -70,7 +70,7 @@ module.exports = fieldName => superclass => class extends superclass {
 
         try {
           // TODO enable saving to file-vault
-          // await model.save();
+          // await uploader.save();
 
           req.sessionModel.set(SESSION.IMAGES_UPLOADED, [...images, uploader.toJSON()]);
           return res.redirect(`${req.baseUrl}${req.path}`);

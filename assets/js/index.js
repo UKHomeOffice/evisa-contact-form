@@ -14,15 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Enable/Disable the file-selector and upload buttons
   const fileSelector = document.getElementById('image-upload');
-  const uploadButton = document.getElementsByName('upload-file-button')[0];
+  if (fileSelector) {
+    const setDisabled = (el, disabled) => el.disabled = el.ariaDisabled = disabled;
+    const uploadButton = document.getElementsByName('upload-file-button')[0];
+    setDisabled(uploadButton, true);
 
-  if (fileSelector && uploadButton) {
     const noMoreUploads = document.getElementById('no-more-uploads');
-    const maxUploads = parseInt(noMoreUploads.getAttribute('data-max-uploads'), 10);
     if (noMoreUploads) {
-      fileSelector.disabled = fileSelector.ariaDisabled = true;
-      uploadButton.disabled = uploadButton.ariaDisabled = true;
+      setDisabled(fileSelector, true);
+    } else {
+      fileSelector.addEventListener('change', () => {
+        const fileSelected = fileSelector.files.length > 0;
+        setDisabled(uploadButton, !fileSelected);
+      });
     }
   }
 });
