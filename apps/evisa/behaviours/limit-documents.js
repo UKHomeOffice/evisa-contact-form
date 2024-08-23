@@ -10,18 +10,20 @@ const uploadsInfo = session => {
 
 module.exports = superclass => class LimitDocs extends superclass {
   validate(req, res, next) {
-    const { atLimit } = uploadsInfo(req.sessionModel);
-    if (atLimit) {
-      return next({
-        image: new this.ValidationError(
-          'image',
-          {
-            type: 'tooMany'
-          }
-        )
-      });
-    } super.validate(req, res, next);
-    return next;
+    if (Object.keys(req.files).length) {
+      const { atLimit } = uploadsInfo(req.sessionModel);
+      if (atLimit) {
+        return next({
+          image: new this.ValidationError(
+            'image',
+            {
+              type: 'tooMany'
+            }
+          )
+        });
+      } 
+    }
+    return super.validate(req, res, next);
   }
 
   locals(req, res) {
