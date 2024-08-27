@@ -17,10 +17,9 @@ const uploadsInfo = session => {
 module.exports = fieldName => superclass => class extends superclass {
   process(req) {
     if (req.files && req.files[fieldName]) {
-      // set file name on `values` for filename extension validation
-      // N:B validation controller gets values from `req.form.values` not `req.files`
-      req.form.values[fieldName] = req.files[fieldName].name;
-      req.log('info', `Processing image: ${req.form.values[fieldName]}`);
+      const filename = req.files[fieldName].name;
+      req.form.values[fieldName] = filename;
+      req.log('info', `Processing image: ${filename}`);
     }
     super.process.apply(this, arguments);
   }
