@@ -1,7 +1,7 @@
 'use strict';
 /* eslint-disable comma-dangle, spaced-comment*/
 
-// const config = require('../../config');
+// const config = require('../../config');  // TODO use or remove
 const SaveImage = require('./behaviours/save-image');
 const RemoveImage = require('./behaviours/remove-image');
 //const agentEmail = require('./behaviours/agent-email')(config.email);
@@ -54,7 +54,6 @@ module.exports = {
       fields: ['file-selector'],
       next: '/confirmation',
     },
-
     '/confirmation': {
       behaviours: [],
       clearSession: true, // triggers hof/components/clear-session to clear the session
