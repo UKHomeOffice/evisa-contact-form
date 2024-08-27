@@ -4,15 +4,21 @@
 const _ = require('lodash');
 const config = require('../../../config');
 const ImageUpload = require('../models/image-upload');
-const { SESSION } = require('../constants');
+const { SESSION, MAX_FILE_UPLOADS } = require('../constants');
+
+const uploadsInfo = session => {
+  const sessionImages = session.get(SESSION.IMAGES_UPLOADED);
+  const uploadCount = sessionImages && sessionImages.length ? sessionImages.length : 0;
+  const atLimit = sessionImages && sessionImages.length >= MAX_FILE_UPLOADS;
+  return { uploadCount, atLimit };
+};
+
 
 module.exports = fieldName => superclass => class extends superclass {
   process(req) {
     if (req.files && req.files[fieldName]) {
-      // TODO check this mapping is necessary - I don't see a consumer for `req.form.values[fieldName]`
-      // set image name on `values` for filename extension validation
-      // N:B validation controller gets values from
-      // `req.form.values` not `req.files`
+      // set file name on `values` for filename extension validation
+      // N:B validation controller gets values from `req.form.values` not `req.files`
       req.form.values[fieldName] = req.files[fieldName].name;
       req.log('info', `Processing image: ${req.form.values[fieldName]}`);
     }
@@ -29,33 +35,40 @@ module.exports = fieldName => superclass => class extends superclass {
   validateField(key, req) {
     // TODO check the key is the same as `fieldName`
     if (req.body['upload-file-button']) {
-      const fileToBeValidated = _.get(req.files, `${fieldName}`);
+      const validationErrorFn = (type, args = []) => new this.ValidationError(key, {
+        type: type,
+        arguments: [fieldName, ...args]
+      });
 
-      if (fileToBeValidated) {
-        const size = fileToBeValidated.size;
-        const sizeTooBig = size > config.upload.maxFileSizeInBytes; // TODO test max file size
-        const sizeBeyondServerLimits = fileToBeValidated.truncated;
-        const invalidSize = sizeTooBig || sizeBeyondServerLimits;
+      // Was a file uploaded?
+      const fileToBeValidated = _.get(req.files, fieldName);
+      if (!fileToBeValidated) {
+        return validationErrorFn('unsaved');
+      }
 
-        // Is file type (mimetype) in whitelist?
-        const mimetype = fileToBeValidated.mimetype;
-        const invalidMimetype = !config.upload.allowedMimeTypes.includes(mimetype);
+      // At uploads limit?
+      const { atLimit } = uploadsInfo(req.sessionModel);
+      if (atLimit) {
+        return validationErrorFn('tooMany', [{maxUploads: 99}, 1, 2, 3, 'abc']);
+      }
 
-        if (invalidSize || invalidMimetype) {
-          return new this.ValidationError(key, {
-            key,
-            type: invalidSize ? 'maxFileSize' : 'fileType',
-            redirect: undefined
-          });
-        }
-      } else {
-        return new this.ValidationError(key, {
-          key,
-          type: 'required',
-          redirect: undefined
-        });
+      // Is file type (mimetype) in whitelist?
+      const mimetype = fileToBeValidated.mimetype;
+      const invalidMimetype = !config.upload.allowedMimeTypes.includes(mimetype);
+      if (invalidMimetype) {
+        return validationErrorFn('fileType', [mimetype]);
+      }
+
+      // Is file size within server limits?
+      const size = fileToBeValidated.size;
+      const sizeTooBig = size > config.upload.maxFileSizeInBytes; // TODO test max file size
+      const sizeBeyondServerLimits = fileToBeValidated.truncated;
+      const invalidSize = sizeTooBig || sizeBeyondServerLimits;
+      if (invalidSize) {
+        return validationErrorFn('maxFileSize', [size]);
       }
     }
+
     return super.validateField(key, req);
   }
 
@@ -80,5 +93,14 @@ module.exports = fieldName => superclass => class extends superclass {
       }
     }
     return super.saveValues.apply(this, arguments);
+  }
+
+  locals(req, res) {
+    const { uploadCount, atLimit } = uploadsInfo(req.sessionModel);
+    return { ...super.locals(req, res), ...{
+      uploadCount,
+      maxUploads: MAX_FILE_UPLOADS,
+      noMoreUploads: atLimit
+    }};
   }
 };
