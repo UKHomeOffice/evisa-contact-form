@@ -50,8 +50,8 @@ module.exports = {
       next: '/upload',
     },
     '/upload': {
-      behaviours: [SaveImage('image-upload'), RemoveImage],
-      fields: ['image-upload'],
+      behaviours: [SaveImage('file-selector'), RemoveImage],
+      fields: ['file-selector'],
       next: '/confirmation',
     },
 

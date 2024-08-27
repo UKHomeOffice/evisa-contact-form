@@ -157,7 +157,7 @@ module.exports = {
     ],
     labelClassName: 'govuk-label--s'
   },
-  'image-upload': { // TODO rename image-upload to file-selector
+  'file-selector': {
     mixin: 'input-file',
     labelClassName: 'visuallyhidden',
   },

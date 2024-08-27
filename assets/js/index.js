@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Enable/Disable the file-selector and upload buttons
-  const fileSelector = document.getElementById('image-upload');
+  const fileSelector = document.getElementById('file-selector');
   if (fileSelector) {
     const setDisabled = (el, disabled) => el.disabled = el.ariaDisabled = disabled;
     const uploadButton = document.getElementsByName('upload-file-button')[0];

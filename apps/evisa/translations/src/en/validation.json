@@ -50,7 +50,7 @@
     "maxlength": "Your question must be 2,000 characters or less",
     "invalidCharactersValidator": "Your question must not include these characters: [ ] < > / |"
   },
-  "image-upload": {
+  "file-selector": {
     "maxFileSize": "The selected file must be 25MB or less",
     "fileType": "The selected file must be JPG, PNG, GIF",
     "default": "The selected file was not uploaded - try again",
