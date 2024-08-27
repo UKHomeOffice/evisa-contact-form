@@ -32,7 +32,6 @@ module.exports = fieldName => superclass => class extends superclass {
    * @return {object} A ValidationError object if the field is invalid, otherwise the result of the superclass's validateField method.
    */
   validateField(key, req) {
-    // TODO check the key is the same as `fieldName`
     if (req.body['upload-file-button']) {
       const validationErrorFn = (type, args = []) => new this.ValidationError(key, {
         type: type,
@@ -60,7 +59,7 @@ module.exports = fieldName => superclass => class extends superclass {
 
       // Is file size within server limits?
       const size = fileToBeValidated.size;
-      const sizeTooBig = size > config.upload.maxFileSizeInBytes; // TODO test max file size
+      const sizeTooBig = size > config.upload.maxFileSizeInBytes;
       const sizeBeyondServerLimits = fileToBeValidated.truncated;
       const invalidSize = sizeTooBig || sizeBeyondServerLimits;
       if (invalidSize) {
@@ -81,7 +80,7 @@ module.exports = fieldName => superclass => class extends superclass {
         const uploader = new ImageUpload(image);
 
         try {
-          // TODO enable saving to file-vault
+          // TODO enable saving to file-vault EVC-79
           // await uploader.save();
 
           req.sessionModel.set(SESSION.IMAGES_UPLOADED, [...images, uploader.toJSON()]);
