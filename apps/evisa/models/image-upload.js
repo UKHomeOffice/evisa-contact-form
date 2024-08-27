@@ -54,14 +54,14 @@ module.exports = class ImageUpload extends Model {
         return resolve(response);
       });
     })
-    .then(result => {
-      return this.set({
-        url: result.url.replace('/file/', '/file/generate-link/').split('?')[0]
+      .then(result => {
+        return this.set({
+          url: result.url.replace('/file/', '/file/generate-link/').split('?')[0]
+        });
+      })
+      .then(() => {
+        return this.unset('data');
       });
-    })
-    .then(() => {
-      return this.unset('data');
-    });
   }
 
   auth() {
