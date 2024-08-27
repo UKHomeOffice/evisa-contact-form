@@ -1,4 +1,3 @@
-const { at } = require('lodash');
 const { SESSION, MAX_FILE_UPLOADS } = require('../constants');
 
 const uploadsInfo = session => {
