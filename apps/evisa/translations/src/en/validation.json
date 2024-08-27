@@ -24,9 +24,10 @@
     "regex": "Enter a valid passport number"
   },
   "other-reference-number": {
-    "required": "// TODO Enter a reference number",
-    "notUrl": "// TODO don't enter a url",
-    "maxlength": "// TODO no more than 16 characters"
+    "required": "Enter a reference number",
+    "notUrl": "Please do not enter a link/url into your answers",
+    "maxlength": "Reference number must be 16 characters or less",
+    "invalidCharactersValidator": "Reference must not include these characters: [ ] < > / |"
   },
   "full-name": {
     "required": "Enter your full name",

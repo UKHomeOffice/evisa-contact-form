@@ -116,7 +116,8 @@ module.exports = {
     validate: [
       'required',
       'notUrl',
-      { type: 'maxlength', arguments: 16 }
+      { type: 'maxlength', arguments: 16 },
+      invalidCharactersValidator
     ],
   },
 
