@@ -33,12 +33,13 @@
     "upload-maximum": "You may submit a maximum of {{maxUploads}} files"
   },
   "confirmation": {
-    "header": "Question sent",
-    "content-copy-sent": "We have sent you a confirmation email",
+    "title": "Question sent",
+    "panel-header": "Question sent",
+    "confirmation-sent": "We have sent you a confirmation email.",
     "content-whats-next": "What happens next",
-    "content-respond-1": "aaaa",
-    "content-respond-2": "bbbb",
-    "content-respond-3": "cccc",
-    "content-feedback-link-text": "What do you think of this service?"
+    "content-line-1": "We have sent your enquiry to the help team.",
+    "content-line-2": "We will reply within 3 working days (Monday to Friday).",
+    "content-line-3": "We will ask you more information if we need it.",
+    "feedback-link-text": "What do you think of this service?"
   }
 }
