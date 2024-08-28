@@ -136,7 +136,8 @@ module.exports = {
     mixin: 'input-text',
     validate: [
       'required',
-      { type: 'minlength', arguments: [6] },
+      { type: 'minlength', arguments: 6 },
+      { type: 'maxlength', arguments: 254 },
       'email'
     ],
     labelClassName: 'govuk-label--s'

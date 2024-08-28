@@ -38,6 +38,7 @@
   "email-field": {
     "required": "Enter your email address",
     "minlength": "Email address must be between 6 and 254 characters",
+    "maxlength": "Email address must be 255 characters or less",
     "email": "Enter a real email address"
   },
   "contact-number": {
