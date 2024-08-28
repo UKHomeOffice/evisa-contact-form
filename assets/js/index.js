@@ -13,4 +13,24 @@ document.addEventListener('DOMContentLoaded', () => {
       selectElement: element
     });
   });
+
+  // Enable/Disable the file-selector and upload buttons
+  const fileSelector = document.getElementById('file-selector');
+  if (fileSelector) {
+    const setDisabled = (el, disabled) => {
+      el.disabled = el.ariaDisabled = disabled;
+    };
+    const uploadButton = document.getElementsByName('upload-file-button')[0];
+    setDisabled(uploadButton, true);
+
+    const noMoreUploads = document.getElementById('no-more-uploads');
+    if (noMoreUploads) {
+      setDisabled(fileSelector, true);
+    } else {
+      fileSelector.addEventListener('change', () => {
+        const fileSelected = fileSelector.files.length > 0;
+        setDisabled(uploadButton, !fileSelected);
+      });
+    }
+  }
 });

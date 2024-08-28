@@ -6,7 +6,7 @@
     "paragraph-2": "We will reply within 3 working days (Monday to Friday).",
     "sub-header-1": "What you need",
     "paragraph-3": "You will need an email address where we can send our reply.",
-    "paragraph-4": "If you do not do anything for 30 minutes, your answers will not be saved. Your question is only saved when you submit the form"
+    "paragraph-4": "If you do not do anything for 30 minutes, your answers will not be saved. Your question is only saved when you submit the form."
   },
   "biometric-residence-permit-number": {
     "header": "Do you know your biometric residence permit number?",
@@ -19,6 +19,18 @@
   "your-details": {
     "header": "Your details",
     "intro": "Enter your contact details below. We will use these to respond to your question."
+  },
+  "upload": {
+    "header": "Upload files (optional)",
+    "intro": "Upload screenshots or images of the problem, if you have them.",
+    "cannot-upload-para": "You cannot upload:",
+    "cannot-upload-larger": "files larger than 25MB",
+    "cannot-upload-videos": "videos",
+    "accepted-types": "Accepted files types are JPG, PNG or GIF",
+    "upload-image": "Upload an image",
+    "no-files-uploaded": "No files uploaded",
+    "files-uploaded": "Files uploaded",
+    "upload-maximum": "You may submit a maximum of {{maxUploads}} files"
   },
   "confirmation": {
     "header": "Question sent",

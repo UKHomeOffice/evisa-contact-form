@@ -1,4 +1,6 @@
 {
     "start-home" : "Start Now",
-    "continue-only" : "Continue"
+    "continue-only" : "Continue",
+    "upload-file": "Upload",
+    "delete": "Remove"
   }

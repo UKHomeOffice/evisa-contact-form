@@ -116,12 +116,11 @@ module.exports = {
     validate: [
       'required',
       'notUrl',
-      { type: 'maxlength', arguments: 16 },
+      { type: 'maxlength', arguments: 32 },
       invalidCharactersValidator
     ],
   },
 
-  // ---------------------------------------
   'full-name': {
     mixin: 'input-text',
     validate: [
@@ -158,6 +157,10 @@ module.exports = {
       invalidCharactersValidator
     ],
     labelClassName: 'govuk-label--s'
+  },
+  'file-selector': {
+    mixin: 'input-file',
+    labelClassName: 'visuallyhidden',
   },
 
   URNValidator: match => URNValidator.arguments.test(match),   // Exported for test access

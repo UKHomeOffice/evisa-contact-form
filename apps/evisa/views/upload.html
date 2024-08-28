@@ -1,0 +1,54 @@
+{{<partials-page}}
+  {{$encoding}}enctype="multipart/form-data" name="file-upload-form"{{/encoding}}
+  {{$page-content}}
+
+    <div>
+        <p class="govuk-body">{{#t}}pages.upload.cannot-upload-para{{/t}}</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{#t}}pages.upload.cannot-upload-larger{{/t}}</li>
+        <li>{{#t}}pages.upload.cannot-upload-videos{{/t}}</li>
+      </ul>
+    </div>
+
+    <br/>
+    
+    <h2 class="govuk-heading-m">{{#t}}pages.upload.upload-image{{/t}}</h2>
+    <p class="govuk-body">{{#t}}pages.upload.accepted-types{{/t}}</p>
+    {{#fields}}
+      {{#renderField}}{{/renderField}}
+    {{/fields}}
+
+    <div>
+      <button class="govuk-button govuk-button--secondary" name="upload-file-button" value="upload-file-button">
+        {{#t}}buttons.upload-file{{/t}}
+      </button>
+      {{#noMoreUploads}}
+        <p class="bold" data-max-uploads="{{maxUploads}}" id="no-more-uploads">{{#t}}pages.upload.upload-maximum{{/t}}</p>
+      {{/noMoreUploads}}
+    </div>
+
+    <br><br>
+    {{^values.images-uploaded}}
+      <h2 class="govuk-heading-m">{{#t}}pages.upload.no-files-uploaded{{/t}}</h2>
+    {{/values.images-uploaded}}
+
+    {{#values.images-uploaded.length}}
+    <h2 class="govuk-heading-m">{{#t}}pages.upload.files-uploaded{{/t}}</h2>
+    <table class="table-files-loop">
+      <tbody class="govuk-table__body">
+      {{#values.images-uploaded}}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">{{name}}</td>
+          <td><a href="?delete={{id}}" class="govuk-link">{{#t}}buttons.delete{{/t}}</a></td>
+        </tr>
+      {{/values.images-uploaded}}
+      </tbody>
+    </table>
+    {{/values.images-uploaded.length}}
+
+    <br><br>
+
+    {{#input-submit}}continue{{/input-submit}}
+
+  {{/page-content}}
+{{/partials-page}}

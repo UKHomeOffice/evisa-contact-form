@@ -25,7 +25,7 @@ module.exports = {
     host: process.env.REDIS_HOST || '127.0.0.1'
   },
   keycloak: {
-    token: process.env.KEYCLOAK_TOKEN_URL,
+    tokenUrl: process.env.KEYCLOAK_TOKEN_URL,
     username: process.env.KEYCLOAK_USERNAME,
     password: process.env.KEYCLOAK_PASSWORD,
     clientId: process.env.KEYCLOAK_CLIENT_ID,
@@ -38,19 +38,7 @@ module.exports = {
       'image/png',
       'image/jpg',
       'image/jpeg',
-      'application/pdf',
-      'text/plain',
-      'text/html',
-      'application/vnd',
-      'message/rfc822',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'application/vnd.ms-powerpoint',
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-      'application/rtf',
-      'text/csv',
-      'application/vnd.ms-excel',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'application/xml'
+      'image/gif'
     ]
   }
 };

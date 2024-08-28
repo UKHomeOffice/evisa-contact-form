@@ -1,26 +1,31 @@
 /* eslint-disable node/no-deprecated-api */
 'use strict';
 
-// TODO consider replacing with hof-coa/apps/coa/models/file-upload.js
-
 const url = require('url');
 const Model = require('hof').model;
 const uuid = require('uuid').v4;
 
 const config = require('../../../config');
+const logger = require('hof/lib/logger')({ env: config.env });
 
-module.exports = class UploadModel extends Model {
+module.exports = class ImageUpload extends Model {
   constructor(...args) {
     super(...args);
     this.set('id', uuid());
   }
 
   save() {
+    if (!config.upload.hostname) {
+      const errorMsg = 'File-vault hostname is not defined';
+      logger.error(errorMsg);
+      throw new Error(errorMsg);
+    }
+
     return new Promise((resolve, reject) => {
       const attributes = {
         url: config.upload.hostname
       };
-      const reqConf = url.parse(this.url(attributes));
+      const reqConf = url.parse(this.url(attributes));  // TODO refactor away from .parse
       reqConf.formData = {
         document: {
           value: this.get('data'),
@@ -31,11 +36,22 @@ module.exports = class UploadModel extends Model {
         }
       };
       reqConf.method = 'POST';
-      return this.request(reqConf, (err, data) => {
+
+      return this.request(reqConf, (err, response) => {
         if (err) {
-          return reject(err);
+          reqConf.formData.document.value = '**REMOVED**';
+          logger.error(`Image upload failed: ${err.message},
+            error: ${JSON.stringify(err)},
+            reqConf: ${JSON.stringify(reqConf)}`);
+          return reject(new Error(`File upload failed: ${err.message}`));
         }
-        return resolve(data);
+
+        if (Object.keys(response).length === 0) {
+          return reject(new Error('Received empty response from file-vault'));
+        }
+
+        logger.info(`Received response from file-vault with keys: ${Object.keys(response)}`);
+        return resolve(response);
       });
     })
       .then(result => {
@@ -49,12 +65,16 @@ module.exports = class UploadModel extends Model {
   }
 
   auth() {
-    if (!config.keycloak.token) {
-      return Promise.reject(new Error('Keycloak token url is not defined'));
+    const requiredProperties = ['tokenUrl', 'username', 'password', 'clientId', 'secret'];
+    for (const property of requiredProperties) {
+      if (!config.keycloak[property]) {
+        logger.error(`Keycloak ${property} is not defined`);
+        return Promise.reject(new Error(`Keycloak ${property} is not defined`));
+      }
     }
 
     const tokenReq = {
-      url: config.keycloak.token,
+      url: config.keycloak.tokenUrl,
       form: {
         username: config.keycloak.username,
         password: config.keycloak.password,
@@ -68,10 +88,27 @@ module.exports = class UploadModel extends Model {
     return new Promise((resolve, reject) => {
       return this._request(tokenReq, (err, response) => {
         if (err) {
-          return reject(err);
+          const errorMsg = `Error occurred: ${JSON.stringify(err)}`;
+          logger.error(errorMsg);
+          return reject(new Error(errorMsg));
         }
+
+        let parsedBody;
+        try {
+          parsedBody = JSON.parse(response.body);
+        } catch (parseError) {
+          logger.error(`Failed to parse response body: ${parseError}`);
+          return reject(new Error(`Failed to parse response body: ${parseError}`));
+        }
+
+        if (!parsedBody.access_token) {
+          logger.error('No access token in response');
+          return reject(new Error('No access token in response'));
+        }
+
+        logger.info('Successfully retrieved access token');
         return resolve({
-          bearer: JSON.parse(response.body).access_token
+          bearer: parsedBody.access_token
         });
       });
     });
