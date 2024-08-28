@@ -1,5 +1,5 @@
 'use strict';
-/* eslint-disable comma-dangle, spaced-comment*/
+/* eslint-disable comma-dangle, spaced-comment */
 
 // const config = require('../../config');  // TODO use or remove
 const SaveImage = require('./behaviours/save-image');
