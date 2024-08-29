@@ -101,5 +101,5 @@ test('test', async ({ page }) => {
   await page.getByLabel('Full name').fill('some full name');
 
   await page.getByRole('button', { name: 'Continue' }).click();
-  await page.waitForURL('**/confirmation');
+  await page.waitForURL('**/upload');
 });
