@@ -47,7 +47,7 @@ module.exports = fieldName => superclass => class extends superclass {
       // At uploads limit?
       const { atLimit } = uploadsInfo(req.sessionModel);
       if (atLimit) {
-        return validationErrorFn('tooMany', [{maxUploads: 99}, 1, 2, 3, 'abc']);
+        return validationErrorFn('tooMany', [MAX_FILE_UPLOADS]);
       }
 
       // Is file type (mimetype) in whitelist?
