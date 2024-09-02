@@ -141,15 +141,6 @@ spec:
             limits:
               memory: 1024Mi
               cpu: 200m
-            requests:
-              memory: 512Mi
-          envFrom:
-            - configMapRef:
-                {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
-                name: {{ .APP_NAME }}-configmap-{{ .DRONE_SOURCE_BRANCH }}
-                {{ else }}
-                name: {{ .APP_NAME }}-configmap
-                {{ end }}
           env:
             - name: PROXY_CLIENT_SECRET
               valueFrom:
@@ -162,8 +153,8 @@ spec:
                   name: keycloak-client
                   key: id
             - name: PROXY_REDIRECTION_URL
-            {{ if eq .KUBE_NAMESPACE .PROD_ENV }}           
-              value: https://fv-{{ .APP_NAME }}.sas.homeoffice.gov.uk
+            {{ if eq .KUBE_NAMESPACE .PROD_ENV }}
+              value: https://fv.prod.{{ .APP_NAME }}.homeoffice.gov.uk
             {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
               value: https://fv-{{ .APP_NAME }}.stg.sas.homeoffice.gov.uk
             {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
@@ -182,7 +173,7 @@ spec:
               value: https://acp-sso.notprod.acp.homeoffice.gov.uk/realms/evc-notprod
             {{ end }}
           args:
-            - --listen=0.0.0.0:3003
+            - --listen=:10443
             # the url which is used to retrieve the OpenID configuration
             - --discovery-url=$(PROXY_DISCOVERY_URL)
             # the endpoint where requests are proxied to
@@ -203,12 +194,8 @@ spec:
             - --verbose=true
             {{ end }}
           ports:
-            - name: http
-              containerPort: 3003
-              protocol: TCP
-          # ports:
-          #   - containerPort: 10080
-          #   - containerPort: 10443
+            - containerPort: 10080
+            - containerPort: 10443
           securityContext:
             runAsNonRoot: true
           terminationMessagePath: /dev/termination-log
@@ -231,9 +218,6 @@ spec:
               memory: 512Mi
           env:
 {{ file .FILEVAULT_NGINX_SETTINGS | indent 12 }}
-          ports:
-            - containerPort: 10080
-            - containerPort: 10443
           securityContext:
             runAsNonRoot: true
           volumeMounts:
