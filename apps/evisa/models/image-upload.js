@@ -64,18 +64,21 @@ module.exports = class ImageUpload extends Model {
       });
   }
 
-  auth() {
+  async auth() {
     const requiredProperties = ['tokenUrl', 'username', 'password', 'clientId', 'secret'];
+
     for (const property of requiredProperties) {
       if (!config.keycloak[property]) {
-        logger.error(`Keycloak ${property} is not defined`);
-        return Promise.reject(new Error(`Keycloak ${property} is not defined`));
+        const errorMsg = `Keycloak ${property} is not defined`;
+        logger.error(errorMsg);
+        throw new Error(errorMsg);
       }
     }
 
     const tokenReq = {
       url: config.keycloak.tokenUrl,
-      form: {
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: {
         username: config.keycloak.username,
         password: config.keycloak.password,
         grant_type: 'password',
@@ -85,32 +88,24 @@ module.exports = class ImageUpload extends Model {
       method: 'POST'
     };
 
-    return new Promise((resolve, reject) => {
-      return this._request(tokenReq, (err, response) => {
-        if (err) {
-          const errorMsg = `Error occurred: ${JSON.stringify(err)}`;
-          logger.error(errorMsg);
-          return reject(new Error(errorMsg));
-        }
+    try {
+      const response = await this._request(tokenReq);
 
-        let parsedBody;
-        try {
-          parsedBody = JSON.parse(response.body);
-        } catch (parseError) {
-          logger.error(`Failed to parse response body: ${parseError}`);
-          return reject(new Error(`Failed to parse response body: ${parseError}`));
-        }
+      if (!response.data || !response.data.access_token) {
+        const errorMsg = 'No access token in response';
+        logger.error(errorMsg);
+        throw new Error(errorMsg);
+      }
 
-        if (!parsedBody.access_token) {
-          logger.error('No access token in response');
-          return reject(new Error('No access token in response'));
-        }
-
-        logger.info('Successfully retrieved access token');
-        return resolve({
-          bearer: parsedBody.access_token
-        });
-      });
-    });
+      logger.info('Successfully retrieved access token');
+      return {
+        bearer: response.data.access_token
+      };
+    } catch(err) {
+      const errorMsg = `Error occurred: ${err.message},
+        Cause: ${err.response.status} ${err.response.statusText}, Data: ${JSON.stringify(err.response.data)}`;
+      logger.error(errorMsg);
+      throw new Error(errorMsg);
+    }
   }
 };

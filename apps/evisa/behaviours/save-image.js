@@ -80,8 +80,7 @@ module.exports = fieldName => superclass => class extends superclass {
         const uploader = new ImageUpload(image);
 
         try {
-          // TODO enable saving to file-vault EVC-79
-          // await uploader.save();
+          await uploader.save();
 
           req.sessionModel.set(SESSION.IMAGES_UPLOADED, [...images, uploader.toJSON()]);
           return res.redirect(`${req.baseUrl}${req.path}`);
