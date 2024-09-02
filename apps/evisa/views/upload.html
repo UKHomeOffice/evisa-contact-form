@@ -11,20 +11,29 @@
     </div>
 
     <br/>
-    
-    <h2 class="govuk-heading-m">{{#t}}pages.upload.upload-image{{/t}}</h2>
-    <p class="govuk-body">{{#t}}pages.upload.accepted-types{{/t}}</p>
-    {{#fields}}
-      {{#renderField}}{{/renderField}}
-    {{/fields}}
 
-    <div>
-      <button class="govuk-button govuk-button--secondary" name="upload-file-button" value="upload-file-button">
-        {{#t}}buttons.upload-file{{/t}}
-      </button>
-      {{#noMoreUploads}}
-        <p class="bold" data-max-uploads="{{maxUploads}}" id="no-more-uploads">{{#t}}pages.upload.upload-maximum{{/t}}</p>
-      {{/noMoreUploads}}
+    <div id="file-upload-group">
+      <h2 class="govuk-heading-m">{{#t}}pages.upload.upload-image{{/t}}</h2>
+      <p class="govuk-body">{{#t}}pages.upload.accepted-types{{/t}}</p>
+      {{#fields}}
+        {{#renderField}}{{/renderField}}
+      {{/fields}}
+
+      <p id="file-selector-error-maxFileSize" class="govuk-error-message govuk-!-display-none">
+        <span id="validation-error" class="govuk-visually-hidden">{{#t}}journey.error{{/t}}:</span> {{#t}}validation.file-selector.maxFileSize{{/t}}
+      </p>
+      <p id="file-selector-error-fileType" class="govuk-error-message govuk-!-display-none">
+        <span id="validation-error" class="govuk-visually-hidden">{{#t}}journey.error{{/t}}:</span> {{#t}}validation.file-selector.fileType{{/t}}
+      </p>
+
+      <div>
+        <button class="govuk-button govuk-button--secondary" name="upload-file-button" value="upload-file-button">
+          {{#t}}buttons.upload-file{{/t}}
+        </button>
+        {{#noMoreUploads}}
+          <p class="bold" data-max-uploads="{{maxUploads}}" id="no-more-uploads">{{#t}}pages.upload.upload-maximum{{/t}}</p>
+        {{/noMoreUploads}}
+      </div>
     </div>
 
     <br><br>
