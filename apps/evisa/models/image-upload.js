@@ -1,9 +1,10 @@
-/* eslint-disable node/no-deprecated-api */
+/* eslint-disable node/no-deprecated-api, max-len */
 'use strict';
 
 const url = require('url');
 const Model = require('hof').model;
 const uuid = require('uuid').v4;
+const FormData = require('form-data');
 
 const config = require('../../../config');
 const logger = require('hof/lib/logger')({ env: config.env });
@@ -21,46 +22,54 @@ module.exports = class ImageUpload extends Model {
       throw new Error(errorMsg);
     }
 
-    return new Promise((resolve, reject) => {
-      const attributes = {
-        url: config.upload.hostname
-      };
-      const reqConf = url.parse(this.url(attributes));  // TODO refactor away from .parse
-      reqConf.formData = {
-        document: {
-          value: this.get('data'),
-          options: {
-            filename: this.get('name'),
-            contentType: this.get('mimetype')
-          }
-        }
-      };
-      reqConf.method = 'POST';
+    const attributes = {
+      url: config.upload.hostname
+    };
 
-      return this.request(reqConf, (err, response) => {
+    const formData = new FormData();
+    formData.append('document', this.get('data'), {
+      filename: this.get('name'),
+      contentType: this.get('mimetype')
+    });
+
+    const reqConf = url.parse(this.url(attributes));
+    reqConf.data = formData;
+    reqConf.method = 'POST';
+    reqConf.headers = {
+      ...formData.getHeaders()
+    };
+
+    return new Promise((resolve, reject) => {
+      return this.request(reqConf, (err, data) => {
         if (err) {
-          reqConf.formData.document.value = '**REMOVED**';
-          logger.error(`Image upload failed: ${err.message},
-            error: ${JSON.stringify(err)},
-            reqConf: ${JSON.stringify(reqConf)}`);
+          logger.error(`File upload failed: ${err.message},
+            error: ${JSON.stringify(err)}`);
           return reject(new Error(`File upload failed: ${err.message}`));
         }
 
-        if (Object.keys(response).length === 0) {
-          return reject(new Error('Received empty response from file-vault'));
+        if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
+          const errorMsg = 'Received empty or invalid response from file-vault';
+          logger.error(errorMsg);
+          return reject(new Error(errorMsg));
         }
 
-        logger.info(`Received response from file-vault with keys: ${Object.keys(response)}`);
-        return resolve(response);
+        logger.info(`Received response from file-vault with keys: ${Object.keys(data)}`);
+        return resolve(data);
       });
     })
       .then(result => {
-        return this.set({
-          url: result.url.replace('/file/', '/file/generate-link/').split('?')[0]
-        });
+        try {
+          this.set({
+            url: result.url.replace('/file/', '/file/generate-link/').split('?')[0]
+          });
+        } catch (err) {
+          const errorMsg = `No url in response: ${err.message}`;
+          logger.error(errorMsg);
+          throw new Error(errorMsg);
+        }
       })
       .then(() => {
-        return this.unset('data');
+        this.unset('data');
       });
   }
 
@@ -102,8 +111,7 @@ module.exports = class ImageUpload extends Model {
         bearer: response.data.access_token
       };
     } catch(err) {
-      const errorMsg = `Error occurred: ${err.message},
-        Cause: ${err.response.status} ${err.response.statusText}, Data: ${JSON.stringify(err.response.data)}`;
+      const errorMsg = `Error occurred: ${err.message}, Cause: ${err.response.status} ${err.response.statusText}, Data: ${JSON.stringify(err.response.data)}`;
       logger.error(errorMsg);
       throw new Error(errorMsg);
     }
