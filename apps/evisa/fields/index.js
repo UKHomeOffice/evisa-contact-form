@@ -10,8 +10,8 @@
 const BRPValidator = { type: 'regex', arguments: /^r[a-z](\d|X)\d{6}$/i };
 
 // Unique Reference Number validator
-// URN number format: 1111-2222-3333-4444 with optional dash - or slash / group separators
-const URNValidator = { type: 'regex', arguments: /^\d{4}(?:[-\/]?)\d{4}(?:[-\/]?)\d{4}(?:[-\/]?)\d{4}$/ };
+// URN number format: 1111-2222-3333-4444 with dash - or slash / group separators
+const URNValidator = { type: 'regex', arguments: /^(\d{4}[-\/]){3}\d{4}$/ };
 
 // Passport number validator
 const PassportValidator = { type: 'regex', arguments: /^[a-z0-9]{9,10}$/i };
