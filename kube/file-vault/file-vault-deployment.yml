@@ -141,6 +141,13 @@ spec:
             limits:
               memory: 1024Mi
               cpu: 200m
+          envFrom:
+            - configMapRef:
+                {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
+                name: {{ .APP_NAME }}-configmap-{{ .DRONE_SOURCE_BRANCH }}
+                {{ else }}
+                name: {{ .APP_NAME }}-configmap
+                {{ end }}
           env:
             - name: PROXY_CLIENT_SECRET
               valueFrom:
@@ -152,6 +159,10 @@ spec:
                 secretKeyRef:
                   name: keycloak-client
                   key: id
+            - name: PROXY_LISTEN
+              value: 127.0.0.1:3001
+            - name: PROXY_UPSTREAM_URL
+              value: "http://127.0.0.1:3000"
             - name: PROXY_REDIRECTION_URL
             {{ if eq .KUBE_NAMESPACE .PROD_ENV }}
               value: https://fv.prod.{{ .APP_NAME }}.homeoffice.gov.uk
@@ -164,9 +175,9 @@ spec:
             {{ end }}
             - name: PROXY_DISCOVERY_URL
             {{ if eq .KUBE_NAMESPACE .PROD_ENV }}
-             value: https://sso.digital.homeoffice.gov.uk/auth/realms/rotm
+             value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
             {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
-              value: https://sso.digital.homeoffice.gov.uk/auth/realms/rotm
+              value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
             {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
               value: https://acp-sso.notprod.acp.homeoffice.gov.uk/realms/evc-notprod
             {{ else if eq .KUBE_NAMESPACE .BRANCH_ENV }}
@@ -180,6 +191,7 @@ spec:
             - --upstream-url=http://127.0.0.1:3000
             # URls that you wish to protect.
             - --resources=uri=/*
+            - --resources=uri=/file|methods=GET,POST|roles=caseworkers
             - --client-id=$(PROXY_CLIENT_ID)
             - --client-secret=$(PROXY_CLIENT_SECRET)
             - --tls-cert=/certs/tls.crt
@@ -188,6 +200,8 @@ spec:
             - --http-only-cookie=true
             - --enable-security-filter=true
             - --enable-request-id=true
+            - --enable-logging=true
+            - --enable-json-logging=true
             - --redirection-url=$(PROXY_REDIRECTION_URL)
             - --tls-min-version=tlsv1.2
             {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
