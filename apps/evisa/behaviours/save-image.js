@@ -19,7 +19,7 @@ module.exports = fieldName => superclass => class extends superclass {
     if (req.files && req.files[fieldName]) {
       const filename = req.files[fieldName].name;
       req.form.values[fieldName] = filename;
-      req.log('info', `Processing image: ${filename}`);
+      req.log('info', `Attempting upload: ${filename}`);
     }
     super.process.apply(this, arguments);
   }
