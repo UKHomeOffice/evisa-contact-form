@@ -191,7 +191,6 @@ spec:
             - --upstream-url=http://127.0.0.1:3000
             # URls that you wish to protect.
             - --resources=uri=/*
-            - "--resources=uri=/file|methods=GET,POST|roles=caseworkers"
             - --client-id=$(PROXY_CLIENT_ID)
             - --client-secret=$(PROXY_CLIENT_SECRET)
             - --tls-cert=/certs/tls.crt
@@ -207,6 +206,9 @@ spec:
             {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
             - --verbose=true
             {{ end }}
+          command:
+            - "/opt/keycloak-proxy"
+            - "--resources=uri=/file|methods=GET,POST|roles=caseworkers"
           ports:
             - containerPort: 10080
             - containerPort: 10443
