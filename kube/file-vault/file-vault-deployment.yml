@@ -206,9 +206,6 @@ spec:
             {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
             - --verbose=true
             {{ end }}
-          command:
-            - "/opt/keycloak-proxy"
-            - "--resources=uri=/file|methods=GET,POST|roles=caseworkers"
           ports:
             - containerPort: 10080
             - containerPort: 10443
@@ -222,8 +219,8 @@ spec:
             - mountPath: /etc/ssl/certs
               name: bundle
               readOnly: true
-
-        - name: nginx-proxy
+  
+       - name: nginx-proxy
           # nginx-proxy-govuk:v4
           image: quay.io/ukhomeofficedigital/nginx-proxy-govuk@sha256:4470064d0b1d20ae08c5fd85551576cb687f342a22d6cb456fda9b2c4ce8c8df
           resources:
