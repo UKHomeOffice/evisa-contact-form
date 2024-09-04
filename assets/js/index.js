@@ -4,7 +4,7 @@
 require('hof/frontend/themes/gov-uk/client-js');
 
 const accessibleAutocomplete = require('accessible-autocomplete');
-const config = require('../../config.js')
+const config = require('../../config.js');
 
 document.addEventListener('DOMContentLoaded', () => {
   // Apply the "accessible-autocomplete" plugin to all (form) elements tagged with the class "typeahead"

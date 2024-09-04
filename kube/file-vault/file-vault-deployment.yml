@@ -141,8 +141,6 @@ spec:
             limits:
               memory: 1024Mi
               cpu: 200m
-            requests:
-              memory: 512Mi
           envFrom:
             - configMapRef:
                 {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
@@ -161,9 +159,13 @@ spec:
                 secretKeyRef:
                   name: keycloak-client
                   key: id
+            - name: PROXY_LISTEN
+              value: 127.0.0.1:3001
+            - name: PROXY_UPSTREAM_URL
+              value: "http://127.0.0.1:3000"
             - name: PROXY_REDIRECTION_URL
-            {{ if eq .KUBE_NAMESPACE .PROD_ENV }}           
-              value: https://fv-{{ .APP_NAME }}.sas.homeoffice.gov.uk
+            {{ if eq .KUBE_NAMESPACE .PROD_ENV }}
+              value: https://fv.prod.{{ .APP_NAME }}.homeoffice.gov.uk
             {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
               value: https://fv-{{ .APP_NAME }}.stg.sas.homeoffice.gov.uk
             {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
@@ -173,20 +175,20 @@ spec:
             {{ end }}
             - name: PROXY_DISCOVERY_URL
             {{ if eq .KUBE_NAMESPACE .PROD_ENV }}
-             value: https://sso.digital.homeoffice.gov.uk/auth/realms/rotm
+             value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
             {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
-              value: https://sso.digital.homeoffice.gov.uk/auth/realms/rotm
+              value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
             {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
               value: https://acp-sso.notprod.acp.homeoffice.gov.uk/realms/evc-notprod
             {{ else if eq .KUBE_NAMESPACE .BRANCH_ENV }}
               value: https://acp-sso.notprod.acp.homeoffice.gov.uk/realms/evc-notprod
             {{ end }}
           args:
-            - --listen=0.0.0.0:3003
+            - --listen=127.0.0.1:3001
             # the url which is used to retrieve the OpenID configuration
             - --discovery-url=$(PROXY_DISCOVERY_URL)
             # the endpoint where requests are proxied to
-            - --upstream-url=https://127.0.0.1:10444
+            - --upstream-url=http://127.0.0.1:3000
             # URls that you wish to protect.
             - --resources=uri=/*
             - --client-id=$(PROXY_CLIENT_ID)
@@ -197,18 +199,16 @@ spec:
             - --http-only-cookie=true
             - --enable-security-filter=true
             - --enable-request-id=true
+            - --enable-logging=true
+            - --enable-json-logging=true
             - --redirection-url=$(PROXY_REDIRECTION_URL)
             - --tls-min-version=tlsv1.2
             {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
             - --verbose=true
             {{ end }}
           ports:
-            - name: http
-              containerPort: 3003
-              protocol: TCP
-          # ports:
-          #   - containerPort: 10080
-          #   - containerPort: 10443
+            - containerPort: 10080
+            - containerPort: 10443
           securityContext:
             runAsNonRoot: true
           terminationMessagePath: /dev/termination-log
@@ -231,9 +231,6 @@ spec:
               memory: 512Mi
           env:
 {{ file .FILEVAULT_NGINX_SETTINGS | indent 12 }}
-          ports:
-            - containerPort: 10080
-            - containerPort: 10443
           securityContext:
             runAsNonRoot: true
           volumeMounts:
