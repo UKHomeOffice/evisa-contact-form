@@ -32,7 +32,7 @@ module.exports = {
     secret: process.env.KEYCLOAK_SECRET
   },
   upload: {
-    maxFileSizeInBytes: 25 * 1000 * 1000, // 25MB in bytes
+    maxFileSizeInBytes: (25 * 1024 * 1024) + 4096, // 25MiB plus slack
     hostname: process.env.FILE_VAULT_URL,
     allowedMimeTypes: [
       'image/png',
