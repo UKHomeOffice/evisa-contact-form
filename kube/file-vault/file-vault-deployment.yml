@@ -99,7 +99,7 @@ spec:
                 secretKeyRef:
                   {{ if or (eq .KUBE_NAMESPACE .BRANCH_ENV) (eq .KUBE_NAMESPACE .UAT_ENV) }}
                   name: evc-s3-bucket
-                   {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
+                  {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
                   name: evc-s3-stg
                   {{ else }}
                   name: evc-s3-prod
@@ -110,10 +110,10 @@ spec:
                 secretKeyRef:
                   {{ if or (eq .KUBE_NAMESPACE .BRANCH_ENV) (eq .KUBE_NAMESPACE .UAT_ENV) }}
                   name: evc-s3-bucket
-                   {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
+                  {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
                   name: evc-s3-stg
                   {{ else }}
-                  name: stg-s3-prod
+                  name: evc-s3-prod
                   {{ end }}
                   key: name
             - name: AWS_PASSWORD
