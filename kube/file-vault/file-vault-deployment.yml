@@ -175,7 +175,7 @@ spec:
             {{ end }}
             - name: PROXY_DISCOVERY_URL
             {{ if eq .KUBE_NAMESPACE .PROD_ENV }}
-             value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
+              value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
             {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
               value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
             {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
