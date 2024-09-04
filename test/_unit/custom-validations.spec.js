@@ -6,7 +6,7 @@ describe('Custom Validators', () => {
       expect(URNValidator('1111-2222-3333-4444')).to.equal(true); // 19 characters
       expect(URNValidator('1111/2222/3333/4444')).to.equal(true);
     });
-    
+
     it('Returns false for invalid URN strings', () => {
       expect(URNValidator('')).to.equal(false);
       expect(URNValidator('1234567890123456')).to.equal(false);
