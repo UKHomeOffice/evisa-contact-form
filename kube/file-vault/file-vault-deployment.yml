@@ -175,7 +175,7 @@ spec:
             {{ end }}
             - name: PROXY_DISCOVERY_URL
             {{ if eq .KUBE_NAMESPACE .PROD_ENV }}
-             value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
+              value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
             {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
               value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
             {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
@@ -231,6 +231,9 @@ spec:
               memory: 512Mi
           env:
 {{ file .FILEVAULT_NGINX_SETTINGS | indent 12 }}
+          ports:
+            - containerPort: 10080
+            - containerPort: 10443
           securityContext:
             runAsNonRoot: true
           volumeMounts:
