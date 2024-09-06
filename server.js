@@ -14,19 +14,7 @@ settings = Object.assign({}, settings, {
 
 const app = hof(settings);
 
-console.log('server.js: console.log');
-logger.debug('server.js: logger.debug');
-logger.info('server.js: logger.info');
-logger.warn('server.js: logger.warn');
-logger.error('server.js: logger.error');
-
-
 app.use((req, res, next) => {
-  req.log('debug', "server.js: req.log 'debug'");
-  req.log('info', "server.js: req.log 'info'");
-  req.log('warn', "server.js: req.log 'warn'");
-  req.log('error', "server.js: req.log 'error'");
-  
   res.locals.htmlLang = 'en';
   res.locals.feedbackUrl = config.survey.urls.feedback;
   if (req.is('multipart/form-data')) {
