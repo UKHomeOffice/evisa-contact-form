@@ -7,26 +7,25 @@ const notify = hof.components.notify;
 const path = require('path');
 
 const parse = (model, translate) => {
-  console.log('=====================');
-  console.log(model.images[0].url);
-  console.log('=====================');
+  console.log(model?.images?.[0]?.url ?? 'No URL available');
+
   return {
     contactDetails: [
       {
         label: 'name',
-        value: model['full-name']
+        value: model?.['full-name'] ?? 'N/A'
       },
       {
         label: 'Email',
-        value: model.email
+        value: model?.email ?? 'N/A'
       },
       {
         label: 'Phone',
-        value: model['contact-number']
+        value: model?.['contact-number'] ?? 'N/A'
       },
       {
         label: 'imageLink',
-        value: model.images[0].url
+        value: model?.images?.[0]?.url ?? 'N/A'
       }
     ]
   };
@@ -34,7 +33,8 @@ const parse = (model, translate) => {
 
 module.exports = config => {
   return notify(Object.assign({}, config, {
-    recipient: config.caseWorker,
+    
+    recipient: config.caseWorkersEmail,
     subject: (model, translate) => 'Getting access to your eVisa',
     template: path.resolve(__dirname, '../views/emails/agent.html'),
     parse

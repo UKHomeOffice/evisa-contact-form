@@ -1,10 +1,10 @@
 'use strict';
 /* eslint-disable comma-dangle, spaced-comment */
 
-// const config = require('../../config');  // TODO use or remove
 const SaveImage = require('./behaviours/save-image');
 const RemoveImage = require('./behaviours/remove-image');
-//const agentEmail = require('./behaviours/agent-email')(config.email);
+const config = require('../../config.js');
+const EmailAgent = require('./behaviours/email-agent')(config.email);
 
 module.exports = {
   name: 'evisa',
@@ -50,14 +50,16 @@ module.exports = {
       next: '/upload',
     },
     '/upload': {
-      behaviours: [SaveImage('file-selector'), RemoveImage],
+      behaviours: [EmailAgent], // TODO remove
+      // behaviours: [EmailAgent, SaveImage('file-selector'), RemoveImage], // TODO restore
       fields: ['file-selector'],
       next: '/confirmation',
     },
     '/confirmation': {
       behaviours: [],
-      clearSession: true, // triggers hof/components/clear-session to clear the session
-      backLink: false
+      // TODO restore
+      // clearSession: true, // triggers hof/components/clear-session to clear the session
+      // backLink: false
     },
   }
 };

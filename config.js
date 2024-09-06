@@ -8,7 +8,7 @@ module.exports = {
   email: {
     notifyApiKey: process.env.NOTIFY_KEY,
     notifyTemplate: process.env.NOTIFY_TEMPLATE,
-    caseWorker: process.env.CASEWORKER_EMAIL
+    caseWorkersEmail: process.env.CASEWORKER_EMAIL
   },
   survey: {
     urls: {
