@@ -59,9 +59,13 @@ module.exports = class ImageUpload extends Model {
     })
       .then(result => {
         try {
-          this.set({
-            url: result.url.replace('/file/', '/file/generate-link/').split('?')[0]
-          });
+          let generateLink = result.url.replace('/file/', '/file/generate-link/').split('?')[0];
+          this.set({ generateLink });
+          let s3Link = result.url.replace('/file/file/', '/file/');
+          this.set({ s3Link });
+          if (process.env.DEBUG) {
+            logger.info({generateLink, s3Link});
+          }
         } catch (err) {
           const errorMsg = `No url in response: ${err.message}`;
           logger.error(errorMsg);

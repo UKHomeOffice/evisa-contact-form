@@ -1,12 +1,12 @@
 'use strict';
 /* eslint no-process-env: 0 */
 
-const env = process.env.NODE_ENV || 'production';
+const node_env = process.env.NODE_ENV || 'production';
 
 module.exports = {
+  env: node_env,
   PRETTY_DATE_FORMAT: 'Do MMMM YYYY',
   dateTimeFormat: 'DD MMM YYYY HH:mm:ss',
-  env: env,
   email: {
     notifyApiKey: process.env.NOTIFY_KEY,
     notifyTemplate: process.env.NOTIFY_TEMPLATE,
