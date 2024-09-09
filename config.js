@@ -1,10 +1,8 @@
 'use strict';
 /* eslint no-process-env: 0 */
 
-const node_env = process.env.NODE_ENV || 'production';
-
 module.exports = {
-  env: node_env,
+  env: process.env.NODE_ENV || 'production',
   PRETTY_DATE_FORMAT: 'Do MMMM YYYY',
   dateTimeFormat: 'DD MMM YYYY HH:mm:ss',
   email: {
