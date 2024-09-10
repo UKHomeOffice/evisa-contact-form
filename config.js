@@ -7,8 +7,8 @@ module.exports = {
   dateTimeFormat: 'DD MMM YYYY HH:mm:ss',
   email: {
     notifyApiKey: process.env.NOTIFY_KEY,
-    notifyTemplate: process.env.NOTIFY_TEMPLATE,
-    caseWorkersEmail: process.env.CASEWORKER_EMAIL
+    agentTemplateId: process.env.AGENT_TEMPLATE_ID,
+    agentEmail: process.env.AGENT_EMAIL
   },
   survey: {
     urls: {

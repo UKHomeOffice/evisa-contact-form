@@ -34,7 +34,7 @@ const parse = (model, translate) => {
 module.exports = config => {
   return notify(Object.assign({}, config, {
     
-    recipient: config.caseWorkersEmail,
+    recipient: config.agentEmail,
     subject: (model, translate) => 'Getting access to your eVisa',
     template: path.resolve(__dirname, '../views/emails/agent.html'),
     parse
