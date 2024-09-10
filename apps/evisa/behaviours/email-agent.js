@@ -1,6 +1,7 @@
 "use strict";
 
-const NotifyClient = require("./notify-client.js");
+const NotifyClient = require('./notify-client.js');
+const { SESSION } = require('../constants.js');
 
 module.exports = (emailConfig) => (superclass) => class EmailAgent extends superclass {
   constructor(...args) {
@@ -17,12 +18,20 @@ module.exports = (emailConfig) => (superclass) => class EmailAgent extends super
   }
 
   getAgentPersonalisation(session) {
+    let referenceNumber = session.get(SESSION.BRP_NUMBER) ||
+      session.get(SESSION.URN_NUMBER) ||
+      session.get(SESSION.PASSPORT_NUMBER) ||
+      session.get(SESSION.OTHER_REFERENCE_NUMBER) ||
+      'not supplied';
+
+    let uploadedFiles = session.get(SESSION.IMAGES_UPLOADED) || 'none supplied';
     return {
-      'email-subject': 'some subject',
-      'email-body': 'some body',
-      'customer-name': session.get('full-name') || 'not supplied',
-      'customer-email': session.get('email-field') || 'not supplied',
+      'customer-name': session.get(SESSION.FULL_NAME) || 'not supplied',
+      'customer-email': session.get(SESSION.EMAIL_FIELD) || 'not supplied',
+      'customer-phone': session.get(SESSION.CONTACT_NUMBER) || 'not supplied',
+      'reference-number': referenceNumber,
+      'customer-question': session.get(SESSION.QUESTION_FIELD) || 'not supplied',
+      'uploaded-files': uploadedFiles
     }
   }
 };
-  
