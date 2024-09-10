@@ -50,8 +50,7 @@ module.exports = {
       next: '/upload',
     },
     '/upload': {
-      behaviours: [EmailAgent], // TODO remove
-      // behaviours: [EmailAgent, SaveImage('file-selector'), RemoveImage], // TODO restore
+      behaviours: [EmailAgent, SaveImage('file-selector'), RemoveImage],
       fields: ['file-selector'],
       next: '/confirmation',
     },
