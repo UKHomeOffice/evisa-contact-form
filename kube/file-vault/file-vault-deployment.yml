@@ -75,8 +75,10 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  {{ if or (eq .KUBE_NAMESPACE .BRANCH_ENV) (eq .KUBE_NAMESPACE .UAT_ENV) }}
+                  {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
                   name: evc-s3-bucket
+                  {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
+                  name: evc-s3-uat
                   {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
                   name: evc-s3-stg
                   {{ else }}
@@ -86,8 +88,10 @@ spec:
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  {{ if or (eq .KUBE_NAMESPACE .BRANCH_ENV) (eq .KUBE_NAMESPACE .UAT_ENV) }}
+                  {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
                   name: evc-s3-bucket
+                  {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
+                  name: evc-s3-uat
                   {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
                   name: evc-s3-stg
                   {{ else }}
@@ -97,8 +101,10 @@ spec:
             - name: AWS_KMS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  {{ if or (eq .KUBE_NAMESPACE .BRANCH_ENV) (eq .KUBE_NAMESPACE .UAT_ENV) }}
+                  {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
                   name: evc-s3-bucket
+                  {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
+                  name: evc-s3-uat
                   {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
                   name: evc-s3-stg
                   {{ else }}
@@ -108,8 +114,10 @@ spec:
             - name: AWS_BUCKET
               valueFrom:
                 secretKeyRef:
-                  {{ if or (eq .KUBE_NAMESPACE .BRANCH_ENV) (eq .KUBE_NAMESPACE .UAT_ENV) }}
+                  {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
                   name: evc-s3-bucket
+                  {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
+                  name: evc-s3-uat
                   {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
                   name: evc-s3-stg
                   {{ else }}
