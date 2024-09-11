@@ -60,14 +60,14 @@ module.exports = class ImageUpload extends Model {
       .then(result => {
         try {
           let s3Link = result.url.replace('/file/file/', '/file/');
-          let generateLink = s3Link.replace('/file/', '/file/generate-link/').split('?')[0];
-          this.set({ generateLink });
+          let generatedLink = s3Link.replace('/file/', '/file/generate-link/').split('?')[0];
+          this.set({ generatedLink });
           this.set({ s3Link });
           if (process.env.DEBUG) {
-            logger.info({generateLink, s3Link});
+            logger.info({generatedLink, s3Link});
           }
         } catch (err) {
-          const errorMsg = `No url in response: ${err.message}`;
+          const errorMsg = `S3 Url undefined or unexpected format in response: ${err.message}`;
           logger.error(errorMsg);
           throw new Error(errorMsg);
         }

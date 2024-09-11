@@ -19,24 +19,27 @@ module.exports = emailConfig => superclass => class EmailAgent extends superclas
   }
 
   getAgentPersonalisation(session) {
+    const notSupplied = 'not supplied';
+    const noneSupplied = 'none supplied';
+
     let referenceNumber = session.get(SESSION.BRP_NUMBER) ||
       session.get(SESSION.URN_NUMBER) ||
       session.get(SESSION.PASSPORT_NUMBER) ||
       session.get(SESSION.OTHER_REFERENCE_NUMBER) ||
-      'not supplied';
+      notSupplied;
 
-    let uploadedFiles = (session.get(SESSION.IMAGES_UPLOADED) || [])
-      .map(file => `[${file.name}](${file.generateLink})`)
+    let uploadedFileLinks = (session.get(SESSION.IMAGES_UPLOADED) || [])
+      .map(file => `[${file.name}](${file.generatedLink})`)
       .join('\n')
-      || 'none supplied';
+      || noneSupplied;
 
     return {
-      'customer-name': session.get(SESSION.FULL_NAME) || 'not supplied',
-      'customer-email': session.get(SESSION.EMAIL_FIELD) || 'not supplied',
-      'customer-phone': session.get(SESSION.CONTACT_NUMBER) || 'not supplied',
+      'customer-name': session.get(SESSION.FULL_NAME) || notSupplied,
+      'customer-email': session.get(SESSION.EMAIL_FIELD) || notSupplied,
+      'customer-phone': session.get(SESSION.CONTACT_NUMBER) || notSupplied,
       'reference-number': referenceNumber,
-      'customer-question': session.get(SESSION.QUESTION_FIELD) || 'not supplied',
-      'uploaded-files': uploadedFiles
+      'customer-question': session.get(SESSION.QUESTION_FIELD) || notSupplied,
+      'uploaded-files': uploadedFileLinks
     };
   }
 };
