@@ -1,6 +1,6 @@
 'use strict';
 /* eslint-disable prefer-const */
-// Send a receipt email to the customer
+// Send a confirmation email to the customer
 
 const Emailer = require('./emailer.js');
 const { SESSION } = require('../constants.js');
@@ -30,7 +30,7 @@ module.exports = emailConfig => superclass => class EmailCustomer extends superc
     const notSupplied = 'not supplied';
     return {
       'customer-name': session.get(SESSION.FULL_NAME) || notSupplied,
-      'customer-question': session.get(SESSION.QUESTION_FIELD) || notSupplied,
+      'customer-question': session.get(SESSION.QUESTION_FIELD) || notSupplied
     };
   }
 };
