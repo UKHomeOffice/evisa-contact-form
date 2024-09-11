@@ -18,9 +18,8 @@ module.exports = emailConfig => superclass => class EmailCustomer extends superc
       if (emailAddress) {
         let personalisation = this.getCustomerPersonalisation(req.sessionModel);
         this.emailer.sendCustomerEmail(emailAddress, personalisation);
-        logger.info('Customer receipt email sent');
       } else {
-        logger.error('Customer email address missing, unable to send receipt email');
+        logger.error('Customer email address missing, unable to send confirmation email');
       }
     }
     return super.successHandler(req, res, next);
