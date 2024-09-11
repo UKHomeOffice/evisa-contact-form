@@ -2,14 +2,14 @@
 /* eslint-disable prefer-const */
 // Send a receipt email to the customer
 
-const NotifyClient = require('./notify-client.js');
+const Emailer = require('./emailer.js');
 const { SESSION } = require('../constants.js');
 const logger = require('hof/lib/logger')({ env: process.env });
 
 module.exports = emailConfig => superclass => class EmailCustomer extends superclass {
   constructor(...args) {
     super(...args);
-    this.notifyClient = new NotifyClient(emailConfig);
+    this.emailer = new Emailer(emailConfig);
   }
 
   async successHandler(req, res, next) {
@@ -17,7 +17,7 @@ module.exports = emailConfig => superclass => class EmailCustomer extends superc
       let emailAddress = req.sessionModel.get(SESSION.EMAIL_FIELD);
       if (emailAddress) {
         let personalisation = this.getCustomerPersonalisation(req.sessionModel);
-        this.notifyClient.sendCustomerEmail(emailAddress, personalisation);
+        this.emailer.sendCustomerEmail(emailAddress, personalisation);
         logger.info('Customer receipt email sent');
       } else {
         logger.error('Customer email address missing, unable to send receipt email');

@@ -2,19 +2,19 @@
 /* eslint-disable prefer-const */
 // Send the form data in an Email to the eVisa Agent
 
-const NotifyClient = require('./notify-client.js');
+const Emailer = require('./emailer.js');
 const { SESSION } = require('../constants.js');
 
 module.exports = emailConfig => superclass => class EmailAgent extends superclass {
   constructor(...args) {
     super(...args);
-    this.notifyClient = new NotifyClient(emailConfig);
+    this.emailer = new Emailer(emailConfig);
   }
 
   async successHandler(req, res, next) {
     if (req.body['continue-button']) {
       let personalisation = this.getAgentPersonalisation(req.sessionModel);
-      this.notifyClient.sendAgentEmail(personalisation);
+      this.emailer.sendAgentEmail(personalisation);
     }
     return super.successHandler(req, res, next);
   }

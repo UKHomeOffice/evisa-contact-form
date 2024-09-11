@@ -1,10 +1,10 @@
 'use strict';
 /* eslint-disable prefer-const */
 
-const RealNotifyClient = require('notifications-node-client').NotifyClient;
+const NotifyClient = require('notifications-node-client').NotifyClient;
 const logger = require('hof/lib/logger')({ env: process.env });
 
-module.exports = class NotifyClient {
+module.exports = class Emailer {
   constructor(emailConfig) {
     // Configuration check
     let requiredProperties = ['notifyApiKey', 'agentTemplateId', 'agentEmail'];
@@ -16,7 +16,7 @@ module.exports = class NotifyClient {
     }
 
     this.emailConfig = emailConfig;
-    this.notifyClient = new RealNotifyClient(emailConfig.notifyApiKey);
+    this.notifyClient = new NotifyClient(emailConfig.notifyApiKey);
   }
 
   async sendAgentEmail(personalisation) {
