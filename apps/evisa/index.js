@@ -4,7 +4,7 @@
 const SaveImage = require('./behaviours/save-image');
 const RemoveImage = require('./behaviours/remove-image');
 const config = require('../../config.js');
-const EmailAgent = require('./behaviours/email-agent')(config.email);
+const EmailAgent = require('./behaviours/email-caseworker')(config.email);
 const EmailCustomer = require('./behaviours/email-customer')(config.email);
 
 module.exports = {

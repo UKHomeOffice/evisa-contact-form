@@ -7,7 +7,7 @@ const logger = require('hof/lib/logger')({ env: process.env });
 module.exports = class Emailer {
   constructor(emailConfig) {
     // Configuration check
-    let requiredProperties = ['notifyApiKey', 'agentTemplateId', 'agentEmail'];
+    let requiredProperties = ['notifyApiKey', 'caseworkerTemplateId', 'caseworkerEmail'];
     let missing = requiredProperties.filter(property => !emailConfig[property]);
     if (missing.length > 0) {
       let errorMsg = missing.map(property => `config.email ${property} is not defined`).join('\n');
@@ -21,8 +21,8 @@ module.exports = class Emailer {
 
   async sendAgentEmail(personalisation) {
     await this._sendEmail(
-      this.emailConfig.agentTemplateId,
-      this.emailConfig.agentEmail,
+      this.emailConfig.caseworkerTemplateId,
+      this.emailConfig.caseworkerEmail,
       personalisation,
       'Agent'
     );
