@@ -5,6 +5,7 @@ const SaveImage = require('./behaviours/save-image');
 const RemoveImage = require('./behaviours/remove-image');
 const config = require('../../config.js');
 const EmailAgent = require('./behaviours/email-agent')(config.email);
+const EmailCustomer = require('./behaviours/email-customer')(config.email);
 
 module.exports = {
   name: 'evisa',
@@ -50,15 +51,14 @@ module.exports = {
       next: '/upload',
     },
     '/upload': {
-      behaviours: [EmailAgent, SaveImage('file-selector'), RemoveImage],
+      behaviours: [EmailAgent, EmailCustomer, SaveImage('file-selector'), RemoveImage],
       fields: ['file-selector'],
       next: '/confirmation',
     },
     '/confirmation': {
       behaviours: [],
-      // TODO restore
-      // clearSession: true, // triggers hof/components/clear-session to clear the session
-      // backLink: false
+      clearSession: true, // triggers hof/components/clear-session to clear the session
+      backLink: false
     },
   }
 };

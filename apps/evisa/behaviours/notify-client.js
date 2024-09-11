@@ -1,7 +1,7 @@
 'use strict';
 /* eslint-disable prefer-const */
 
-const RealNotifyClient = require('notifications-node-client').NotifyClient; // TODO refactor into constructor
+const RealNotifyClient = require('notifications-node-client').NotifyClient;
 const logger = require('hof/lib/logger')({ env: process.env });
 
 module.exports = class NotifyClient {
@@ -23,6 +23,14 @@ module.exports = class NotifyClient {
     await this._sendEmail(
       this.emailConfig.agentTemplateId,
       this.emailConfig.agentEmail,
+      personalisation
+    );
+  }
+
+  async sendCustomerEmail(emailAddress, personalisation) {
+    await this._sendEmail(
+      this.emailConfig.customerTemplateId,
+      emailAddress,
       personalisation
     );
   }

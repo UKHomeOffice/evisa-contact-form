@@ -8,7 +8,8 @@ module.exports = {
   email: {
     notifyApiKey: process.env.NOTIFY_KEY,
     agentTemplateId: process.env.AGENT_TEMPLATE_ID,
-    agentEmail: process.env.AGENT_EMAIL
+    agentEmail: process.env.AGENT_EMAIL,
+    customerTemplateId: process.env.CUSTOMER_TEMPLATE_ID
   },
   survey: {
     urls: {
