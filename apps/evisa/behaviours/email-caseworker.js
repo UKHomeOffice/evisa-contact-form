@@ -1,11 +1,11 @@
 'use strict';
 /* eslint-disable prefer-const */
-// Send the form data in an Email to the eVisa Agent
+// Send the form data in an Email to the eVisa Caseworker
 
 const Emailer = require('./emailer.js');
 const { SESSION } = require('../constants.js');
 
-module.exports = emailConfig => superclass => class EmailAgent extends superclass {
+module.exports = emailConfig => superclass => class EmailCaseworker extends superclass {
   constructor(...args) {
     super(...args);
     this.emailer = new Emailer(emailConfig);
@@ -13,13 +13,13 @@ module.exports = emailConfig => superclass => class EmailAgent extends superclas
 
   async successHandler(req, res, next) {
     if (req.body['continue-button']) {
-      let personalisation = this.getAgentPersonalisation(req.sessionModel);
-      this.emailer.sendAgentEmail(personalisation);
+      let personalisation = this.getCaseworkerPersonalisation(req.sessionModel);
+      this.emailer.sendCaseworkerEmail(personalisation);
     }
     return super.successHandler(req, res, next);
   }
 
-  getAgentPersonalisation(session) {
+  getCaseworkerPersonalisation(session) {
     const notSupplied = 'not supplied';
     const noneSupplied = 'none supplied';
 

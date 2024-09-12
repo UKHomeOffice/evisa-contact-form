@@ -19,7 +19,7 @@ module.exports = class Emailer {
     this.notifyClient = new NotifyClient(emailConfig.notifyApiKey);
   }
 
-  async sendAgentEmail(personalisation) {
+  async sendCaseworkerEmail(personalisation) {
     await this._sendEmail(
       this.emailConfig.caseworkerTemplateId,
       this.emailConfig.caseworkerEmail,

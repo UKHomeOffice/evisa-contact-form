@@ -4,7 +4,7 @@
 const SaveImage = require('./behaviours/save-image');
 const RemoveImage = require('./behaviours/remove-image');
 const config = require('../../config.js');
-const EmailAgent = require('./behaviours/email-caseworker')(config.email);
+const EmailCaseworker = require('./behaviours/email-caseworker')(config.email);
 const EmailCustomer = require('./behaviours/email-customer')(config.email);
 
 module.exports = {
@@ -51,7 +51,7 @@ module.exports = {
       next: '/upload',
     },
     '/upload': {
-      behaviours: [EmailAgent, EmailCustomer, SaveImage('file-selector'), RemoveImage],
+      behaviours: [EmailCaseworker, EmailCustomer, SaveImage('file-selector'), RemoveImage],
       fields: ['file-selector'],
       next: '/confirmation',
     },
