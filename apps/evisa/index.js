@@ -1,10 +1,11 @@
 'use strict';
 /* eslint-disable comma-dangle, spaced-comment */
 
-// const config = require('../../config');  // TODO use or remove
 const SaveImage = require('./behaviours/save-image');
 const RemoveImage = require('./behaviours/remove-image');
-//const agentEmail = require('./behaviours/agent-email')(config.email);
+const config = require('../../config.js');
+const EmailAgent = require('./behaviours/email-caseworker')(config.email);
+const EmailCustomer = require('./behaviours/email-customer')(config.email);
 
 module.exports = {
   name: 'evisa',
@@ -50,7 +51,7 @@ module.exports = {
       next: '/upload',
     },
     '/upload': {
-      behaviours: [SaveImage('file-selector'), RemoveImage],
+      behaviours: [EmailAgent, EmailCustomer, SaveImage('file-selector'), RemoveImage],
       fields: ['file-selector'],
       next: '/confirmation',
     },
