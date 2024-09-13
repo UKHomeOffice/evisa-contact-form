@@ -43,12 +43,10 @@ module.exports = class Emailer {
       let response = await this.notifyClient.sendEmail(templateId, emailAddress, { personalisation });
       logger.info(`${recipientType} Email sent successfully: ${response?.data?.id || 'no id'}`);
     } catch (err) {
-      let errorDetails = err.response?.data ? `Cause: ${JSON.stringify(err.response.data)}` : '';
-      let errorCode = err.code ? `${err.code} -` : '';
-      let errorMessage = `${errorCode} ${err.message}; ${errorDetails}`;
-
+      let errorDetails = JSON.stringify(err.response?.data || '');
+      let errorCode = err.code || '';
+      let errorMessage = `${errorCode} - ${err.message}; Cause: ${errorDetails}`;
       logger.error(`Failed to send Email: ${errorMessage}`);
-      throw Error(errorMessage);
     }
   }
 };
