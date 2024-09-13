@@ -3,6 +3,7 @@
 
 const NotifyClient = require('notifications-node-client').NotifyClient;
 const logger = require('hof/lib/logger')({ env: process.env });
+const { EMAIL } = require('../constants.js');
 
 module.exports = class Emailer {
   constructor(emailConfig) {
@@ -24,7 +25,7 @@ module.exports = class Emailer {
       this.emailConfig.caseworkerTemplateId,
       this.emailConfig.caseworkerEmail,
       personalisation,
-      'Agent'
+      EMAIL.TYPE.CASEWORKER
     );
   }
 
@@ -33,7 +34,7 @@ module.exports = class Emailer {
       this.emailConfig.customerTemplateId,
       emailAddress,
       personalisation,
-      'Customer'
+      EMAIL.TYPE.CUSTOMER
     );
   }
 
