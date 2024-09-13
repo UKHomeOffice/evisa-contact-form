@@ -3,6 +3,7 @@
 
 const NotifyClient = require('notifications-node-client').NotifyClient;
 const logger = require('hof/lib/logger')({ env: process.env });
+const { EMAIL } = require('../constants.js');
 
 module.exports = class Emailer {
   constructor(emailConfig) {
@@ -19,12 +20,12 @@ module.exports = class Emailer {
     this.notifyClient = new NotifyClient(emailConfig.notifyApiKey);
   }
 
-  async sendAgentEmail(personalisation) {
+  async sendCaseworkerEmail(personalisation) {
     await this._sendEmail(
       this.emailConfig.caseworkerTemplateId,
       this.emailConfig.caseworkerEmail,
       personalisation,
-      'Agent'
+      EMAIL.RECIPIENT_TYPE.CASEWORKER
     );
   }
 
@@ -33,21 +34,19 @@ module.exports = class Emailer {
       this.emailConfig.customerTemplateId,
       emailAddress,
       personalisation,
-      'Customer'
+      EMAIL.RECIPIENT_TYPE.CUSTOMER
     );
   }
 
-  async _sendEmail(templateId, emailAddress, personalisation, type) {
+  async _sendEmail(templateId, emailAddress, personalisation, recipientType) {
     try {
       let response = await this.notifyClient.sendEmail(templateId, emailAddress, { personalisation });
-      logger.info(`${type} Email sent successfully: ${response?.data?.id || 'no id'}`);
+      logger.info(`${recipientType} Email sent successfully: ${response?.data?.id || 'no id'}`);
     } catch (err) {
-      let errorDetails = err.response?.data ? `Cause: ${JSON.stringify(err.response.data)}` : '';
-      let errorCode = err.code ? `${err.code} -` : '';
-      let errorMessage = `${errorCode} ${err.message}; ${errorDetails}`;
-
+      let errorDetails = JSON.stringify(err.response?.data || '');
+      let errorCode = err.code || '';
+      let errorMessage = `${errorCode} - ${err.message}; Cause: ${errorDetails}`;
       logger.error(`Failed to send Email: ${errorMessage}`);
-      throw Error(errorMessage);
     }
   }
 };

@@ -10,5 +10,11 @@ module.exports = {
     OTHER_REFERENCE_NUMBER: 'other-reference-number',
     QUESTION_FIELD: 'question-field'
   },
-  MAX_FILE_UPLOADS: 5   // Max number of file uploads permitted
+  MAX_FILE_UPLOADS: 5,   // Max number of file uploads permitted
+  EMAIL: {
+    RECIPIENT_TYPE: {
+      CASEWORKER: 'Caseworker',
+      CUSTOMER: 'Customer'
+    }
+  }
 };
