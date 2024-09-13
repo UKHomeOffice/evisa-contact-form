@@ -25,7 +25,7 @@ module.exports = class Emailer {
       this.emailConfig.caseworkerTemplateId,
       this.emailConfig.caseworkerEmail,
       personalisation,
-      EMAIL.TYPE.CASEWORKER
+      EMAIL.RECIPIENT_TYPE.CASEWORKER
     );
   }
 
@@ -34,14 +34,14 @@ module.exports = class Emailer {
       this.emailConfig.customerTemplateId,
       emailAddress,
       personalisation,
-      EMAIL.TYPE.CUSTOMER
+      EMAIL.RECIPIENT_TYPE.CUSTOMER
     );
   }
 
-  async _sendEmail(templateId, emailAddress, personalisation, type) {
+  async _sendEmail(templateId, emailAddress, personalisation, recipientType) {
     try {
       let response = await this.notifyClient.sendEmail(templateId, emailAddress, { personalisation });
-      logger.info(`${type} Email sent successfully: ${response?.data?.id || 'no id'}`);
+      logger.info(`${recipientType} Email sent successfully: ${response?.data?.id || 'no id'}`);
     } catch (err) {
       let errorDetails = err.response?.data ? `Cause: ${JSON.stringify(err.response.data)}` : '';
       let errorCode = err.code ? `${err.code} -` : '';

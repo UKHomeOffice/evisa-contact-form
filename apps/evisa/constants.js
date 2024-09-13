@@ -12,7 +12,7 @@ module.exports = {
   },
   MAX_FILE_UPLOADS: 5,   // Max number of file uploads permitted
   EMAIL: {
-    TYPE: {
+    RECIPIENT_TYPE: {
       CASEWORKER: 'Caseworker',
       CUSTOMER: 'Customer'
     }
