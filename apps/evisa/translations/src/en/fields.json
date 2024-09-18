@@ -66,6 +66,7 @@
     "hint": "We may call you to ask for more details"
   },
   "question-field": {
-    "label": "Enter your question below. Provide as much detail as possible"
+    "label": "Enter your question below",
+    "hint": "Provide as much detail as possible"
   }
 }
