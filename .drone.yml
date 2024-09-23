@@ -238,7 +238,7 @@ steps:
   # - name: acceptance_tests_uat
   #   <<: *acceptance_tests
   #   commands:
-  #     - export ACCEPTANCE_HOST_NAME=https://acrs.internal.uat.sas-notprod.homeoffice.gov.uk
+  #     - export ACCEPTANCE_HOST_NAME=https://evc.internal.uat.sas-notprod.homeoffice.gov.uk
   #     - npx playwright install
   #     - npm run test:acceptance
   #   when:
@@ -373,7 +373,6 @@ steps:
     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
     commands:
       - docker build --no-cache -t $${IMAGE_REPO}:$${DRONE_COMMIT_SHA} .
-      #- docker build --no-cache  --build-arg BASE_IMAGE=${BASE_IMAGE} -t $${IMAGE_REPO}:$${DRONE_COMMIT_SHA} .
     volumes:
       - name: dockersock
         path: /var/run
@@ -387,7 +386,7 @@ steps:
     environment:
         IMAGE_NAME: sas/evc:${DRONE_COMMIT_SHA}
         SERVICE_URL: https://acp-trivy.acp-trivy.svc.cluster.local:443
-        SEVERITY: UNKOWN,LOW,MEDIUM,HIGH,CRITICAL
+        SEVERITY: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL --dependency-tree
         FAIL_ON_DETECTION: false
         IGNORE_UNFIXED: false
         ALLOW_CVE_LIST_FILE: hof-services-config/infrastructure/trivy/.trivyignore.yaml
@@ -400,7 +399,7 @@ steps:
     pull: always
     environment:
         IMAGE_NAME: node:20.16.0-alpine3.20@sha256:eb8101caae9ac02229bd64c024919fe3d4504ff7f329da79ca60a04db08cef52
-        SEVERITY: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+        SEVERITY: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL --dependency-tree
         FAIL_ON_DETECTION: false
         IGNORE_UNFIXED: false
         ALLOW_CVE_LIST_FILE: hof-services-config/infrastructure/trivy/.trivyignore.yaml
