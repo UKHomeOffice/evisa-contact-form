@@ -30,7 +30,9 @@
     "upload-image": "Upload an image",
     "no-files-uploaded": "No files uploaded",
     "files-uploaded": "Files uploaded",
-    "upload-maximum": "You may submit a maximum of {{maxUploads}} files"
+    "upload-maximum": "You may submit a maximum of {{maxUploads}} files",
+    "link-remove-remove": "Remove",
+    "link-remove-this": " this file"
   },
   "confirmation": {
     "title": "Question sent",
