@@ -19,12 +19,14 @@
         {{#renderField}}{{/renderField}}
       {{/fields}}
 
-      <p id="file-selector-error-maxFileSize" class="govuk-error-message govuk-!-display-none">
-        <span id="validation-error" class="govuk-visually-hidden">{{#t}}journey.error{{/t}}:</span> {{#t}}validation.file-selector.maxFileSize{{/t}}
-      </p>
-      <p id="file-selector-error-fileType" class="govuk-error-message govuk-!-display-none">
-        <span id="validation-error" class="govuk-visually-hidden">{{#t}}journey.error{{/t}}:</span> {{#t}}validation.file-selector.fileType{{/t}}
-      </p>
+      <div>
+        <p id="file-selector-error-maxFileSize" class="govuk-error-message govuk-!-display-none">
+          <span id="validation-error" class="govuk-visually-hidden">{{#t}}journey.error{{/t}}:</span> {{#t}}validation.file-selector.maxFileSize{{/t}}
+        </p>
+        <p id="file-selector-error-fileType" class="govuk-error-message govuk-!-display-none">
+          <span id="validation-error" class="govuk-visually-hidden">{{#t}}journey.error{{/t}}:</span> {{#t}}validation.file-selector.fileType{{/t}}
+        </p>
+      </div>
 
       <div>
         <button class="govuk-button govuk-button--secondary" name="upload-file-button" value="upload-file-button">
@@ -34,26 +36,28 @@
           <p class="bold" data-max-uploads="{{maxUploads}}" id="no-more-uploads">{{#t}}pages.upload.upload-maximum{{/t}}</p>
         {{/noMoreUploads}}
       </div>
+
+      <div>
+        <h3 class="govuk-heading-s">{{#t}}pages.upload.files-uploaded{{/t}}</h3>
+
+        {{^values.images-uploaded}}
+          <p>{{#t}}pages.upload.no-files-uploaded{{/t}}</p>
+        {{/values.images-uploaded}}
+  
+        {{#values.images-uploaded.length}}
+          <table class="table-files-loop">
+            <tbody class="govuk-table__body">
+            {{#values.images-uploaded}}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{name}}</td>
+                <td><a href="?delete={{id}}" class="govuk-link">{{#t}}pages.upload.link-remove-remove{{/t}}<span class="govuk-visually-hidden">{{#t}}pages.upload.link-remove-this{{/t}}</span></a></td>
+              </tr>
+            {{/values.images-uploaded}}
+            </tbody>
+          </table>
+        {{/values.images-uploaded.length}}
+      </div>
     </div>
-
-    <br><br>
-    {{^values.images-uploaded}}
-      <p class="govuk-heading-s">{{#t}}pages.upload.no-files-uploaded{{/t}}</p>
-    {{/values.images-uploaded}}
-
-    {{#values.images-uploaded.length}}
-    <h2 class="govuk-heading-m">{{#t}}pages.upload.files-uploaded{{/t}}</h2>
-    <table class="table-files-loop">
-      <tbody class="govuk-table__body">
-      {{#values.images-uploaded}}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">{{name}}</td>
-          <td><a href="?delete={{id}}" class="govuk-link">{{#t}}buttons.delete{{/t}}</a></td>
-        </tr>
-      {{/values.images-uploaded}}
-      </tbody>
-    </table>
-    {{/values.images-uploaded.length}}
 
     <br><br>
 
