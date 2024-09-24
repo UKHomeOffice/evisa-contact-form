@@ -327,3 +327,9 @@ pre.looped-records {
     }
   }
 }
+
+// markdown bullet list
+ul {
+  @extend .govuk-list--bullet;
+  padding-bottom: 1rem;
+}
