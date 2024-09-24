@@ -11,6 +11,6 @@
   "session": {
     "name": "evisa.hof.sid"
   },
-  "getAccessibility": true,
+  "getAccessibility": false,
   "emailerFallback": true
 }
