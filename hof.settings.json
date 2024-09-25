@@ -1,5 +1,5 @@
 {
-  "appName": "eVisa contact form",
+  "appName": "eVisa Contact Us",
   "theme": "govUK",
   "behaviours": [
     "hof/components/clear-session"

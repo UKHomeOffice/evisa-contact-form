@@ -1,4 +1,8 @@
 {{<partials-page}}
+  {{$pageTitle}}
+    {{#t}}pages.confirmation.title{{/t}} &ndash; GOV.UK
+  {{/pageTitle}}
+
   {{$page-content}}
     {{#markdown}}confirmation{{/markdown}}
     <p><a class="govuk-link" href="{{feedbackUrl}}">{{#t}}pages.confirmation.feedback-link-text{{/t}}</a></p>
