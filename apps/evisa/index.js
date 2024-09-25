@@ -9,6 +9,9 @@ const EmailCustomer = require('./behaviours/email-customer')(config.email);
 
 module.exports = {
   name: 'evisa',
+  pages: {
+    '/accessibility': 'accessibility'
+  },
   baseUrl: '/',
   steps: {
     '/start': {

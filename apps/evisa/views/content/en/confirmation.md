@@ -4,14 +4,14 @@
     </div>
 </div>
 
-{{#t}}pages.confirmation.confirmation-sent{{/t}}
+We have sent you a confirmation email.
 
 <strong>{{values.email-text}}</strong>
 
-<h2>{{#t}}pages.confirmation.content-whats-next{{/t}}</h2>
+## What happens next
 
-{{#t}}pages.confirmation.content-line-1{{/t}}
+We have sent your enquiry to the help team.
 
-{{#t}}pages.confirmation.content-line-2{{/t}}
+We will reply within 3 working days (Monday to Friday).
 
-{{#t}}pages.confirmation.content-line-3{{/t}}
+We will ask you more information if we need it.
