@@ -1,14 +1,6 @@
 {{<partials-page}}
-{{$page-content}}
-<div>
-    <p>{{#t}}pages.start.paragraph-1{{/t}}<a href="https://www.gov.uk/get-access-evisa">{{#t}}pages.start.paragraph-1-link-text{{/t}}</a>.</p>
-    <p>{{#t}}pages.start.paragraph-2{{/t}}</p>
-
-    <h2 class="govuk-heading-m">{{#t}}pages.start.sub-header-1{{/t}}</h2>
-    <p>{{#t}}pages.start.paragraph-3{{/t}}
-    <p>{{#t}}pages.start.paragraph-4{{/t}}</p>
-
-    {{#input-submit}}start-home{{/input-submit}}
-</div>
-{{/page-content}}
+    {{$page-content}}
+        {{#markdown}}start{{/markdown}}
+        {{#input-submit}}start-home{{/input-submit}}
+    {{/page-content}}
 {{/partials-page}}
