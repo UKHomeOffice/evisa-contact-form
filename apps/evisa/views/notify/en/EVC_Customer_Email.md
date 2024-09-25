@@ -17,7 +17,7 @@ You asked:
 
 ^ ((customer-question))
 
-We will reply within 3 working days (Monday to Friday). We will ask for more information if we need it.
+We aim to reply within 5 working days (Monday to Friday). We will ask for more information if we need it.
 
 Regards
 

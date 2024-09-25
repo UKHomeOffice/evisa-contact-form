@@ -12,6 +12,6 @@ We have sent you a confirmation email.
 
 We have sent your enquiry to the help team.
 
-We will reply within 3 working days (Monday to Friday).
+We aim to reply within 5 working days (Monday to Friday).
 
 We will ask you more information if we need it.

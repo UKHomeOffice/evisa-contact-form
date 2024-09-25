@@ -1,6 +1,6 @@
 Use this service if you have a question about creating your UK Visas and Immigration (UKVI) account and [getting access to your online immigration status (eVisa)](https://www.gov.uk/get-access-evisa).
 
-We will reply within 3 working days (Monday to Friday).
+We aim to reply within 5 working days (Monday to Friday).
 
 ## What you need
 
