@@ -170,7 +170,7 @@ spec:
             - name: PROXY_LISTEN
               value: 127.0.0.1:3001
             - name: PROXY_UPSTREAM_URL
-              value: "https://127.0.0.1:3000"
+              value: "http://127.0.0.1:3000"
             - name: PROXY_REDIRECTION_URL
             {{ if eq .KUBE_NAMESPACE .PROD_ENV }}
               value: https://fv.prod.{{ .APP_NAME }}.homeoffice.gov.uk
@@ -181,42 +181,19 @@ spec:
             {{ else if eq .KUBE_NAMESPACE .BRANCH_ENV }}
               value: https://fv-{{ .DRONE_SOURCE_BRANCH }}.branch.sas-notprod.homeoffice.gov.uk
             {{ end }}
-            - name: PROXY_DISCOVERY_URL
-            {{ if eq .KUBE_NAMESPACE .PROD_ENV }}
-              value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
-            {{ else if eq .KUBE_NAMESPACE .STG_ENV }}
-              value: https://acp-sso.prod.acp.homeoffice.gov.uk/realms/evc
-            {{ else if eq .KUBE_NAMESPACE .UAT_ENV }}
-              value: https://acp-sso.notprod.acp.homeoffice.gov.uk/realms/evc-notprod
-            {{ else if eq .KUBE_NAMESPACE .BRANCH_ENV }}
-              value: https://acp-sso.notprod.acp.homeoffice.gov.uk/realms/evc-notprod
-            {{ end }}
           args:
-            - --listen=127.0.0.1:3001
-            # the url which is used to retrieve the OpenID configuration
-            - --discovery-url=$(PROXY_DISCOVERY_URL)
-            # the endpoint where requests are proxied to
-            - --upstream-url=https://127.0.0.1:3000
             # URls that you wish to protect.
             - --resources=uri=/*
-            - --client-id=$(PROXY_CLIENT_ID)
-            - --client-secret=$(PROXY_CLIENT_SECRET)
-            - --tls-cert=/certs/tls.crt
-            - --tls-private-key=/certs/tls.key
             - --enable-default-deny=false
-            - --http-only-cookie=true
             - --enable-security-filter=true
             - --enable-request-id=true
             - --enable-logging=true
             - --enable-json-logging=true
-            - --redirection-url=$(PROXY_REDIRECTION_URL)
-            - --tls-min-version=tlsv1.2
             {{ if eq .KUBE_NAMESPACE .BRANCH_ENV }}
             - --verbose=true
             {{ end }}
           ports:
-            - containerPort: 10080
-            - containerPort: 10443
+            - containerPort: 3001
           securityContext:
             runAsNonRoot: true
           terminationMessagePath: /dev/termination-log
@@ -239,6 +216,9 @@ spec:
               memory: 512Mi
           env:
 {{ file .FILEVAULT_NGINX_SETTINGS | indent 12 }}
+          ports:
+            - containerPort: 10080
+            - containerPort: 10443
           securityContext:
             runAsNonRoot: true
           volumeMounts:
