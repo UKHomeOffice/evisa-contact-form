@@ -15,7 +15,6 @@ module.exports = emailConfig => superclass => class EmailCustomer extends superc
   async successHandler(req, res, next) {
     if (req.body['continue-button']) {
       let emailAddress = req.sessionModel.get(SESSION.EMAIL_FIELD);
-      emailAddress = '';
       if (!emailAddress) {
         let errorMsg = 'Customer email address missing, unable to send confirmation email';
         logger.error(errorMsg);
