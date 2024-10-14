@@ -1,3 +1,10 @@
+# EVC-101-test-error
+
+THIS IS A TEST BRANCH, DO NOT MERGE
+
+The Notify api key has been deliberately corrupted to trigger a Notify fail that will result in an error reported to the user in the client.
+
+
 # E-Visa Contact Us (EVC)
 
 ## Getting Started
