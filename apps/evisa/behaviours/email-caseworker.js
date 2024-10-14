@@ -14,7 +14,11 @@ module.exports = emailConfig => superclass => class EmailCaseworker extends supe
   async successHandler(req, res, next) {
     if (req.body['continue-button']) {
       let personalisation = this.getCaseworkerPersonalisation(req.sessionModel);
-      this.emailer.sendCaseworkerEmail(personalisation);
+      try {
+        await this.emailer.sendCaseworkerEmail(personalisation);
+      } catch (error) {
+        return next(new Error(req.translate('errors.email.caseworker')));
+      }
     }
     return super.successHandler(req, res, next);
   }

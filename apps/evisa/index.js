@@ -54,7 +54,7 @@ module.exports = {
       next: '/upload',
     },
     '/upload': {
-      behaviours: [EmailCaseworker, EmailCustomer, SaveImage('file-selector'), RemoveImage],
+      behaviours: [EmailCustomer, EmailCaseworker, SaveImage('file-selector'), RemoveImage],
       fields: ['file-selector'],
       next: '/confirmation',
     },
