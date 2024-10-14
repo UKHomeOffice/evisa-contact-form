@@ -45,8 +45,9 @@ module.exports = class Emailer {
     } catch (err) {
       let errorDetails = JSON.stringify(err.response?.data || '');
       let errorCode = err.code || '';
-      let errorMessage = `${errorCode} - ${err.message}; Cause: ${errorDetails}`;
-      logger.error(`Failed to send Email: ${errorMessage}`);
+      let errorMessage = `Failed to send Email: ${errorCode} - ${err.message}; Cause: ${errorDetails}`;
+      logger.error(errorMessage);
+      throw (err);
     }
   }
 };
