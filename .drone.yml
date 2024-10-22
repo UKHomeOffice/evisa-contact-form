@@ -83,7 +83,24 @@ steps:
         - master
         - feature/*
       event: [push, pull_request]
-
+      
+  # Trivy Security Scannner for scanning OS related vulnerabilities in Base image of Dockerfile
+  - name: scan_base_image_os
+    pull: always
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/trivy/client:latest
+    resources:
+      limits:
+        cpu: 1000
+        memory: 1024Mi
+    environment:
+      IMAGE_NAME: node:20.16.0-alpine3.20@sha256:eb8101caae9ac02229bd64c024919fe3d4504ff7f329da79ca60a04db08cef52 
+      SERVICE_URL: https://acp-trivy-helm.acp-trivy.svc.cluster.local:443
+      SEVERITY: MEDIUM,HIGH,CRITICAL  --dependency-tree
+      FAIL_ON_DETECTION: false
+      IGNORE_UNFIXED: false
+      ALLOW_CVE_LIST_FILE: hof-services-config/infrastructure/trivy/.trivyignore.yaml
+    when:
+      event: [push, pull_request]
 
   - name: setup_deploy
     pull: if-not-exists
@@ -156,23 +173,7 @@ steps:
           - master
           - feature/*
       event: [push, pull_request]
-  # Trivy Security Scannner for scanning OS related vulnerabilities in Base image of Dockerfile
-  - name: scan_base_image_os
-    pull: always
-    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/trivy/client:latest
-    resources:
-      limits:
-        cpu: 1000
-        memory: 1024Mi
-    environment:
-      IMAGE_NAME: node:20.16.0-alpine3.20@sha256:eb8101caae9ac02229bd64c024919fe3d4504ff7f329da79ca60a04db08cef52 
-      SERVICE_URL: https://acp-trivy-helm.acp-trivy.svc.cluster.local:443
-      SEVERITY: MEDIUM,HIGH,CRITICAL  --dependency-tree
-      FAIL_ON_DETECTION: false
-      IGNORE_UNFIXED: false
-      ALLOW_CVE_LIST_FILE: hof-services-config/infrastructure/trivy/.trivyignore.yaml
-    when:
-      event: [push, pull_request]
+
   # Trivy Security Scannner for scanning nodejs packages in Yarn
   - name: scan_node_packages
     pull: always
