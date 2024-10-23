@@ -9,6 +9,7 @@ module.exports = {
     notifyApiKey: process.env.NOTIFY_KEY,
     caseworkerTemplateId: process.env.CASEWORKER_TEMPLATE_ID,
     caseworkerEmail: process.env.CASEWORKER_EMAIL,
+    caseworkerEmailReplyToId: process.env.CASEWORKER_EMAIL_REPLY_TO_ID,
     customerTemplateId: process.env.CUSTOMER_TEMPLATE_ID,
     customerEmailReplyToId: process.env.CUSTOMER_EMAIL_REPLY_TO_ID
   },
