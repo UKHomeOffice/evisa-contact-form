@@ -10,7 +10,7 @@ module.exports = {
     caseworkerTemplateId: process.env.CASEWORKER_TEMPLATE_ID,
     caseworkerEmail: process.env.CASEWORKER_EMAIL,
     customerTemplateId: process.env.CUSTOMER_TEMPLATE_ID,
-    emailReplyToId: process.env.REPLY_TO_EMAIL_ID
+    customerEmailReplyToId: process.env.CUSTOMER_EMAIL_REPLY_TO_ID
   },
   survey: {
     urls: {

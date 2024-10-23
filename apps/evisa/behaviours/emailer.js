@@ -13,7 +13,7 @@ module.exports = class Emailer {
       'caseworkerTemplateId',
       'caseworkerEmail',
       'customerTemplateId',
-      'emailReplyToId'    // [Notify emailReplyToId](https://docs.notifications.service.gov.uk/node.html#emailreplytoid-optional)
+      'customerEmailReplyToId'    // [Notify emailReplyToId](https://docs.notifications.service.gov.uk/node.html#emailreplytoid-optional)
     ];
     let missing = requiredProperties.filter(property => !emailConfig[property]);
     if (missing.length > 0) {
@@ -41,7 +41,7 @@ module.exports = class Emailer {
       emailAddress,
       personalisation,
       EMAIL.RECIPIENT_TYPE.CUSTOMER,
-      this.emailConfig.emailReplyToId
+      this.emailConfig.customerEmailReplyToId
     );
   }
 
