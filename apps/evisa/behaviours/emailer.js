@@ -8,7 +8,14 @@ const { EMAIL } = require('../constants.js');
 module.exports = class Emailer {
   constructor(emailConfig) {
     // Configuration check
-    let requiredProperties = ['notifyApiKey', 'caseworkerTemplateId', 'caseworkerEmail'];
+    let requiredProperties = [
+      'notifyApiKey',
+      'caseworkerTemplateId',
+      'caseworkerEmail',
+      'caseworkerEmailReplyToId',    // [Notify emailReplyToId](https://docs.notifications.service.gov.uk/node.html#emailreplytoid-optional)
+      'customerTemplateId',
+      'customerEmailReplyToId'
+    ];
     let missing = requiredProperties.filter(property => !emailConfig[property]);
     if (missing.length > 0) {
       let errorMsg = missing.map(property => `config.email ${property} is not defined`).join('\n');
@@ -25,7 +32,8 @@ module.exports = class Emailer {
       this.emailConfig.caseworkerTemplateId,
       this.emailConfig.caseworkerEmail,
       personalisation,
-      EMAIL.RECIPIENT_TYPE.CASEWORKER
+      EMAIL.RECIPIENT_TYPE.CASEWORKER,
+      this.emailConfig.caseworkerEmailReplyToId
     );
   }
 
@@ -34,13 +42,22 @@ module.exports = class Emailer {
       this.emailConfig.customerTemplateId,
       emailAddress,
       personalisation,
-      EMAIL.RECIPIENT_TYPE.CUSTOMER
+      EMAIL.RECIPIENT_TYPE.CUSTOMER,
+      this.emailConfig.customerEmailReplyToId
     );
   }
 
-  async _sendEmail(templateId, emailAddress, personalisation, recipientType) {
+  async _sendEmail(templateId, emailAddress, personalisation, recipientType, emailReplyToId = undefined) {
+    let options = {
+      personalisation
+    };
+
+    if (emailReplyToId) {
+      options.emailReplyToId = emailReplyToId;
+    }
+
     try {
-      let response = await this.notifyClient.sendEmail(templateId, emailAddress, { personalisation });
+      let response = await this.notifyClient.sendEmail(templateId, emailAddress, options);
       logger.info(`${recipientType} Email sent successfully: ${response?.data?.id || 'no id'}`);
     } catch (err) {
       let errorDetails = JSON.stringify(err.response?.data || '');
