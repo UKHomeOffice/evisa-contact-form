@@ -1,5 +1,5 @@
 'use strict';
-/* eslint-disable prefer-const */
+/* eslint-disable prefer-const, max-len */
 
 const NotifyClient = require('notifications-node-client').NotifyClient;
 const logger = require('hof/lib/logger')({ env: process.env });
