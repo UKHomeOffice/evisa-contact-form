@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UKHomeOffice/evc.git"
+    "url": "git+https://github.com/UKHomeOffice/evisa-contact-form.git"
   },
   "author": "HOF",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/UKHomeOffice/evc/issues"
+    "url": "https://github.com/UKHomeOffice/evisa-contact-form/issues"
   },
-  "homepage": "https://github.com/UKHomeOffice/evc#readme",
+  "homepage": "https://github.com/UKHomeOffice/evisa-contact-form#readme",
   "dependencies": {
     "accessible-autocomplete": "^2.0.4",
     "bl": "^6.0.12",
