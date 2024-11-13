@@ -52,6 +52,6 @@ Choose this option if you want to use services installed directly on your develo
 
 ### Setup
 
-1. Copy `.env.development` to `.env` and populate it with all the required environment variables for the project.
+1. Copy `env.development` to `.env` and populate it with all the required environment variables for the project.
 2. Install dependencies with `yarn install`.
 3. Start the service in development mode using `yarn run start:dev`.
