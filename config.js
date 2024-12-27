@@ -13,11 +13,7 @@ module.exports = {
     customerTemplateId: process.env.CUSTOMER_TEMPLATE_ID,
     customerEmailReplyToId: process.env.CUSTOMER_EMAIL_REPLY_TO_ID
   },
-  survey: {
-    urls: {
-      feedback: 'https://eforms.homeoffice.gov.uk/outreach/Feedback.ofml?FormName=evc'
-    }
-  },
+  feedbackUrl: process.env.FEEDBACK_URL,
   hosts: {
     acceptanceTests: process.env.ACCEPTANCE_HOST_NAME || `http://localhost:${process.env.PORT || 8080}`
   },
