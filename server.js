@@ -16,7 +16,7 @@ const app = hof(settings);
 
 app.use((req, res, next) => {
   res.locals.htmlLang = 'en';
-  res.locals.feedbackUrl = config.survey.urls.feedback;
+  res.locals.feedbackUrl = config.feedbackUrl;
   if (req.is('multipart/form-data')) {
     try {
       const bb = busboy({
