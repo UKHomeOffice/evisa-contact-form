@@ -333,3 +333,7 @@ ul {
   @extend .govuk-list--bullet;
   padding-bottom: 1rem;
 }
+
+a {
+  @extend .govuk-link;
+}
