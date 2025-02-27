@@ -10,7 +10,8 @@
     "./apps/evisa"
   ],
   "session": {
-    "name": "evisa.hof.sid"
+    "name": "evisa.hof.sid",
+    "ttl": 1800
   },
   "getAccessibility": false,
   "emailerFallback": true
