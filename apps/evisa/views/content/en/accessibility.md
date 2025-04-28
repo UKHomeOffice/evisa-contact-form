@@ -18,7 +18,7 @@ We are always looking to improve the accessibility of this website. If you find 
 
 ## Enforcement procedure
 
-The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, [contact the Equality Advisory and Support Service (EASS).](https://www.equalityadvisoryservice.com/)
+The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, [contact the Equality Advisory and Support Service (EASS)](https://www.equalityadvisoryservice.com/).
 
 If you are in Northern Ireland and are not happy with how we respond to your complaint you can contact the Equalities Commission for Northern Ireland who are responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’) in Northern Ireland.
 
@@ -40,8 +40,6 @@ We are aware of and working to address the following issues. We will update this
 
 On the "Do you know your biometric residence permit number?' when tabbing to any of the options the initial focus moves to the text input. This means that when navigating between options with a keyboard, users will need to use either the up and down arrow keys or Tab and SHIFT + Tab to move between options and text inputs. This does not meet WCAG 2.4.3 - Focus Order.
 
-The session timeout of 30 minutes cannot be changed and the user is not alerted when it is running out. This is for each individual page of the form, not the form overall. This does not meet WCAG2.2 – Enough Time.
-
 If you find an issue that we have yet to identify, please contact us using one of the routes described in the ‘Reporting accessibility problems with this website’ section of this statement.
 
 ### Disproportionate burden
@@ -54,7 +52,7 @@ At this time, this service does not contain any content that is exempt from the 
 
 ## Preparation of this accessibility statement
 
-This statement was prepared on 17 September 2024. It was last reviewed on 17 September 2024.
+This statement was prepared on 17 September 2024. It was last reviewed on 07 March 2025.
 
 This website was last tested on 17 September 2024. The test was carried out internally by the Home Office.
 
