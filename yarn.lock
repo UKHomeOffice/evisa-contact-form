@@ -858,10 +858,10 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.3.0.tgz#f6e14a97858d327252200242d4ccfe522c445522"
   integrity sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==
 
-bl@^6.0.12:
-  version "6.0.19"
-  resolved "https://registry.yarnpkg.com/bl/-/bl-6.0.19.tgz#c4487282bb18768186f02fec6be1be3b5b93677b"
-  integrity sha512-4Ay3A3oDfGg3GGirhl4s62ebtnk0pJZA5mLp672MPKOQXsWvXjEF4dqdXySjJIs7b9OVr/O8aOo0Lm+xdjo2JA==
+bl@^6.1.0:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/bl/-/bl-6.1.1.tgz#9018c1ae0f8cc6b06f9261135bfc678d5c8608b5"
+  integrity sha512-yYc8UIHrd1ZTLgNBIE7JjMzUPZH+dec3q7nWkrSHEbtvkQ3h6WKC63W9K5jthcL5EXFyMuWYq+2pq5WMSIgFHw==
   dependencies:
     "@types/readable-stream" "^4.0.0"
     buffer "^6.0.3"
