@@ -827,13 +827,22 @@ aws-sdk@^2.2.36:
     uuid "8.0.0"
     xml2js "0.6.2"
 
-axios@^1.5.1, axios@^1.7.2:
+axios@^1.7.2:
   version "1.7.9"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.9.tgz#d7d071380c132a24accda1b2cfc1535b79ec650a"
   integrity sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw==
   dependencies:
     follow-redirects "^1.15.6"
     form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
+axios@^1.8.2:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.11.0.tgz#c2ec219e35e414c025b2095e8b8280278478fdb6"
+  integrity sha512-1Lx3WLFQWm3ooKDYZD1eXmoGO9fxYQjrycfHFC8P0sCfQVXyROp0p9PFWBehewBOdCwHc+f/b8I0fMto5eSfwA==
+  dependencies:
+    follow-redirects "^1.15.6"
+    form-data "^4.0.4"
     proxy-from-env "^1.1.0"
 
 balanced-match@^1.0.0:
@@ -2517,6 +2526,17 @@ form-data@^4.0.0:
     es-set-tostringtag "^2.1.0"
     mime-types "^2.1.12"
 
+form-data@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.4.tgz#784cdcce0669a9d68e94d11ac4eea98088edd2c4"
+  integrity sha512-KrGhL9Q4zjj0kiUt5OO4Mr/A/jlI2jDYs5eHBpYHPcBEVSiipAvn2Ko2HnPe20rmcuuvMHNdZFp+4IlGTMF0Ow==
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    es-set-tostringtag "^2.1.0"
+    hasown "^2.0.2"
+    mime-types "^2.1.12"
+
 forwarded@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
@@ -2884,13 +2904,13 @@ hmac-drbg@^1.0.1:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hof@~22.1.1:
-  version "22.1.3"
-  resolved "https://registry.yarnpkg.com/hof/-/hof-22.1.3.tgz#5e39dd9def5384d8b4b1ea202ec8c363b9a5cb14"
-  integrity sha512-CUn+XXqgDsZD9LEeRtTzpJowZHruKhtlonJs+PniRtBs3erA0j3pO0QIsmrQlC9/rG+IpGURkceNo13246mNvA==
+hof@~22.7.7:
+  version "22.7.7"
+  resolved "https://registry.yarnpkg.com/hof/-/hof-22.7.7.tgz#708ca70a108066d4300d662d2c6485fa96d89d7f"
+  integrity sha512-XUruf3cFfYK1PPCjPc8X4eww8BiCbaHd/rHSXEXaiAOechgwTusdvSd0hSIQkWVDVEQrsuSrXKzpb+xumkA7OA==
   dependencies:
     aliasify "^2.1.0"
-    axios "^1.5.1"
+    axios "^1.8.2"
     bluebird "^3.7.2"
     body-parser "^1.15.1"
     browserify "^17.0.0"
