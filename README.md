@@ -9,7 +9,7 @@
 
 This form is built using
 - [HOF framework](https://github.com/UKHomeOfficeForms/hof)
-   - hof v21.0.1
+   - hof v22.8.4
 - [Gov.uk Notify](https://www.notifications.service.gov.uk) to send notification emails
 - [File Vault](https://github.com/UKHomeOffice/file-vault) to store and retrieve uploaded files
 
