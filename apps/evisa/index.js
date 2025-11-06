@@ -63,7 +63,6 @@ module.exports = {
       clearSession: true, // triggers hof/components/clear-session to clear the session
       backLink: false
     },
-    '/session-timeout': {},
     '/exit': {}
   }
 };
