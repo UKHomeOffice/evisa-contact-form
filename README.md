@@ -46,7 +46,7 @@ Choose this option if you want to use services installed directly on your develo
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/en/)
-   - Node v20.15.1 (LTS)
+   - for supported versions see `engines.node` in [package.json](package.json)
 - [Redis server](http://redis.io/download) running on default port 6379
 - [File Vault](https://github.com/UKHomeOffice/file-vault) Service - running port 3000
 

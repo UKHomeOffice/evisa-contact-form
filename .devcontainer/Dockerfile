@@ -1,10 +1,9 @@
-FROM node:20.16.0-alpine3.20@sha256:eb8101caae9ac02229bd64c024919fe3d4504ff7f329da79ca60a04db08cef52
+FROM node:24.18.0-alpine3.24@sha256:4ba75f835bb8802193e4c114572113d4b26f95f6f094f4b5229d2a77773e0afc
 
 USER root
 
 # Update packages as a result of Anchore security vulnerability checks
-RUN apk update && \
-    apk add --upgrade gnutls binutils nodejs npm apk-tools libjpeg-turbo libcurl libx11 libxml2
+RUN apk upgrade --no-cache
 
 # Setup nodejs group & nodejs user
 RUN addgroup --system nodejs --gid 998 && \
