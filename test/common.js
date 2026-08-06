@@ -14,13 +14,18 @@ process.env.AWS_ACCESS_KEY_ID = 'test';
 global.reqres = require('hof').utils.reqres;
 
 const sinonChai = require('sinon-chai');
-// chai is packaged in ES Modules and must be dynamically loaded
-(async () => {
-  const chai = await import('chai');
-  global.chai = chai.use(sinonChai);
-  global.should = chai.should();
-  global.expect = chai.expect;
-})();
+// chai is packaged in ES Modules and must be dynamically loaded.
+// Use Mocha root hooks so globals are ready before any test runs.
+module.exports.mochaHooks = {
+  async beforeAll() {
+    const chaiModule = await import('chai');
+    const chai = chaiModule.default || chaiModule;
+    const sinonChaiPlugin = sinonChai.default || sinonChai;
+    global.chai = chai.use(sinonChaiPlugin);
+    global.should = chai.should();
+    global.expect = chai.expect;
+  }
+};
 
 // "sinon" provides framework agnostic test spies, stubs and mocks
 global.sinon = require('sinon');
