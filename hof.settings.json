@@ -13,5 +13,7 @@
     "name": "evisa.hof.sid"
   },
   "getAccessibility": false,
-  "emailerFallback": true
+  "emailerFallback": true,
+  "hasGoogleAnalytics": true,
+  "showCookiesBanner": true
 }
