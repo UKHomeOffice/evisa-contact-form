@@ -12,8 +12,9 @@ module.exports = class Emailer {
       'notifyApiKey',
       'caseworkerTemplateId',
       'caseworkerEmail',
+      'caseworkerEmailReplyToId',    // [Notify emailReplyToId](https://docs.notifications.service.gov.uk/node.html#emailreplytoid-optional)
       'customerTemplateId',
-      // Notify emailReplyToId is optional and is only sent when configured.
+      'customerEmailReplyToId'
     ];
     let missing = requiredProperties.filter(property => !emailConfig[property]);
     if (missing.length > 0) {
