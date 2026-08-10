@@ -2,8 +2,7 @@
 /* eslint-disable max-len */
 
 const _ = require('lodash');
-const config = require('../../../config');
-const fileUploadConfig = require('../../assets/js/file-upload-config');
+const fileUploadConfig = require('../../../assets/js/file-upload-config');
 const ImageUpload = require('../models/image-upload');
 const { SESSION, MAX_FILE_UPLOADS } = require('../constants');
 
