@@ -2,6 +2,7 @@
 
 const hof = require('hof');
 const config = require('./config.js');
+const fileUploadConfig = require('./assets/js/file-upload-config');
 const busboy = require('busboy'); // module for parsing incoming HTML form data
 const logger = require('hof/lib/logger')({ env: config.env });
 let settings = require('./hof.settings');
@@ -17,15 +18,15 @@ app.use((req, res, next) => {
   res.locals.htmlLang = 'en';
   res.locals.feedbackUrl = config.feedbackUrl;
   res.locals.upload = {
-    allowedMimeTypes: config.upload.allowedMimeTypes.join(','),
-    maxFileSizeInBytes: String(config.upload.maxFileSizeInBytes)
+    allowedMimeTypes: fileUploadConfig.allowedMimeTypes.join(','),
+    maxFileSizeInBytes: String(fileUploadConfig.maxFileSizeInBytes)
   };
   if (req.is('multipart/form-data')) {
     try {
       const bb = busboy({
         headers: req.headers,
         limits: {
-          fileSize: config.upload.maxFileSizeInBytes
+          fileSize: fileUploadConfig.maxFileSizeInBytes
         }
       });
 
