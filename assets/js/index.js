@@ -45,11 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Enable/Disable the file-selector and upload buttons
   const fileSelector = document.getElementById('file-selector');
   if (fileSelector) {
-    const allowedMimeTypes = (fileUploadConfig.allowedMimeTypes || '')
-      .split(',')
-      .filter(Boolean);
-    const maxFileSizeInBytes = fileUploadConfig.maxFileSizeInBytes;
-
     const setDisabled = (el, disabled) => {
       el.disabled = el.ariaDisabled = disabled;
     };
@@ -66,11 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const isSelected = fileSelector.files.length > 0;
         if (isSelected) {
           const fileInfo = fileSelector.files[0];
-          if (!allowedMimeTypes.includes(fileInfo.type)) {
+          if (!fileUploadConfig.allowedMimeTypes.includes(fileInfo.type)) {
             uploadStatusHandler('error', 'fileType');
             return;
           }
-          if (fileInfo.size > maxFileSizeInBytes) {
+          if (fileInfo.size > fileUploadConfig.maxFileSizeInBytes) {
             uploadStatusHandler('error', 'maxFileSize');
             return;
           }
