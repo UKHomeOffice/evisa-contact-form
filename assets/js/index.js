@@ -4,7 +4,6 @@
 require('hof/frontend/themes/gov-uk/client-js');
 
 const accessibleAutocomplete = require('accessible-autocomplete');
-const config = require('../../config.js');
 
 document.addEventListener('DOMContentLoaded', () => {
   // Apply the "accessible-autocomplete" plugin to all (form) elements tagged with the class "typeahead"
@@ -45,6 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Enable/Disable the file-selector and upload buttons
   const fileSelector = document.getElementById('file-selector');
   if (fileSelector) {
+    const uploadGroup = document.getElementById('file-upload-group');
+    const allowedMimeTypes = (uploadGroup?.dataset.allowedMimeTypes || '')
+      .split(',')
+      .filter(Boolean);
+    const maxFileSizeInBytes = Number(uploadGroup?.dataset.maxFileSizeInBytes || 0);
+
     const setDisabled = (el, disabled) => {
       el.disabled = el.ariaDisabled = disabled;
     };
@@ -61,11 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const isSelected = fileSelector.files.length > 0;
         if (isSelected) {
           const fileInfo = fileSelector.files[0];
-          if ( !config.upload.allowedMimeTypes.includes(fileInfo.type) ) {
+          if (!allowedMimeTypes.includes(fileInfo.type)) {
             uploadStatusHandler('error', 'fileType');
             return;
           }
-          if (fileInfo.size > config.upload.maxFileSizeInBytes) {
+          if (fileInfo.size > maxFileSizeInBytes) {
             uploadStatusHandler('error', 'maxFileSize');
             return;
           }
