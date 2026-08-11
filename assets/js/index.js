@@ -6,6 +6,16 @@ require('hof/frontend/themes/gov-uk/client-js');
 const accessibleAutocomplete = require('accessible-autocomplete');
 const fileUploadConfig = require('./file-upload-config');
 
+const ALLOWED_IMAGE_EXTENSIONS = /\.(jpe?g|png|gif)$/i;
+
+const isAllowedImageFile = fileInfo => {
+  const mimeType = (fileInfo.type || '').toLowerCase();
+  const filename = fileInfo.name || '';
+
+  return fileUploadConfig.allowedMimeTypes.includes(mimeType)
+    || ((mimeType === '' || mimeType === 'application/octet-stream') && ALLOWED_IMAGE_EXTENSIONS.test(filename));
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   // Apply the "accessible-autocomplete" plugin to all (form) elements tagged with the class "typeahead"
   document.querySelectorAll('.typeahead').forEach(function applyTypeahead(element) {
@@ -61,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isSelected = fileSelector.files.length > 0;
         if (isSelected) {
           const fileInfo = fileSelector.files[0];
-          if (!fileUploadConfig.allowedMimeTypes.includes(fileInfo.type)) {
+          if (!isAllowedImageFile(fileInfo)) {
             uploadStatusHandler('error', 'fileType');
             return;
           }

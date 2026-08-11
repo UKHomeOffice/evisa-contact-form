@@ -6,6 +6,16 @@ const fileUploadConfig = require('../../../assets/js/file-upload-config');
 const ImageUpload = require('../models/image-upload');
 const { SESSION, MAX_FILE_UPLOADS } = require('../constants');
 
+const ALLOWED_IMAGE_EXTENSIONS = /\.(jpe?g|png|gif)$/i;
+
+const isAllowedImageFile = file => {
+  const mimetype = (file.mimetype || '').toLowerCase();
+  const filename = file.name || '';
+
+  return fileUploadConfig.allowedMimeTypes.includes(mimetype)
+    || ((mimetype === '' || mimetype === 'application/octet-stream') && ALLOWED_IMAGE_EXTENSIONS.test(filename));
+};
+
 const uploadsInfo = session => {
   const sessionImages = session.get(SESSION.IMAGES_UPLOADED);
   const uploadCount = sessionImages && sessionImages.length ? sessionImages.length : 0;
@@ -52,7 +62,7 @@ module.exports = fieldName => superclass => class extends superclass {
 
       // Is file type (mimetype) in whitelist?
       const mimetype = fileToBeValidated.mimetype;
-      const invalidMimetype = !fileUploadConfig.allowedMimeTypes.includes(mimetype);
+      const invalidMimetype = !isAllowedImageFile(fileToBeValidated);
       if (invalidMimetype) {
         return validationErrorFn('fileType', [mimetype]);
       }
