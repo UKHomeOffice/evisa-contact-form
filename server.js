@@ -17,6 +17,10 @@ const app = hof(settings);
 app.use((req, res, next) => {
   res.locals.htmlLang = 'en';
   res.locals.feedbackUrl = config.feedbackUrl;
+  res.locals.upload = {
+    allowedMimeTypes: fileUploadConfig.allowedMimeTypes.join(','),
+    maxFileSizeInBytes: String(fileUploadConfig.maxFileSizeInBytes)
+  };
   if (req.is('multipart/form-data')) {
     try {
       const bb = busboy({
