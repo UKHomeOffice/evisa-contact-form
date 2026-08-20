@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 
 const _ = require('lodash');
-const config = require('../../../config');
+const fileUploadConfig = require('../../../assets/js/file-upload-config');
 const ImageUpload = require('../models/image-upload');
 const { SESSION, MAX_FILE_UPLOADS } = require('../constants');
 
@@ -52,14 +52,14 @@ module.exports = fieldName => superclass => class extends superclass {
 
       // Is file type (mimetype) in whitelist?
       const mimetype = fileToBeValidated.mimetype;
-      const invalidMimetype = !config.upload.allowedMimeTypes.includes(mimetype);
+      const invalidMimetype = !fileUploadConfig.allowedMimeTypes.includes(mimetype);
       if (invalidMimetype) {
         return validationErrorFn('fileType', [mimetype]);
       }
 
       // Is file size within server limits?
       const size = fileToBeValidated.size;
-      const sizeTooBig = size > config.upload.maxFileSizeInBytes;
+      const sizeTooBig = size > fileUploadConfig.maxFileSizeInBytes;
       const sizeBeyondServerLimits = fileToBeValidated.truncated;
       const invalidSize = sizeTooBig || sizeBeyondServerLimits;
       if (invalidSize) {

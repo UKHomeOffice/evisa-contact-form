@@ -1,6 +1,8 @@
 'use strict';
 /* eslint no-process-env: 0 */
 
+const fileUploadConfig = require('./assets/js/file-upload-config');
+
 module.exports = {
   env: process.env.NODE_ENV || 'production',
   PRETTY_DATE_FORMAT: 'Do MMMM YYYY',
@@ -29,13 +31,7 @@ module.exports = {
     secret: process.env.KEYCLOAK_SECRET
   },
   upload: {
-    maxFileSizeInBytes: (25 * 1024 * 1024) + 4096, // 25MiB plus slack
-    hostname: process.env.FILE_VAULT_URL,
-    allowedMimeTypes: [
-      'image/png',
-      'image/jpg',
-      'image/jpeg',
-      'image/gif'
-    ]
+    ...fileUploadConfig,
+    hostname: process.env.FILE_VAULT_URL
   }
 };

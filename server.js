@@ -2,6 +2,7 @@
 
 const hof = require('hof');
 const config = require('./config.js');
+const fileUploadConfig = require('./assets/js/file-upload-config');
 const busboy = require('busboy'); // module for parsing incoming HTML form data
 const logger = require('hof/lib/logger')({ env: config.env });
 let settings = require('./hof.settings');
@@ -21,7 +22,7 @@ app.use((req, res, next) => {
       const bb = busboy({
         headers: req.headers,
         limits: {
-          fileSize: config.upload.maxFileSizeInBytes
+          fileSize: fileUploadConfig.maxFileSizeInBytes
         }
       });
 
