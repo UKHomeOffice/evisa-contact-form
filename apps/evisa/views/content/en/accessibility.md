@@ -52,7 +52,7 @@ At this time, this service does not contain any content that is exempt from the 
 
 ## Preparation of this accessibility statement
 
-This statement was prepared on 17 September 2024. It was last reviewed on 07 March 2025.
+This statement was prepared on 17 September 2024. It was last reviewed on 02 September 2026.
 
 This website was last tested on 17 September 2024. The test was carried out internally by the Home Office.
 
