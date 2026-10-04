@@ -287,7 +287,7 @@ Given('Test data has been created for {string} scenarios', async ({ applicantSta
   applicantState.product = product;
 });
 
-Given('I selected the data for scenario {string} - {string}', async ({ applicantState }, scenario: string, description: string) => {
+function selectScenarioData(applicantState: ApplicantState, scenario: string, description: string): void {
   if (applicantState.product !== c.PRODUCT) throw new Error('Create EVC test data before selecting a scenario');
   let data: Omit<EVCApplicant, 'scenarioId' | 'description'>;
   switch (scenario) {
@@ -313,6 +313,18 @@ Given('I selected the data for scenario {string} - {string}', async ({ applicant
     default: throw new Error(`Unknown EVC scenario ID: ${scenario}`);
   }
   applicantState.applicant = { scenarioId: scenario, description, ...data };
+}
+
+Given('I selected the data for scenario {string} - {string}', async ({ applicantState }, scenario: string, description: string) => {
+  selectScenarioData(applicantState, scenario, description);
+});
+
+When('I select the EVC scenario {string}', async ({ applicantState, $testInfo }, description: string) => {
+  const contexts = $testInfo.titlePath.filter(title => Object.prototype.hasOwnProperty.call(c.DESCRIPTION_SCENARIOS, title));
+  if (contexts.length !== 1) throw new Error(`Expected one EVC outline title for description: ${description}`);
+  const descriptions = c.DESCRIPTION_SCENARIOS[contexts[0]];
+  if (!Object.prototype.hasOwnProperty.call(descriptions, description)) throw new Error(`Unknown EVC description: ${description}`);
+  selectScenarioData(applicantState, descriptions[description], description);
 });
 
 When('I visit evc application Start now page', async ({ pages }) => {
@@ -323,6 +335,10 @@ When('I visit evc application Start now page', async ({ pages }) => {
 Given('I visit the EVC Homepage and click the guidance link', async ({ pages }) => {
   await pages.evcStartPage.openEvcStartNowPage();
   await pages.evcStartPage.acceptCookies();
+  await pages.evcStartPage.clickLinkEvcGuidanceOnGovUK();
+});
+
+When('I click the EVC guidance link', async ({ pages }) => {
   await pages.evcStartPage.clickLinkEvcGuidanceOnGovUK();
 });
 
@@ -399,8 +415,6 @@ When('I can remove {int} file from the table', async ({ pages }, row: number) =>
 
 When('I complete E-Visa form up your details page', async ({ pages, applicantState }) => {
   const data = applicant(applicantState);
-  await pages.evcStartPage.openEvcStartNowPage();
-  await pages.evcStartPage.acceptCookies();
   await pages.evcStartPage.clickStartNowBtn();
   switch (data.scenarioId) {
     case '12':

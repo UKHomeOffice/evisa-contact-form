@@ -84,6 +84,28 @@ export class ConstantsLib {
         '19': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, uploadFiles: ConstantsLib.INVALID_FILES }
     };
 
+    static readonly DESCRIPTION_SCENARIOS: Readonly<Record<string, Readonly<Record<string, string>>>> = {
+        'E2E 1 - Verify the user can delete the uploaded file and continue': { 'Remove an file from uploaded files': '16' },
+        'E2E 2 - Verify the user clicks on continue by uploading a valid file type will navigates to Confirmation page': { 'Service link check from Confirmation page': '17' },
+        '3 - Verify the user can navigate to Your details page with a valid BRP number': { 'VALID BRP number validation': '1' },
+        '4 - Verify the user can navigate to Reference number page and without entering BRP number': { 'No BRP number validation': '2' },
+        '5 - Verify the back navigation from Your details will navigates to BRP number page': { 'Back navigation to BRP number page': '3' },
+        '6 - Verify the back navigation from Your details will navigates to BRP number page': { 'Back navigation to BRP number page': '4' },
+        '7 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page': { 'No BRP number validation': '5' },
+        '8 - Verify the back navigation from Reference number will navigates to BRP number page': { 'Back navigation to BRP number page from Reference page': '6' },
+        '9 - Verify the user can navigates to Your details page from Reference number page when he provide correct details': {
+            'Unique reference number navigation from Reference page validation': '7',
+            'Passport number navigation from Reference page validation': '8',
+            'Other navigation from Reference page validation': '9',
+            'None of the above navigation from Reference page validation': '10'
+        },
+        '10 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page': { 'Unique reference number navigation from Reference page validation': '11' },
+        '11 - Verify the back navigation from File Upload will navigates to Your details page': { 'VALID BRP number validation': '12' },
+        '12 - Verify the user clicks on continue by uploading a valid file type will navigates to Confirmation page': { 'Upload valid file types': '13' },
+        '13 - Verify the user clicks on continue without uploading any files will navigates to Confirmation page': { 'Complete E-Visa without uploading any files': '14' },
+        '14 - Verify the user can upload maximum of 5 files': { 'Upload a maximum of 5 files': '15' }
+    };
+
     static longDetails(contactNumber: string): { fullName: string; emailAddress: string; contactNumber: string; question: string } {
         const alphabet = (length: number): string => Array.from({ length }, () => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
         const emailAddress = alphabet(ConstantsLib.LONG_EMAIL_LOCAL_LENGTH) + ConstantsLib.LONG_EMAIL_SUFFIX;
