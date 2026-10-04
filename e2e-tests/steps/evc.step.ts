@@ -1,11 +1,9 @@
 import { DataTable } from '@cucumber/cucumber';
 import { createBdd } from 'playwright-bdd';
 import { test } from '../fixture/fixtures';
-import { ConstantsLib as c, EvcContents as content } from '../utility-helper/constants-lib';
+import { ConstantsLib as c, EvcContents as evcContents } from '../utility-helper/constants-lib';
 
 export const { Given, When, Then } = createBdd(test);
-
-// ********************************************************* Step Definitions ****************************************************************************
 
 Given('I visit the eVisa contact form Page', async ({ pages }) => {
     await pages.evcStartPage.openEvcStartNowPage();
@@ -181,7 +179,7 @@ Then('the upload limit should be reached', async ({ pages }) => {
 });
 
 Then('the {string} page should display the expected content', async ({ page, pages }, title: string) => {
-    await pages.basePage.validateBanners(content.ACCESS_YOUR_E_VISA_BANNER, content.BETA_BANNER);
+    await pages.basePage.validateBanners(evcContents.ACCESS_YOUR_E_VISA_BANNER, evcContents.BETA_BANNER);
     await pages.basePage.assertPageTitle(page, title);
     switch (title) {
         case await pages.evcStartPage.expectedPageTitle():
