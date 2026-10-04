@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from '@playwright/test';
 import path from 'node:path';
 import { basePage } from './base-page';
+import { EvcContents as content, EvcErrorMessages as errors } from '../utility-helper/constants-lib';
 
 export class evcUploadPage extends basePage {
   readonly uploadPageHeaderText: Locator;
@@ -76,6 +77,10 @@ export class evcUploadPage extends basePage {
     await this.uploadBackLinkBtn.click();
   }
 
+  async uploadContinue(): Promise<void> {
+    await this.uploadContinueBtn.click();
+  }
+
   async uploadFilesCount(): Promise<number> {
     return this.uploadedRows.count();
   }
@@ -89,5 +94,28 @@ export class evcUploadPage extends basePage {
         .click();
       await expect(this.uploadedRows).toHaveCount(count - 1);
     }
+  }
+
+  async uploadPageContent(): Promise<void> {
+    await this.assertUrlEndPoints('upload');
+    await this.assertText(this.uploadPageHeaderText, content.UPLOAD_HEADER);
+    await this.assertText(this.uploadScreenShotsText, content.UPLOAD_SCREENSHOTS_TEXT);
+    await this.assertText(this.uploadCannotUploadText, content.UPLOAD_CANNOT_UPLOAD_TEXT);
+    await this.assertText(this.uploadFilesLargerText, content.UPLOAD_FILE_SIZE_TEXT);
+    await this.assertText(this.uploadVideosText, content.UPLOAD_VIDEOS_TEXT);
+    await this.assertText(this.uploadAnImageText, content.UPLOAD_IMAGE_TEXT);
+    await this.assertText(this.uploadAcceptedFilesText, content.UPLOAD_ACCEPTED_FILES_TEXT);
+    await this.assertText(this.uploadNoFilesText, content.UPLOAD_NO_FILES_UPLOADED_TEXT);
+  }
+
+  async validateMaxFilesUploaded(): Promise<void> {
+    await expect(this.chooseFileInput).toBeDisabled();
+    await expect(this.uploadBtn).toBeDisabled();
+    await this.assertText(this.maxUploadText, content.UPLOAD_MAX_FILES_UPLOADED_TEXT);
+  }
+
+  async assertUploadErrorMessages(errorType: string): Promise<void> {
+    if (errorType === 'file size over 25MB') await expect(this.maxFileSizeError).toContainText(errors.UPLOAD_FILE_SIZE_ERROR);
+    else if (errorType === 'invalid file type') await expect(this.fileTypeError).toContainText(errors.UPLOAD_INVALID_FILETYPE_ERROR);
   }
 }

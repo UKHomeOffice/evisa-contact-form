@@ -4,12 +4,12 @@ This test-only migration mirrors `hof-e2e-auto-tests/Function/src/main` EVC cove
 
 ## Structure
 
-- `features/`: EVC journey and validation features. All features navigate first and use the original Scenario Outline titles with description-only Examples; an explicit journey Given distinguishes repeated descriptions without relying on titles, Rules, or tags.
-- `pages/`: all six EVC page objects, plus shared `base-page.ts`.
-- `fixture/fixture.ts`: every page and test-scoped applicant state.
-- `steps/evc.step.ts`: direct page-object steps, all 19 journey data variants in the inline scenario-selection When switch, shared journey helpers, and content/error assertions.
+- `features/`: EVC journey and validation features. Each scenario starts with an explicit navigation Given, following LMR, and uses description-only Examples. Given establishes setup, When performs actions, and Then asserts outcomes. Existing route-specific titles, descriptions, tags, and expected values are retained.
+- `pages/`: all six EVC page objects own their actions, form completion, route checks, content assertions, and validation errors; `base-page.ts` owns shared controls and assertions.
+- `fixture/fixtures.ts`: LMR-style pages-only fixture, registering every page object.
+- `steps/evc.step.ts`: LMR-style setup Given definitions, action When definitions with the description-driven form-completion switch first, and outcome/validation Then definitions. Page methods receive scalar constants directly. Description and journey choices are passed explicitly to the actions that need them; no applicant-data model or shared scenario state is required.
 - `test-data/user-upload-files/`: byte-identical source upload assets.
-- `utility-helper/constants-lib.ts`: shared applicant defaults, repeated inputs, generated boundary data, applicant types, description and journey string lists, and content/error constants.
+- `utility-helper/constants-lib.ts`: repeated scalar inputs, generated boundary data, and content/error constants.
 
 ## Prerequisites
 

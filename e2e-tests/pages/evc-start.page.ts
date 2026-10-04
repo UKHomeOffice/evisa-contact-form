@@ -1,5 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { basePage } from './base-page';
+import { EvcContents as content } from '../utility-helper/constants-lib';
 
 export class evcStartPage extends basePage {
   readonly startNowHeaderText: Locator;
@@ -55,5 +56,15 @@ export class evcStartPage extends basePage {
 
   async clickStartNowBtn(): Promise<void> {
     await this.startNowBtn.click();
+  }
+
+  async startNowPageContent(): Promise<void> {
+    await this.assertUrlEndPoints('start');
+    await this.assertText(this.startNowHeaderText, content.START_NOW_HEADER);
+    await this.assertText(this.startNowVisaAndImmigrationText, content.START_NOW_IMMIGRATION_TEXT);
+    await this.assertText(this.startNowWorkingDaysText, content.START_NOW_WORKING_DAYS_TEXT);
+    await this.assertText(this.startNowYouNeedText, content.START_NOW_YOU_NEED_TEXT);
+    await this.assertText(this.startNowEmailAddressText, content.START_NOW_EMAIL_ADDRESS_TEXT);
+    await this.assertText(this.startNowYourQuestionText, content.START_NOW_YOUR_QUESTION_TEXT);
   }
 }

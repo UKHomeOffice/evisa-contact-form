@@ -56,6 +56,11 @@ export class basePage {
     await this.assertText(locator, error);
   }
 
+  async assertEVisaFormInput(mainError: Locator, fieldError: Locator, error: string): Promise<void> {
+    await this.assertText(mainError, error);
+    await expect(fieldError).toContainText(error);
+  }
+
   async validateBanners(serviceName: string, betaText: string): Promise<void> {
     await this.assertText(this.accessYourEVisaBanner, serviceName);
     await expect(this.betaBannerText).toBeVisible();

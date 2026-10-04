@@ -1,175 +1,167 @@
 @EvcRegression
 @EvcRegressionCI
 Feature: EVC - Electronic Visa
-  As a Home Office application user,
-  I can navigate through the E-Visa form pages.
+  As someone asking a question about accessing my eVisa,
+  I can complete the contact form and navigate between its pages.
 
-  Background:
-    Given I visit evc application Start now page
-
-  Scenario Outline: E2E 1 - Verify the user can delete the uploaded file and continue
-    When I select the EVC scenario "<Description>"
-    And I complete E-Visa form up your details page
-    And I can upload files from Upload page
-    And I can remove 1 file from the table
-    And I continue from Upload page
-    Then the user should be on the "Question sent – GOV.UK" page
-    Examples:
-      | Description                        |
-      | Remove an file from uploaded files |
-
-  Scenario Outline: E2E 2 - Verify the user clicks on continue by uploading a valid file type will navigates to Confirmation page
-    When I select the EVC scenario "<Description>"
-    And I complete E-Visa form up your details page
-    And I can upload files from Upload page
-    And I continue from Upload page
-    Then I validate the feedback link
+  Scenario Outline: Remove an uploaded file and submit the question
+    Given I visit the eVisa contact form Page
+    When I fill out the answers to EVC form pertaining to "<Description>"
+    And I attach any selected files for "<Description>"
+    And I remove uploaded file 1
+    And I submit my question
+    Then I am navigated to "Question sent – GOV.UK" page
     Examples:
       | Description                               |
-      | Service link check from Confirmation page |
+      | Remove an uploaded file before submitting |
 
-  Scenario Outline: 3 - Verify the user can navigate to Your details page with a valid BRP number
-    Given I use the "BRP number" EVC journey
-    When I select the EVC scenario "<Description>"
-    And I continue from Start Now page
-    And I select BRP number option and continue
-    Then the user should be on the "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
+  Scenario Outline: Display the feedback link after submission
+    Given I visit the eVisa contact form Page
+    When I fill out the answers to EVC form pertaining to "<Description>"
+    And I attach any selected files for "<Description>"
+    And I submit my question
+    Then the feedback link should be available
     Examples:
-      | Description                 |
-      | VALID BRP number validation |
+      | Description                              |
+      | Check the feedback link after submission |
 
-  Scenario Outline: 4 - Verify the user can navigate to Reference number page and without entering BRP number
-    Given I use the "Reference number" EVC journey
-    When I select the EVC scenario "<Description>"
-    And I continue from Start Now page
-    And I select BRP number option and continue
-    Then the user should be on the "Do you have any of the following reference numbers? – Ask a question about getting access to your eVisa – GOV.UK" page
+  Scenario Outline: Submit without files using a passport number
+    Given I visit the eVisa contact form Page
+    When I fill out the answers to EVC form pertaining to "<Description>"
+    And I attach any selected files for "<Description>"
+    And I submit my question
+    Then I am navigated to "Question sent – GOV.UK" page
     Examples:
-      | Description              |
-      | No BRP number validation |
+      | Description                                |
+      | Submit with a passport number and no files |
 
-  Scenario Outline: 5 - Verify the back navigation from Your details will navigates to BRP number page
-    Given I use the "BRP number" EVC journey
-    When I select the EVC scenario "<Description>"
-    And I continue from Start Now page
-    And I select BRP number option and continue
-    Then the user should be on the "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
-    When User click on the back button from Your details page
-    Then the user should be on the "Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK" page
+  Scenario Outline: Submit without a reference number or files
+    Given I visit the eVisa contact form Page
+    When I fill out the answers to EVC form pertaining to "<Description>"
+    And I attach any selected files for "<Description>"
+    And I submit my question
+    Then I am navigated to "Question sent – GOV.UK" page
+    Examples:
+      | Description                                |
+      | Submit without a reference number or files |
+
+  Scenario Outline: Submit the maximum of five files
+    Given I visit the eVisa contact form Page
+    When I fill out the answers to EVC form pertaining to "<Description>"
+    And I attach any selected files for "<Description>"
+    Then the upload limit should be reached
+    When I submit my question
+    Then I am navigated to "Question sent – GOV.UK" page
+    Examples:
+      | Description                |
+      | Submit five uploaded files |
+
+  Scenario Outline: Return from Upload to Your details
+    Given I visit the eVisa contact form Page
+    When I fill out the answers to EVC form pertaining to "<Description>"
+    And I go back from Upload
+    Then I am navigated to "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
     Examples:
       | Description                        |
-      | Back navigation to BRP number page |
+      | Return from Upload to Your details |
 
-  Scenario Outline: 6 - Verify the back navigation from Your details will navigates to BRP number page
-    Given I use the "Reference number" EVC journey
-    When I select the EVC scenario "<Description>"
-    And I continue from Start Now page
-    And I select BRP number option and continue
-    And the user choose his reference option and continue
-    Then the user should be on the "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
-    When User click on the back button from Your details page
-    Then the user should be on the "Do you have any of the following reference numbers? – Ask a question about getting access to your eVisa – GOV.UK" page
+  Scenario Outline: Return from reference numbers to the BRP number page
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    And I answer the BRP number question and continue for "<Description>" on the "Reference number" journey
+    And I go back from the reference numbers page
+    Then I am navigated to "Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK" page
     Examples:
-      | Description                        |
-      | Back navigation to BRP number page |
+      | Description                                          |
+      | Return from reference numbers to the BRP number page |
 
-  Scenario Outline: 7 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page
-    Given I use the "Your details" EVC journey
-    When I select the EVC scenario "<Description>"
-    And I continue from Start Now page
-    And I select BRP number option and continue
-    And I enter valid user details and continue
-    Then the user should be on the "Upload files (optional) – Ask a question about getting access to your eVisa – GOV.UK" page
+  Scenario Outline: Continue to Your details using a reference number option
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    And I answer the BRP number question and continue for "<Description>" on the "Reference number" journey
+    And I provide reference details and continue for "<Description>" on the "Reference number" journey
+    Then I am navigated to "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
     Examples:
-      | Description              |
-      | No BRP number validation |
+      | Description                             |
+      | Continue with a unique reference number |
+      | Continue with a passport number         |
+      | Continue with another reference number  |
+      | Continue without a reference number     |
 
-  Scenario Outline: 8 - Verify the back navigation from Reference number will navigates to BRP number page
-    When I select the EVC scenario "<Description>"
-    And I continue from Start Now page
-    And I select BRP number option and continue
-    And User click on the back button from Reference number page
-    Then the user should be on the "Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK" page
+  Scenario Outline: Continue to Upload without a reference number
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    And I answer the BRP number question and continue for "<Description>" on the "Your details" journey
+    And I provide reference details and continue for "<Description>" on the "Your details" journey
+    And I enter valid contact details and continue
+    Then I am navigated to "Upload files (optional) – Ask a question about getting access to your eVisa – GOV.UK" page
+    Examples:
+      | Description                                      |
+      | Enter contact details without a reference number |
+
+  Scenario Outline: Continue to Your details with a valid BRP number
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    And I answer the BRP number question and continue for "<Description>" on the "BRP number" journey
+    Then I am navigated to "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
+    Examples:
+      | Description                      |
+      | Continue with a valid BRP number |
+
+  Scenario Outline: Continue to reference numbers without a BRP number
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    And I answer the BRP number question and continue for "<Description>" on the "Reference number" journey
+    Then I am navigated to "Do you have any of the following reference numbers? – Ask a question about getting access to your eVisa – GOV.UK" page
+    Examples:
+      | Description                   |
+      | Continue without a BRP number |
+
+  Scenario Outline: Return from Your details to the BRP number page
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    And I answer the BRP number question and continue for "<Description>" on the "BRP number" journey
+    Then I am navigated to "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
+    When I go back from Your details
+    Then I am navigated to "Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK" page
+    Examples:
+      | Description                                     |
+      | Return from Your details to the BRP number page |
+
+  Scenario Outline: Return from Your details to the reference numbers page
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    And I answer the BRP number question and continue for "<Description>" on the "Reference number" journey
+    And I provide reference details and continue for "<Description>" on the "Reference number" journey
+    Then I am navigated to "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
+    When I go back from Your details
+    Then I am navigated to "Do you have any of the following reference numbers? – Ask a question about getting access to your eVisa – GOV.UK" page
     Examples:
       | Description                                            |
-      | Back navigation to BRP number page from Reference page |
+      | Return from Your details to the reference numbers page |
 
-  Scenario Outline: 9 - Verify the user can navigates to Your details page from Reference number page when he provide correct details
-    Given I use the "Reference number" EVC journey
-    When I select the EVC scenario "<Description>"
-    And I continue from Start Now page
-    And I select BRP number option and continue
-    And the user choose his reference option and continue
-    Then the user should be on the "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
+  Scenario Outline: Continue to Upload after providing a BRP number and contact details
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    And I answer the BRP number question and continue for "<Description>" on the "Your details" journey
+    And I enter valid contact details and continue
+    Then I am navigated to "Upload files (optional) – Ask a question about getting access to your eVisa – GOV.UK" page
     Examples:
-      | Description                                                       |
-      | Unique reference number navigation from Reference page validation |
-      | Passport number navigation from Reference page validation         |
-      | Other navigation from Reference page validation                   |
-      | None of the above navigation from Reference page validation       |
+      | Description                                        |
+      | Enter contact details after providing a BRP number |
 
-  Scenario Outline: 10 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page
-    Given I use the "Your details" EVC journey
-    When I select the EVC scenario "<Description>"
-    And I continue from Start Now page
-    And I select BRP number option and continue
-    And the user choose his reference option and continue
-    And I enter valid user details and continue
-    Then the user should be on the "Upload files (optional) – Ask a question about getting access to your eVisa – GOV.UK" page
-    Examples:
-      | Description                                                       |
-      | Unique reference number navigation from Reference page validation |
+  Scenario: Open the BRP number question from Start now
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    Then I am navigated to "Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK" page
 
-  Scenario Outline: 11 - Verify the back navigation from File Upload will navigates to Your details page
-    Given I use the "Upload" EVC journey
-    When I select the EVC scenario "<Description>"
-    And I complete E-Visa form up your details page
-    And User click on the back button from Upload page
-    Then the user should be on the "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
-    Examples:
-      | Description                 |
-      | VALID BRP number validation |
-
-  Scenario Outline: 12 - Verify the user clicks on continue by uploading a valid file type will navigates to Confirmation page
-    When I select the EVC scenario "<Description>"
-    And I complete E-Visa form up your details page
-    And I can upload files from Upload page
-    And I continue from Upload page
-    Then the user should be on the "Question sent – GOV.UK" page
-    Examples:
-      | Description             |
-      | Upload valid file types |
-
-  Scenario Outline: 13 - Verify the user clicks on continue without uploading any files will navigates to Confirmation page
-    When I select the EVC scenario "<Description>"
-    And I complete E-Visa form up your details page
-    And I can upload files from Upload page
-    And I continue from Upload page
-    Then the user should be on the "Question sent – GOV.UK" page
-    Examples:
-      | Description                                 |
-      | Complete E-Visa without uploading any files |
-
-  Scenario Outline: 14 - Verify the user can upload maximum of 5 files
-    When I select the EVC scenario "<Description>"
-    And I complete E-Visa form up your details page
-    And I can upload files from Upload page
-    Then I can validate the maximum files uploaded
-    When I continue from Upload page
-    Then the user should be on the "Question sent – GOV.UK" page
-    Examples:
-      | Description                 |
-      | Upload a maximum of 5 files |
-
-  Scenario: User clicks on start now button and able to navigate to the ‘BRP number’
-    When I click on Start now button from Ask a Question page
-    Then the user should be on the "Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK" page
-
-  Scenario: EVC - Electronic Visa - click guidance link
+  Scenario: Open the eVisa guidance on GOV.UK
+    Given I visit the eVisa contact form Page
     When I click the EVC guidance link
-    Then the user should be on the "eVisas: access and use your online immigration status: Set up a UKVI account to access your eVisa - GOV.UK" page
+    Then I am navigated to "eVisas: access and use your online immigration status: Set up a UKVI account to access your eVisa - GOV.UK" page
 
-  Scenario: Verify the back navigation from BRP number page is redirecting to Ask a Question page
-    When I click on Start now button from Ask a Question page
-    And User click on the back button from BRP page
-    Then I should be on "Ask a question about getting access to your eVisa – Ask a question about getting access to your eVisa – GOV.UK" page and he can validate it
+  Scenario: Return from the BRP number question to Start now
+    Given I visit the eVisa contact form Page
+    When I select Start now
+    And I go back from the BRP number page
+    Then the "Ask a question about getting access to your eVisa – Ask a question about getting access to your eVisa – GOV.UK" page should display the expected content

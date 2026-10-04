@@ -7,7 +7,6 @@ import { evcYourDetailsPage } from '../pages/evc-your-details.page';
 import { evcUploadPage } from '../pages/evc-upload.page';
 import { evcConfirmationPage } from '../pages/evc-confirmation.page';
 import path from 'node:path';
-import type { EVCApplicant } from '../utility-helper/constants-lib';
 
 export type Pages = {
     basePage: basePage;
@@ -19,16 +18,7 @@ export type Pages = {
     evcConfirmationPage: evcConfirmationPage
 };
 
-export type ApplicantState = {
-    applicant?: EVCApplicant;
-    product?: string;
-    journey?: string
-};
-
-export const test = base.extend<{ pages: Pages; applicantState: ApplicantState }>({
-    applicantState: async ({ }, use) => {
-        await use({});
-    },
+export const test = base.extend<{ pages: Pages }>({
     pages: async ({ page }, use) => {
         await use({
             basePage: new basePage(page),

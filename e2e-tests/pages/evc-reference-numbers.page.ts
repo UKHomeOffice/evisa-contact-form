@@ -1,6 +1,6 @@
-import { Locator, Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 import { basePage } from './base-page';
-import { EvcContents as content } from '../utility-helper/constants-lib';
+import { EvcContents as content, EvcErrorMessages as errors } from '../utility-helper/constants-lib';
 
 export class evcReferenceNumbersPage extends basePage {
   readonly refPageHeaderText: Locator;
@@ -102,5 +102,61 @@ export class evcReferenceNumbersPage extends basePage {
     await this.selectRadioOptions(option);
     if (option !== content.REF_NONE_ABOVE_LABEL) await this.enterRefNo(option, value ?? '');
     await this.clickContinueButton();
+  }
+
+  async referencePageContent(): Promise<void> {
+    await this.assertUrlEndPoints('reference-numbers');
+    await this.assertText(this.refPageHeaderText, content.REF_HEADER);
+    await this.assertText(this.refYourAccountText, content.REF_ENQUIRY_TEXT);
+    await expect(this.refURNRadioLabel).toContainText(content.REF_URN_LABEL);
+    await this.assertText(this.refURNHintText, content.REF_EVISA_ACCOUNT_TEXT);
+    await expect(this.refPassportNumberRadioLabel).toContainText(content.REF_PASSPORT_NUMBER_LABEL);
+    await this.assertText(this.refPassportNumberHintText, content.REF_PASSPORT_NUMBER_EXAMPLE);
+    await expect(this.refOtherRadioLabel).toContainText(content.REF_OTHER_LABEL);
+    await this.assertText(this.refOtherHintText, content.REF_INC_GWF);
+    await expect(this.refNoneOfAboveRadioLabel).toContainText(content.REF_NONE_ABOVE_LABEL);
+  }
+
+  async refDetailsErrorMessages(option: string, errorFor: string): Promise<void> {
+    switch (option) {
+      case content.REF_URN_LABEL:
+        switch (errorFor) {
+          case 'urn number blank':
+            await this.assertEVisaFormInput(this.refURNMainError, this.refURNFieldError, errors.REF_BLANK_URN_ERROR);
+            break;
+          case 'urn number length':
+            await this.assertEVisaFormInput(this.refURNMainError, this.refURNFieldError, errors.REF_URN_LENGTH_ERROR);
+            break;
+          case 'urn number incorrect':
+          case 'urn number invalid format':
+            await this.assertEVisaFormInput(this.refURNMainError, this.refURNFieldError, errors.REF_URN_FORMAT_ERROR);
+            break;
+          default: throw new Error(`Unexpected urn error value: ${errorFor}`);
+        }
+        break;
+      case content.REF_PASSPORT_NUMBER_LABEL:
+        switch (errorFor) {
+          case 'passport number blank':
+            await this.assertEVisaFormInput(this.refPassportNumberMainError, this.refPassportNumberFieldError, errors.REF_BLANK_PASSPORT_NUMBER_ERROR);
+            break;
+          case 'passport number length':
+            await this.assertEVisaFormInput(this.refPassportNumberMainError, this.refPassportNumberFieldError, errors.REF_PASSPORT_NUMBER_LENGTH_ERROR);
+            break;
+          case 'passport number special chars':
+            await this.assertEVisaFormInput(this.refPassportNumberMainError, this.refPassportNumberFieldError, errors.REF_INVALID_PASSPORT_NUMBER_ERROR);
+            break;
+          default: throw new Error(`Unexpected passport number error value: ${errorFor}`);
+        }
+        break;
+      case content.REF_OTHER_LABEL:
+        if (errorFor === 'Other input blank') await this.assertEVisaFormInput(this.refOtherMainError, this.refOtherFieldError, errors.REF_BLANK_OTHER_ERROR);
+        else if (errorFor === 'Url input value') await this.assertEVisaFormInput(this.refOtherMainError, this.refOtherFieldError, errors.REF_URL_OTHER_ERROR);
+        break;
+      case 'empty':
+        await this.assertError(this.refNoOptionSelectionMainError, errors.REF_NO_OPTION_SELECTION_ERROR);
+        await expect(this.refNoOptionSelectionFieldError).toContainText(errors.REF_NO_OPTION_SELECTION_ERROR);
+        break;
+      default: throw new Error(`Unexpected reference error value: ${errorFor}`);
+    }
   }
 }

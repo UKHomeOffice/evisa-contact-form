@@ -1,21 +1,8 @@
-export type EVCApplicant = {
-    description: string;
-    doYouKnowYourBiometricResidencePermitNumber: string;
-    brpNumber: string;
-    doYouHaveAnyOfTheFollowingReferenceNumbers: string;
-    uniqueReferenceNumberEvc: string;
-    passportNumberEvc: string; otherEvc: string;
-    fullNameEvc: string; emailAddressEvc: string;
-    contactNumberEvc: string;
-    yourQuestionEvc: string; uploadFiles: string
-};
-
 export class ConstantsLib {
     static readonly YES = 'Yes';
     static readonly NO = 'No';
     static readonly EMPTY = '';
     static readonly BLANK = ' ';
-    static readonly EMPTY_OPTION = 'empty';
     static readonly NOT_APPLICABLE = 'N/A';
     static readonly BRP_NUMBER = 'RAX203829';
     static readonly ALTERNATIVE_BRP_NUMBER = 'RAX203819';
@@ -46,46 +33,6 @@ export class ConstantsLib {
     static readonly BLANK_REFERENCE_ERRORS: readonly string[] = ['no option selected', 'urn number blank', 'passport number blank', 'Other input blank'];
     static readonly CONTENT_UPLOAD_COUNT = 6;
     static readonly MAX_UPLOAD_COUNT = 5;
-    static readonly DETAILS = { 
-        fullNameEvc: ConstantsLib.FULL_NAME, 
-        emailAddressEvc: ConstantsLib.SAS_HOF_EMAIL, 
-        contactNumberEvc: ConstantsLib.TELEPHONE, 
-        yourQuestionEvc: ConstantsLib.QUESTION 
-    };
-
-    static readonly DEFAULT_APPLICANT = {
-        doYouKnowYourBiometricResidencePermitNumber: ConstantsLib.NO,
-        brpNumber: ConstantsLib.NOT_APPLICABLE,
-        doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NOT_APPLICABLE,
-        uniqueReferenceNumberEvc: ConstantsLib.NOT_APPLICABLE,
-        passportNumberEvc: ConstantsLib.NOT_APPLICABLE,
-        otherEvc: ConstantsLib.NOT_APPLICABLE,
-        fullNameEvc: ConstantsLib.NOT_APPLICABLE,
-        emailAddressEvc: ConstantsLib.NOT_APPLICABLE,
-        contactNumberEvc: ConstantsLib.NOT_APPLICABLE,
-        yourQuestionEvc: ConstantsLib.NOT_APPLICABLE,
-        uploadFiles: ConstantsLib.NOT_APPLICABLE
-    };
-
-    static readonly JOURNEYS: readonly string[] = ['BRP number', 'Reference number', 'Your details', 'Upload'];
-    static readonly DESCRIPTION: readonly string[] = [
-        'Remove an file from uploaded files',
-        'Service link check from Confirmation page',
-        'VALID BRP number validation',
-        'No BRP number validation',
-        'Back navigation to BRP number page',
-        'Back navigation to BRP number page from Reference page',
-        'Unique reference number navigation from Reference page validation',
-        'Passport number navigation from Reference page validation',
-        'Other navigation from Reference page validation',
-        'None of the above navigation from Reference page validation',
-        'Upload valid file types',
-        'Complete E-Visa without uploading any files',
-        'Upload a maximum of 5 files',
-        'E-Visa form content validations',
-        'E-Visa form error validations'
-    ];
-
     static longDetails(contactNumber: string): { fullName: string; emailAddress: string; contactNumber: string; question: string } {
         const alphabet = (length: number): string => Array.from({ length }, () => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
         const emailAddress = alphabet(ConstantsLib.LONG_EMAIL_LOCAL_LENGTH) + ConstantsLib.LONG_EMAIL_SUFFIX;
@@ -178,7 +125,7 @@ export class EvcErrorMessages {
 
 function requiredEnv(name: string): string {
     const value = process.env[name];
-
+    
     if (!value) {
         throw new Error(`${name} is not configured`);
     }
