@@ -1,14 +1,15 @@
 @EvcRegression
 
 Feature: EVC - Electronic Visa application error validations
-  As Home Office application user,
-  I am able validate the error messages displaying on all the pages in E-Visa forms
+  As a Home Office application user,
+  I can validate the error messages displayed on all E-Visa form pages.
 
+  Background:
+    Given I visit evc application Start now page
 
   Scenario Outline: E-Visa form error validations for all pages
-    Given Test data has been created for "EVC" scenarios
-    And I selected the data for scenario "<Scenario ID>" - "<Description>"
-    When the user continue from Start Now page
+    When I select the EVC scenario "<Description>"
+    And I continue from Start Now page
     Then I validate BRP number selection page error messages
       | empty |           | no option selected       |
       | Yes   |           | blank BRP number         |
@@ -41,6 +42,7 @@ Feature: EVC - Electronic Visa application error validations
     Then I validate Upload page error messages
       | PNG 30mb.png     | file size over 25MB |
       | invalid file.txt | invalid file type   |
+
     Examples:
-      | Scenario ID | Description                   |
-      | 19          | E-Visa form error validations |
+      | Description                   |
+      | E-Visa form error validations |

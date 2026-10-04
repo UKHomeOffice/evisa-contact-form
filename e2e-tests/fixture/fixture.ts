@@ -21,7 +21,8 @@ export type Pages = {
 
 export type ApplicantState = {
     applicant?: EVCApplicant;
-    product?: string
+    product?: string;
+    journey?: string
 };
 
 export const test = base.extend<{ pages: Pages; applicantState: ApplicantState }>({

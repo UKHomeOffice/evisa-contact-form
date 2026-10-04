@@ -1,6 +1,5 @@
 import { Locator, Page } from '@playwright/test';
 import { basePage } from './base-page';
-import { EvcContents as content } from '../utility-helper/constants-lib';
 
 export class evcYourDetailsPage extends basePage {
   readonly ydPageHeaderText: Locator;
@@ -59,7 +58,7 @@ export class evcYourDetailsPage extends basePage {
   }
 
   async expectedPageTitle(): Promise<string> {
-    return content.YOUR_DETAILS_PAGE_TITLE;
+    return 'Your details – Ask a question about getting access to your eVisa – GOV.UK';
   }
 
   async clickYourDetailsBackLink(): Promise<void> {

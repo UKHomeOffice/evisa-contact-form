@@ -4,12 +4,12 @@ This test-only migration mirrors `hof-e2e-auto-tests/Function/src/main` EVC cove
 
 ## Structure
 
-- `features/`: EVC journey and validation features. The main feature navigates first and uses the original Scenario Outline titles with description-only Examples; outline titles distinguish descriptions reused by different data variants without Rules or journey tags.
+- `features/`: EVC journey and validation features. All features navigate first and use the original Scenario Outline titles with description-only Examples; an explicit journey Given distinguishes repeated descriptions without relying on titles, Rules, or tags.
 - `pages/`: all six EVC page objects, plus shared `base-page.ts`.
 - `fixture/fixture.ts`: every page and test-scoped applicant state.
-- `steps/evc.step.ts`: direct page-object steps, scenario switches, shared journey helpers, and content/error assertions.
+- `steps/evc.step.ts`: direct page-object steps, all 19 journey data variants in the inline scenario-selection When switch, shared journey helpers, and content/error assertions.
 - `test-data/user-upload-files/`: byte-identical source upload assets.
-- `utility-helper/constants-lib.ts`: all 19 scenario data variants, repeated inputs, generated boundary data, applicant types, and content/error constants.
+- `utility-helper/constants-lib.ts`: shared applicant defaults, repeated inputs, generated boundary data, applicant types, description and journey string lists, and content/error constants.
 
 ## Prerequisites
 

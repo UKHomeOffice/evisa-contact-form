@@ -37,7 +37,7 @@ export class evcBRPNumberPage extends basePage {
   }
 
   async expectedPageTitle(): Promise<string> {
-    return content.BRP_NUMBER_PAGE_TITLE;
+    return 'Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK';
   }
 
   async clickBackLink(): Promise<void> {

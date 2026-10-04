@@ -1,6 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { basePage } from './base-page';
-import { EvcContents as content } from '../utility-helper/constants-lib';
 
 export class evcConfirmationPage extends basePage {
   readonly confirmBanner: Locator;
@@ -23,7 +22,7 @@ export class evcConfirmationPage extends basePage {
   }
 
   async expectedPageTitle(): Promise<string> {
-    return content.E_VISA_CONFIRMATION_PAGE;
+    return 'Question sent – GOV.UK';
   }
 
   async assertServiceLink(): Promise<void> {

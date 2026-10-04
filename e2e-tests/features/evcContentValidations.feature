@@ -1,14 +1,14 @@
 @EvcRegression
 
 Feature: EVC - Electronic Visa application error validations
-  As Home Office application user,
-  I am able validate the content displaying on all the pages in E-Visa forms
+  As a Home Office application user,
+  I can validate the content displayed on all E-Visa form pages.
 
+  Background:
+    Given I visit evc application Start now page
 
   Scenario Outline: E-Visa form content validations for all pages
-    Given Test data has been created for "EVC" scenarios
-    And I selected the data for scenario "<Scenario ID>" - "<Description>"
-    When I visit evc application Start now page
+    When I select the EVC scenario "<Description>"
     Then I should be on "Ask a question about getting access to your eVisa – Ask a question about getting access to your eVisa – GOV.UK" page and he can validate it
     When I click on Start now button from Ask a Question page
     Then I should be on "Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK" page and he can validate it
@@ -20,6 +20,7 @@ Feature: EVC - Electronic Visa application error validations
     Then I should be on "Upload files (optional) – Ask a question about getting access to your eVisa – GOV.UK" page and he can validate it
     When I continue from Upload page
     Then I should be on "Question sent – GOV.UK" page and he can validate it
+
     Examples:
-      | Scenario ID | Description                     |
-      | 18          | E-Visa form content validations |
+      | Description                     |
+      | E-Visa form content validations |

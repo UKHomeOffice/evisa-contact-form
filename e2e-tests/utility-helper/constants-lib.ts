@@ -1,5 +1,5 @@
 export type EVCApplicant = {
-    scenarioId: string; description: string;
+    description: string;
     doYouKnowYourBiometricResidencePermitNumber: string;
     brpNumber: string;
     doYouHaveAnyOfTheFollowingReferenceNumbers: string;
@@ -11,7 +11,6 @@ export type EVCApplicant = {
 };
 
 export class ConstantsLib {
-    static readonly PRODUCT = 'EVC';
     static readonly YES = 'Yes';
     static readonly NO = 'No';
     static readonly EMPTY = '';
@@ -47,7 +46,13 @@ export class ConstantsLib {
     static readonly BLANK_REFERENCE_ERRORS: readonly string[] = ['no option selected', 'urn number blank', 'passport number blank', 'Other input blank'];
     static readonly CONTENT_UPLOAD_COUNT = 6;
     static readonly MAX_UPLOAD_COUNT = 5;
-    static readonly DETAILS = { fullNameEvc: ConstantsLib.FULL_NAME, emailAddressEvc: ConstantsLib.SAS_HOF_EMAIL, contactNumberEvc: ConstantsLib.TELEPHONE, yourQuestionEvc: ConstantsLib.QUESTION };
+    static readonly DETAILS = { 
+        fullNameEvc: ConstantsLib.FULL_NAME, 
+        emailAddressEvc: ConstantsLib.SAS_HOF_EMAIL, 
+        contactNumberEvc: ConstantsLib.TELEPHONE, 
+        yourQuestionEvc: ConstantsLib.QUESTION 
+    };
+
     static readonly DEFAULT_APPLICANT = {
         doYouKnowYourBiometricResidencePermitNumber: ConstantsLib.NO,
         brpNumber: ConstantsLib.NOT_APPLICABLE,
@@ -62,49 +67,24 @@ export class ConstantsLib {
         uploadFiles: ConstantsLib.NOT_APPLICABLE
     };
 
-    static readonly SCENARIOS: Readonly<Record<string, Omit<EVCApplicant, 'scenarioId' | 'description'>>> = {
-        '1': { ...ConstantsLib.DEFAULT_APPLICANT, doYouKnowYourBiometricResidencePermitNumber: ConstantsLib.YES, brpNumber: ConstantsLib.BRP_NUMBER },
-        '2': { ...ConstantsLib.DEFAULT_APPLICANT },
-        '3': { ...ConstantsLib.DEFAULT_APPLICANT, doYouKnowYourBiometricResidencePermitNumber: ConstantsLib.YES, brpNumber: ConstantsLib.ALTERNATIVE_BRP_NUMBER },
-        '4': { ...ConstantsLib.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.PASSPORT_OPTION, otherEvc: ConstantsLib.PASSPORT_NUMBER },
-        '5': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouKnowYourBiometricResidencePermitNumber: ConstantsLib.YES, brpNumber: ConstantsLib.ALTERNATIVE_BRP_NUMBER },
-        '6': { ...ConstantsLib.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.PASSPORT_OPTION, otherEvc: ConstantsLib.PASSPORT_NUMBER },
-        '7': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.UNIQUE_REFERENCE_OPTION, uniqueReferenceNumberEvc: ConstantsLib.UNIQUE_REFERENCE_NUMBER },
-        '8': { ...ConstantsLib.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.PASSPORT_OPTION, otherEvc: ConstantsLib.PASSPORT_NUMBER },
-        '9': { ...ConstantsLib.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.OTHER_OPTION, otherEvc: ConstantsLib.OTHER_REFERENCE },
-        '10': { ...ConstantsLib.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, otherEvc: ConstantsLib.PASSPORT_NUMBER },
-        '11': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, otherEvc: ConstantsLib.PASSPORT_NUMBER },
-        '12': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, uploadFiles: ConstantsLib.THREE_FILES },
-        '13': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.PASSPORT_OPTION, otherEvc: ConstantsLib.PASSPORT_NUMBER },
-        '14': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, otherEvc: ConstantsLib.LEGACY_OTHER_REFERENCE },
-        '15': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, uploadFiles: ConstantsLib.FIVE_FILES },
-        '16': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, uploadFiles: ConstantsLib.THREE_FILES },
-        '17': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, uploadFiles: ConstantsLib.TWO_FILES },
-        '18': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, uploadFiles: ConstantsLib.THREE_FILES },
-        '19': { ...ConstantsLib.DEFAULT_APPLICANT, ...ConstantsLib.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: ConstantsLib.NONE_OPTION, uploadFiles: ConstantsLib.INVALID_FILES }
-    };
-
-    static readonly DESCRIPTION_SCENARIOS: Readonly<Record<string, Readonly<Record<string, string>>>> = {
-        'E2E 1 - Verify the user can delete the uploaded file and continue': { 'Remove an file from uploaded files': '16' },
-        'E2E 2 - Verify the user clicks on continue by uploading a valid file type will navigates to Confirmation page': { 'Service link check from Confirmation page': '17' },
-        '3 - Verify the user can navigate to Your details page with a valid BRP number': { 'VALID BRP number validation': '1' },
-        '4 - Verify the user can navigate to Reference number page and without entering BRP number': { 'No BRP number validation': '2' },
-        '5 - Verify the back navigation from Your details will navigates to BRP number page': { 'Back navigation to BRP number page': '3' },
-        '6 - Verify the back navigation from Your details will navigates to BRP number page': { 'Back navigation to BRP number page': '4' },
-        '7 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page': { 'No BRP number validation': '5' },
-        '8 - Verify the back navigation from Reference number will navigates to BRP number page': { 'Back navigation to BRP number page from Reference page': '6' },
-        '9 - Verify the user can navigates to Your details page from Reference number page when he provide correct details': {
-            'Unique reference number navigation from Reference page validation': '7',
-            'Passport number navigation from Reference page validation': '8',
-            'Other navigation from Reference page validation': '9',
-            'None of the above navigation from Reference page validation': '10'
-        },
-        '10 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page': { 'Unique reference number navigation from Reference page validation': '11' },
-        '11 - Verify the back navigation from File Upload will navigates to Your details page': { 'VALID BRP number validation': '12' },
-        '12 - Verify the user clicks on continue by uploading a valid file type will navigates to Confirmation page': { 'Upload valid file types': '13' },
-        '13 - Verify the user clicks on continue without uploading any files will navigates to Confirmation page': { 'Complete E-Visa without uploading any files': '14' },
-        '14 - Verify the user can upload maximum of 5 files': { 'Upload a maximum of 5 files': '15' }
-    };
+    static readonly JOURNEYS: readonly string[] = ['BRP number', 'Reference number', 'Your details', 'Upload'];
+    static readonly DESCRIPTION: readonly string[] = [
+        'Remove an file from uploaded files',
+        'Service link check from Confirmation page',
+        'VALID BRP number validation',
+        'No BRP number validation',
+        'Back navigation to BRP number page',
+        'Back navigation to BRP number page from Reference page',
+        'Unique reference number navigation from Reference page validation',
+        'Passport number navigation from Reference page validation',
+        'Other navigation from Reference page validation',
+        'None of the above navigation from Reference page validation',
+        'Upload valid file types',
+        'Complete E-Visa without uploading any files',
+        'Upload a maximum of 5 files',
+        'E-Visa form content validations',
+        'E-Visa form error validations'
+    ];
 
     static longDetails(contactNumber: string): { fullName: string; emailAddress: string; contactNumber: string; question: string } {
         const alphabet = (length: number): string => Array.from({ length }, () => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
@@ -114,17 +94,6 @@ export class ConstantsLib {
 }
 
 export class EvcContents {
-    static readonly START_NOW_PAGE_TITLE = 'Ask a question about getting access to your eVisa – Ask a question about getting access to your eVisa – GOV.UK';
-    static readonly BRP_NUMBER_PAGE_TITLE = 'Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK';
-    static readonly REFERENCE_DETAILS_PAGE_TITLE = 'Do you have any of the following reference numbers? – Ask a question about getting access to your eVisa – GOV.UK';
-    static readonly YOUR_DETAILS_PAGE_TITLE = 'Your details – Ask a question about getting access to your eVisa – GOV.UK';
-    static readonly UPLOAD_PAGE_TITLE = 'Upload files (optional) – Ask a question about getting access to your eVisa – GOV.UK';
-    static readonly E_VISA_START_NOW_PAGE = 'Ask a question about getting access to your eVisa – GOV.UK';
-    static readonly E_VISA_BRP_NUMBER_PAGE = 'Do you know your biometric residence permit number? – GOV.UK';
-    static readonly E_VISA_REFERENCE_DETAILS_PAGE = 'Do you have any of the following reference numbers? – GOV.UK';
-    static readonly E_VISA_YOUR_DETAILS_PAGE = 'Your details – GOV.UK';
-    static readonly E_VISA_UPLOAD_PAGE = 'Upload files (optional) – GOV.UK';
-    static readonly E_VISA_CONFIRMATION_PAGE = 'Question sent – GOV.UK';
     static readonly ACCESS_YOUR_E_VISA_BANNER = 'Ask a question about getting access to your eVisa';
     static readonly BETA_BANNER = 'BETA This is a new service – your feedback will help us to improve it.';
     static readonly START_NOW_HEADER = 'Ask a question about getting access to your eVisa';

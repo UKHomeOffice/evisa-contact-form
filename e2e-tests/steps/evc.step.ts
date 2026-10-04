@@ -6,6 +6,210 @@ import { ConstantsLib as c, EVCApplicant, EvcContents as content, EvcErrorMessag
 
 export const { Given, When, Then } = createBdd(test);
 
+// ********************************************************* Step Definitions ****************************************************************************
+
+Given('I visit evc application Start now page', async ({ pages }) => {
+  await pages.evcStartPage.openEvcStartNowPage();
+  await pages.evcStartPage.acceptCookies();
+});
+
+Given('I use the {string} EVC journey', async ({ applicantState }, journey: string) => {
+  if (!c.JOURNEYS.includes(journey)) throw new Error(`Unknown EVC journey: ${journey}`);
+  applicantState.journey = journey;
+});
+
+When('I select the EVC scenario {string}', async ({ applicantState }, description: string) => {
+  if (!c.DESCRIPTION.includes(description)) throw new Error(`Unknown EVC description: ${description}`);
+  let data: Omit<EVCApplicant, 'description'>;
+  switch (description) {
+    case 'VALID BRP number validation':
+      switch (applicantState.journey) {
+        case 'BRP number': data = { ...c.DEFAULT_APPLICANT, doYouKnowYourBiometricResidencePermitNumber: c.YES, brpNumber: c.BRP_NUMBER }; break;
+        case 'Upload': data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.NONE_OPTION, uploadFiles: c.THREE_FILES }; break;
+        default: throw new Error(`Select an explicit EVC journey for description: ${description}`);
+      }
+      break;
+    case 'No BRP number validation':
+      switch (applicantState.journey) {
+        case 'Reference number': data = { ...c.DEFAULT_APPLICANT }; break;
+        case 'Your details': data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouKnowYourBiometricResidencePermitNumber: c.YES, brpNumber: c.ALTERNATIVE_BRP_NUMBER }; break;
+        default: throw new Error(`Select an explicit EVC journey for description: ${description}`);
+      }
+      break;
+    case 'Back navigation to BRP number page':
+      switch (applicantState.journey) {
+        case 'BRP number': data = { ...c.DEFAULT_APPLICANT, doYouKnowYourBiometricResidencePermitNumber: c.YES, brpNumber: c.ALTERNATIVE_BRP_NUMBER }; break;
+        case 'Reference number': data = { ...c.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: c.PASSPORT_OPTION, otherEvc: c.PASSPORT_NUMBER }; break;
+        default: throw new Error(`Select an explicit EVC journey for description: ${description}`);
+      }
+      break;
+    case 'Back navigation to BRP number page from Reference page':
+      data = { ...c.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: c.PASSPORT_OPTION, otherEvc: c.PASSPORT_NUMBER };
+      break;
+    case 'Unique reference number navigation from Reference page validation':
+      switch (applicantState.journey) {
+        case 'Reference number': data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.UNIQUE_REFERENCE_OPTION, uniqueReferenceNumberEvc: c.UNIQUE_REFERENCE_NUMBER }; break;
+        case 'Your details': data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.NONE_OPTION, otherEvc: c.PASSPORT_NUMBER }; break;
+        default: throw new Error(`Select an explicit EVC journey for description: ${description}`);
+      }
+      break;
+    case 'Passport number navigation from Reference page validation':
+      data = { ...c.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: c.PASSPORT_OPTION, otherEvc: c.PASSPORT_NUMBER };
+      break;
+    case 'Other navigation from Reference page validation':
+      data = { ...c.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: c.OTHER_OPTION, otherEvc: c.OTHER_REFERENCE };
+      break;
+    case 'None of the above navigation from Reference page validation':
+      data = { ...c.DEFAULT_APPLICANT, doYouHaveAnyOfTheFollowingReferenceNumbers: c.NONE_OPTION, otherEvc: c.PASSPORT_NUMBER };
+      break;
+    case 'Upload valid file types':
+      data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.PASSPORT_OPTION, otherEvc: c.PASSPORT_NUMBER };
+      break;
+    case 'Complete E-Visa without uploading any files':
+      data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.NONE_OPTION, otherEvc: c.LEGACY_OTHER_REFERENCE };
+      break;
+    case 'Upload a maximum of 5 files':
+      data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.NONE_OPTION, uploadFiles: c.FIVE_FILES };
+      break;
+    case 'Remove an file from uploaded files':
+      data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.NONE_OPTION, uploadFiles: c.THREE_FILES };
+      break;
+    case 'Service link check from Confirmation page':
+      data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.NONE_OPTION, uploadFiles: c.TWO_FILES };
+      break;
+    case 'E-Visa form content validations':
+      data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.NONE_OPTION, uploadFiles: c.THREE_FILES };
+      break;
+    case 'E-Visa form error validations':
+      data = { ...c.DEFAULT_APPLICANT, ...c.DETAILS, doYouHaveAnyOfTheFollowingReferenceNumbers: c.NONE_OPTION, uploadFiles: c.INVALID_FILES };
+      break;
+    default: throw new Error(`Unknown EVC description: ${description}`);
+  }
+  applicantState.applicant = { description, ...data };
+});
+
+
+When('I click the EVC guidance link', async ({ pages }) => {
+  await pages.evcStartPage.clickLinkEvcGuidanceOnGovUK();
+});
+
+When('I continue from Start Now page', async ({ pages }) => {
+  await pages.evcStartPage.clickStartNowBtn();
+});
+
+When('I click on Start now button from Ask a Question page', async ({ pages }) => {
+  await pages.evcStartPage.clickStartNowBtn();
+});
+
+When('User click on the back button from BRP page', async ({ pages }) => {
+  await pages.evcBRPNumberPage.clickBackLink();
+});
+
+Then('the user should be on the {string} page', async ({ page, pages }, title: string) => {
+  await pages.basePage.assertPageTitle(page, title);
+});
+
+When('I select BRP number option and continue', async ({ pages, applicantState }) => {
+  await completeBRP(pages, applicant(applicantState));
+});
+
+When('I enter valid user details and continue', async ({ pages, applicantState }) => {
+  await completeDetails(pages, applicant(applicantState));
+});
+
+When('User click on the back button from Your details page', async ({ pages }) => {
+  await pages.evcYourDetailsPage.clickYourDetailsBackLink();
+});
+
+When('User click on the back button from Reference number page', async ({ pages }) => {
+  await pages.evcReferenceNumbersPage.clickReferenceBackLink();
+});
+
+When('the user choose his reference option and continue', async ({ pages, applicantState }) => {
+  await completeReference(pages, applicant(applicantState));
+});
+
+When('User click on the back button from Upload page', async ({ pages }) => {
+  await pages.evcUploadPage.clickUploadBackLink();
+});
+
+Then('I can validate the maximum files uploaded', async ({ pages }) => {
+  await new EvcAssertions(pages).validateMaxFilesUploaded();
+});
+
+When('I continue from Upload page', async ({ pages }) => {
+  await pages.evcUploadPage.uploadContinueBtn.click();
+});
+
+Then('I should be on {string} page and he can validate it', async ({ pages }, title: string) => {
+  await new EvcAssertions(pages).eVisaFormTitleAndContentValidations(title);
+});
+
+Then('I validate the feedback link', async ({ pages }) => {
+  await pages.evcConfirmationPage.assertServiceLink();
+});
+
+Then('I can upload files from Upload page', async ({ pages, applicantState }) => {
+  const files = applicant(applicantState).uploadFiles;
+  await pages.evcUploadPage.setUploadYourEvidence(files === c.NOT_APPLICABLE ? [] : files.split('-').map(filename => filename.trim()).filter(Boolean));
+});
+
+When('I can remove {int} file from the table', async ({ pages }, row: number) => {
+  await pages.evcUploadPage.deleteAFile(row);
+});
+
+When('I complete E-Visa form up your details page', async ({ pages, applicantState }) => {
+  const data = applicant(applicantState);
+  await pages.evcStartPage.clickStartNowBtn();
+  await completeBRP(pages, data);
+  await completeReference(pages, data);
+  await completeDetails(pages, data);
+});
+
+When('I validate for {string} selection with {string} BRP number', async ({ pages }, option: string, value: string) => {
+  await pages.evcBRPNumberPage.enterBRPNumber(option, value);
+});
+
+Then('I validate BRP number selection page error messages', async ({ pages }, dataTable: DataTable) => {
+  const checks = new EvcAssertions(pages);
+  for (const [option, value, errorFor] of dataTable.raw()) {
+    await pages.evcBRPNumberPage.enterBRPNumber(option, c.BLANK_BRP_ERRORS.includes(errorFor) ? c.BLANK : value);
+    await checks.brpNumberErrorMessages(errorFor);
+  }
+});
+
+Then('I validate Reference details page error messages', async ({ pages }, dataTable: DataTable) => {
+  const checks = new EvcAssertions(pages);
+  for (const [option, value, errorFor] of dataTable.raw()) {
+    await pages.evcReferenceNumbersPage.enterReferenceDetails(option.trim(), c.BLANK_REFERENCE_ERRORS.includes(errorFor) ? c.BLANK : value.trim());
+    await checks.refDetailsErrorMessages(option.trim(), errorFor.trim());
+  }
+});
+
+Then('I validate Your details page error messages', async ({ pages }, dataTable: DataTable) => {
+  const checks = new EvcAssertions(pages);
+  for (const [option, fullName, emailAddress, contactNumber, question] of dataTable.raw()) {
+    if (option === c.BLANK_DETAILS_CASE) {
+      await pages.evcYourDetailsPage.enterYourDetails(c.EMPTY, c.EMPTY, c.EMPTY, c.EMPTY);
+    } else if (question.trim() === c.LONG_QUESTION_CASE) {
+      const data = c.longDetails(contactNumber.trim());
+      await pages.evcYourDetailsPage.enterYourDetails(data.fullName, data.emailAddress, data.contactNumber, data.question);
+    } else {
+      await pages.evcYourDetailsPage.enterYourDetails(fullName.trim(), emailAddress.trim(), contactNumber.trim(), question.trim());
+    }
+    await pages.basePage.clickContinueButton();
+    await checks.assertYourDetailsErrors(option.trim());
+  }
+});
+
+Then('I validate Upload page error messages', async ({ pages }, dataTable: DataTable) => {
+  const checks = new EvcAssertions(pages);
+  for (const [fileName, errorType] of dataTable.raw()) {
+    await pages.evcUploadPage.uploadEvidenceFile(fileName.trim());
+    await checks.assertUploadErrorMessages(errorType.trim());
+  }
+});
+
 function applicant(state: ApplicantState): EVCApplicant {
   if (!state.applicant) throw new Error('Select EVC scenario data before completing the form');
   return state.applicant;
@@ -37,6 +241,10 @@ async function completeDetails(pages: Pages, data: EVCApplicant): Promise<void> 
   await pages.evcYourDetailsPage.enterYourDetails(data.fullNameEvc, data.emailAddressEvc, data.contactNumberEvc, data.yourQuestionEvc);
   await pages.basePage.clickContinueButton();
 }
+
+
+
+// ********************************************************* Assertions ****************************************************************************
 
 class EvcAssertions {
   constructor(readonly pages: Pages) {}
@@ -121,34 +329,34 @@ class EvcAssertions {
     await this.pages.basePage.validateBanners(content.ACCESS_YOUR_E_VISA_BANNER, content.BETA_BANNER);
     await this.assertTitle(title);
     switch (title) {
-      case content.E_VISA_START_NOW_PAGE:
+      case 'Ask a question about getting access to your eVisa – GOV.UK':
       case await this.pages.evcStartPage.expectedPageTitle():
         await this.pages.basePage.assertUrlEndPoints('start');
         await this.startNowPageContent();
         break;
-      case content.E_VISA_BRP_NUMBER_PAGE:
+      case 'Do you know your biometric residence permit number? – GOV.UK':
       case await this.pages.evcBRPNumberPage.expectedPageTitle():
         await this.pages.basePage.assertUrlEndPoints('biometric-residence-permit-number');
         await this.brpNumberPageContent();
         break;
-      case content.E_VISA_REFERENCE_DETAILS_PAGE:
+      case 'Do you have any of the following reference numbers? – GOV.UK':
       case await this.pages.evcReferenceNumbersPage.expectedPageTitle():
         await this.pages.basePage.assertUrlEndPoints('reference-numbers');
         await this.referencePageContent();
         break;
-      case content.E_VISA_YOUR_DETAILS_PAGE:
+      case 'Your details – GOV.UK':
       case await this.pages.evcYourDetailsPage.expectedPageTitle():
         await this.pages.basePage.assertUrlEndPoints('your-details');
         await this.yourDetailsPageContent();
         break;
-      case content.E_VISA_UPLOAD_PAGE:
+      case 'Upload files (optional) – GOV.UK':
       case await this.pages.evcUploadPage.expectedPageTitle():
         await this.pages.basePage.assertUrlEndPoints('upload');
         await this.uploadPageContent();
         await this.pages.evcUploadPage.setUploadEvidence(c.CONTENT_UPLOAD_COUNT, c.PNG_FILE, c.MAX_UPLOAD_COUNT);
         await this.validateMaxFilesUploaded();
         break;
-      case content.E_VISA_CONFIRMATION_PAGE:
+      case 'Question sent – GOV.UK':
         await this.pages.basePage.assertUrlEndPoints('confirmation');
         await this.confirmationPageContent();
         break;
@@ -281,205 +489,3 @@ class EvcAssertions {
     else if (errorType === 'invalid file type') await expect(this.pages.evcUploadPage.fileTypeError).toContainText(errors.UPLOAD_INVALID_FILETYPE_ERROR);
   }
 }
-
-Given('Test data has been created for {string} scenarios', async ({ applicantState }, product: string) => {
-  if (product !== c.PRODUCT) throw new Error(`Unsupported product: ${product}`);
-  applicantState.product = product;
-});
-
-function selectScenarioData(applicantState: ApplicantState, scenario: string, description: string): void {
-  if (applicantState.product !== c.PRODUCT) throw new Error('Create EVC test data before selecting a scenario');
-  let data: Omit<EVCApplicant, 'scenarioId' | 'description'>;
-  switch (scenario) {
-    case '1': data = c.SCENARIOS['1']; break;
-    case '2': data = c.SCENARIOS['2']; break;
-    case '3': data = c.SCENARIOS['3']; break;
-    case '4': data = c.SCENARIOS['4']; break;
-    case '5': data = c.SCENARIOS['5']; break;
-    case '6': data = c.SCENARIOS['6']; break;
-    case '7': data = c.SCENARIOS['7']; break;
-    case '8': data = c.SCENARIOS['8']; break;
-    case '9': data = c.SCENARIOS['9']; break;
-    case '10': data = c.SCENARIOS['10']; break;
-    case '11': data = c.SCENARIOS['11']; break;
-    case '12': data = c.SCENARIOS['12']; break;
-    case '13': data = c.SCENARIOS['13']; break;
-    case '14': data = c.SCENARIOS['14']; break;
-    case '15': data = c.SCENARIOS['15']; break;
-    case '16': data = c.SCENARIOS['16']; break;
-    case '17': data = c.SCENARIOS['17']; break;
-    case '18': data = c.SCENARIOS['18']; break;
-    case '19': data = c.SCENARIOS['19']; break;
-    default: throw new Error(`Unknown EVC scenario ID: ${scenario}`);
-  }
-  applicantState.applicant = { scenarioId: scenario, description, ...data };
-}
-
-Given('I selected the data for scenario {string} - {string}', async ({ applicantState }, scenario: string, description: string) => {
-  selectScenarioData(applicantState, scenario, description);
-});
-
-When('I select the EVC scenario {string}', async ({ applicantState, $testInfo }, description: string) => {
-  const contexts = $testInfo.titlePath.filter(title => Object.prototype.hasOwnProperty.call(c.DESCRIPTION_SCENARIOS, title));
-  if (contexts.length !== 1) throw new Error(`Expected one EVC outline title for description: ${description}`);
-  const descriptions = c.DESCRIPTION_SCENARIOS[contexts[0]];
-  if (!Object.prototype.hasOwnProperty.call(descriptions, description)) throw new Error(`Unknown EVC description: ${description}`);
-  selectScenarioData(applicantState, descriptions[description], description);
-});
-
-When('I visit evc application Start now page', async ({ pages }) => {
-  await pages.evcStartPage.openEvcStartNowPage();
-  await pages.evcStartPage.acceptCookies();
-});
-
-Given('I visit the EVC Homepage and click the guidance link', async ({ pages }) => {
-  await pages.evcStartPage.openEvcStartNowPage();
-  await pages.evcStartPage.acceptCookies();
-  await pages.evcStartPage.clickLinkEvcGuidanceOnGovUK();
-});
-
-When('I click the EVC guidance link', async ({ pages }) => {
-  await pages.evcStartPage.clickLinkEvcGuidanceOnGovUK();
-});
-
-When('I continue from Start Now page', async ({ pages }) => {
-  await pages.evcStartPage.clickStartNowBtn();
-});
-
-When('the user continue from Start Now page', async ({ pages }) => {
-  await pages.evcStartPage.openEvcStartNowPage();
-  await pages.evcStartPage.acceptCookies();
-  await pages.evcStartPage.clickStartNowBtn();
-});
-
-When('I click on Start now button from Ask a Question page', async ({ pages }) => {
-  await pages.evcStartPage.clickStartNowBtn();
-});
-
-When('User click on the back button from BRP page', async ({ pages }) => {
-  await pages.evcBRPNumberPage.clickBackLink();
-});
-
-Then('the user should be on the {string} page', async ({ page, pages }, title: string) => {
-  await pages.basePage.assertPageTitle(page, title);
-});
-
-When('I select BRP number option and continue', async ({ pages, applicantState }) => {
-  await completeBRP(pages, applicant(applicantState));
-});
-
-When('I enter valid user details and continue', async ({ pages, applicantState }) => {
-  await completeDetails(pages, applicant(applicantState));
-});
-
-When('User click on the back button from Your details page', async ({ pages }) => {
-  await pages.evcYourDetailsPage.clickYourDetailsBackLink();
-});
-
-When('User click on the back button from Reference number page', async ({ pages }) => {
-  await pages.evcReferenceNumbersPage.clickReferenceBackLink();
-});
-
-When('the user choose his reference option and continue', async ({ pages, applicantState }) => {
-  await completeReference(pages, applicant(applicantState));
-});
-
-When('User click on the back button from Upload page', async ({ pages }) => {
-  await pages.evcUploadPage.clickUploadBackLink();
-});
-
-Then('I can validate the maximum files uploaded', async ({ pages }) => {
-  await new EvcAssertions(pages).validateMaxFilesUploaded();
-});
-
-When('I continue from Upload page', async ({ pages }) => {
-  await pages.evcUploadPage.uploadContinueBtn.click();
-});
-
-Then('I should be on {string} page and he can validate it', async ({ pages }, title: string) => {
-  await new EvcAssertions(pages).eVisaFormTitleAndContentValidations(title);
-});
-
-Then('I validate the feedback link', async ({ pages }) => {
-  await pages.evcConfirmationPage.assertServiceLink();
-});
-
-Then('I can upload files from Upload page', async ({ pages, applicantState }) => {
-  const files = applicant(applicantState).uploadFiles;
-  await pages.evcUploadPage.setUploadYourEvidence(files === c.NOT_APPLICABLE ? [] : files.split('-').map(filename => filename.trim()).filter(Boolean));
-});
-
-When('I can remove {int} file from the table', async ({ pages }, row: number) => {
-  await pages.evcUploadPage.deleteAFile(row);
-});
-
-When('I complete E-Visa form up your details page', async ({ pages, applicantState }) => {
-  const data = applicant(applicantState);
-  await pages.evcStartPage.clickStartNowBtn();
-  switch (data.scenarioId) {
-    case '12':
-    case '14':
-    case '15':
-    case '16':
-    case '17':
-    case '18':
-    case '19':
-      await pages.evcBRPNumberPage.enterBRPNumber(c.NO, c.EMPTY);
-      await pages.evcReferenceNumbersPage.enterReferenceDetails(c.NONE_OPTION, referenceValue(data));
-      await completeDetails(pages, data);
-      break;
-    case '13':
-      await pages.evcBRPNumberPage.enterBRPNumber(c.NO, c.EMPTY);
-      await pages.evcReferenceNumbersPage.enterReferenceDetails(c.PASSPORT_OPTION, referenceValue(data));
-      await completeDetails(pages, data);
-      break;
-    default:
-      await completeBRP(pages, data);
-      await completeReference(pages, data);
-      await completeDetails(pages, data);
-  }
-});
-
-When('I validate for {string} selection with {string} BRP number', async ({ pages }, option: string, value: string) => {
-  await pages.evcBRPNumberPage.enterBRPNumber(option, value);
-});
-
-Then('I validate BRP number selection page error messages', async ({ pages }, dataTable: DataTable) => {
-  const checks = new EvcAssertions(pages);
-  for (const [option, value, errorFor] of dataTable.raw()) {
-    await pages.evcBRPNumberPage.enterBRPNumber(option, c.BLANK_BRP_ERRORS.includes(errorFor) ? c.BLANK : value);
-    await checks.brpNumberErrorMessages(errorFor);
-  }
-});
-
-Then('I validate Reference details page error messages', async ({ pages }, dataTable: DataTable) => {
-  const checks = new EvcAssertions(pages);
-  for (const [option, value, errorFor] of dataTable.raw()) {
-    await pages.evcReferenceNumbersPage.enterReferenceDetails(option.trim(), c.BLANK_REFERENCE_ERRORS.includes(errorFor) ? c.BLANK : value.trim());
-    await checks.refDetailsErrorMessages(option.trim(), errorFor.trim());
-  }
-});
-
-Then('I validate Your details page error messages', async ({ pages }, dataTable: DataTable) => {
-  const checks = new EvcAssertions(pages);
-  for (const [option, fullName, emailAddress, contactNumber, question] of dataTable.raw()) {
-    if (option === c.BLANK_DETAILS_CASE) {
-      await pages.evcYourDetailsPage.enterYourDetails(c.EMPTY, c.EMPTY, c.EMPTY, c.EMPTY);
-    } else if (question.trim() === c.LONG_QUESTION_CASE) {
-      const data = c.longDetails(contactNumber.trim());
-      await pages.evcYourDetailsPage.enterYourDetails(data.fullName, data.emailAddress, data.contactNumber, data.question);
-    } else {
-      await pages.evcYourDetailsPage.enterYourDetails(fullName.trim(), emailAddress.trim(), contactNumber.trim(), question.trim());
-    }
-    await pages.basePage.clickContinueButton();
-    await checks.assertYourDetailsErrors(option.trim());
-  }
-});
-
-Then('I validate Upload page error messages', async ({ pages }, dataTable: DataTable) => {
-  const checks = new EvcAssertions(pages);
-  for (const [fileName, errorType] of dataTable.raw()) {
-    await pages.evcUploadPage.uploadEvidenceFile(fileName.trim());
-    await checks.assertUploadErrorMessages(errorType.trim());
-  }
-});

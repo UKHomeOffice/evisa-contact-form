@@ -1,7 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test';
 import path from 'node:path';
 import { basePage } from './base-page';
-import { EvcContents as content } from '../utility-helper/constants-lib';
 
 export class evcUploadPage extends basePage {
   readonly uploadPageHeaderText: Locator;
@@ -45,7 +44,7 @@ export class evcUploadPage extends basePage {
   }
 
   async expectedPageTitle(): Promise<string> {
-    return content.UPLOAD_PAGE_TITLE;
+    return 'Upload files (optional) – Ask a question about getting access to your eVisa – GOV.UK';
   }
 
   async uploadEvidence(filename: string): Promise<void> {

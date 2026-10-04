@@ -1,6 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { basePage } from './base-page';
-import { EvcContents as content } from '../utility-helper/constants-lib';
 
 export class evcStartPage extends basePage {
   readonly startNowHeaderText: Locator;
@@ -29,7 +28,7 @@ export class evcStartPage extends basePage {
   }
 
   async expectedPageTitle(): Promise<string> {
-    return content.START_NOW_PAGE_TITLE;
+    return 'Ask a question about getting access to your eVisa – Ask a question about getting access to your eVisa – GOV.UK';
   }
 
   async openEvcStartNowPage(): Promise<void> {

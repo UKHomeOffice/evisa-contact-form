@@ -6,7 +6,6 @@ Feature: EVC - Electronic Visa
 
   Background:
     Given I visit evc application Start now page
-    And Test data has been created for "EVC" scenarios
 
   Scenario Outline: E2E 1 - Verify the user can delete the uploaded file and continue
     When I select the EVC scenario "<Description>"
@@ -30,6 +29,7 @@ Feature: EVC - Electronic Visa
       | Service link check from Confirmation page |
 
   Scenario Outline: 3 - Verify the user can navigate to Your details page with a valid BRP number
+    Given I use the "BRP number" EVC journey
     When I select the EVC scenario "<Description>"
     And I continue from Start Now page
     And I select BRP number option and continue
@@ -39,6 +39,7 @@ Feature: EVC - Electronic Visa
       | VALID BRP number validation |
 
   Scenario Outline: 4 - Verify the user can navigate to Reference number page and without entering BRP number
+    Given I use the "Reference number" EVC journey
     When I select the EVC scenario "<Description>"
     And I continue from Start Now page
     And I select BRP number option and continue
@@ -48,6 +49,7 @@ Feature: EVC - Electronic Visa
       | No BRP number validation |
 
   Scenario Outline: 5 - Verify the back navigation from Your details will navigates to BRP number page
+    Given I use the "BRP number" EVC journey
     When I select the EVC scenario "<Description>"
     And I continue from Start Now page
     And I select BRP number option and continue
@@ -59,6 +61,7 @@ Feature: EVC - Electronic Visa
       | Back navigation to BRP number page |
 
   Scenario Outline: 6 - Verify the back navigation from Your details will navigates to BRP number page
+    Given I use the "Reference number" EVC journey
     When I select the EVC scenario "<Description>"
     And I continue from Start Now page
     And I select BRP number option and continue
@@ -71,6 +74,7 @@ Feature: EVC - Electronic Visa
       | Back navigation to BRP number page |
 
   Scenario Outline: 7 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page
+    Given I use the "Your details" EVC journey
     When I select the EVC scenario "<Description>"
     And I continue from Start Now page
     And I select BRP number option and continue
@@ -91,6 +95,7 @@ Feature: EVC - Electronic Visa
       | Back navigation to BRP number page from Reference page |
 
   Scenario Outline: 9 - Verify the user can navigates to Your details page from Reference number page when he provide correct details
+    Given I use the "Reference number" EVC journey
     When I select the EVC scenario "<Description>"
     And I continue from Start Now page
     And I select BRP number option and continue
@@ -104,6 +109,7 @@ Feature: EVC - Electronic Visa
       | None of the above navigation from Reference page validation       |
 
   Scenario Outline: 10 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page
+    Given I use the "Your details" EVC journey
     When I select the EVC scenario "<Description>"
     And I continue from Start Now page
     And I select BRP number option and continue
@@ -115,6 +121,7 @@ Feature: EVC - Electronic Visa
       | Unique reference number navigation from Reference page validation |
 
   Scenario Outline: 11 - Verify the back navigation from File Upload will navigates to Your details page
+    Given I use the "Upload" EVC journey
     When I select the EVC scenario "<Description>"
     And I complete E-Visa form up your details page
     And User click on the back button from Upload page

@@ -59,7 +59,7 @@ export class evcReferenceNumbersPage extends basePage {
   }
 
   async expectedPageTitle(): Promise<string> {
-    return content.REFERENCE_DETAILS_PAGE_TITLE;
+    return 'Do you have any of the following reference numbers? – Ask a question about getting access to your eVisa – GOV.UK';
   }
 
   async clickReferenceBackLink(): Promise<void> {
