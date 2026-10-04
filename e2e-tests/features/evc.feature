@@ -30,18 +30,7 @@ Feature: EVC - Electronic Visa
       | 17          | Service link check from Confirmation page |
 
 
-  Scenario:1 - User clicks on start now button and able to navigate to the ‘BRP number’
-    When I visit evc application Start now page
-    When I click on Start now button from Ask a Question page
-    Then the user should be on the "Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK" page
-
-
-  Scenario:2 - EVC - Electronic Visa - click guidance link
-    When I visit the EVC Homepage and click the guidance link
-    Then the user should be on the "eVisas: access and use your online immigration status: Set up a UKVI account to access your eVisa - GOV.UK" page
-
-
-  Scenario Outline:3 - Verify the user can navigate to Your details page with a valid BRP number
+  Scenario Outline: 3 - Verify the user can navigate to Your details page with a valid BRP number
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     And I visit evc application Start now page
     When I continue from Start Now page
@@ -52,7 +41,7 @@ Feature: EVC - Electronic Visa
       | 1           | VALID BRP number validation |
 
 
-  Scenario Outline:4 - Verify the user can navigate to Reference number page and without entering BRP number
+  Scenario Outline: 4 - Verify the user can navigate to Reference number page and without entering BRP number
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When the user continue from Start Now page
     And I select BRP number option and continue
@@ -62,14 +51,7 @@ Feature: EVC - Electronic Visa
       | 2           | No BRP number validation |
 
 
-  Scenario:5 - Verify the back navigation from BRP number page is redirecting to Ask a Question page
-    And I visit evc application Start now page
-    When I click on Start now button from Ask a Question page
-    And User click on the back button from BRP page
-    Then I should be on "Ask a question about getting access to your eVisa – Ask a question about getting access to your eVisa – GOV.UK" page and he can validate it
-
-
-  Scenario Outline:6 - Verify the back navigation from Your details will navigates to BRP number page
+  Scenario Outline: 5 - Verify the back navigation from Your details will navigates to BRP number page
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When the user continue from Start Now page
     And I select BRP number option and continue
@@ -81,7 +63,7 @@ Feature: EVC - Electronic Visa
       | 3           | Back navigation to BRP number page |
 
 
-  Scenario Outline:7 - Verify the back navigation from Your details will navigates to BRP number page
+  Scenario Outline: 6 - Verify the back navigation from Your details will navigates to BRP number page
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When the user continue from Start Now page
     And I select BRP number option and continue
@@ -94,7 +76,7 @@ Feature: EVC - Electronic Visa
       | 4           | Back navigation to BRP number page |
 
 
-  Scenario Outline:8 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page
+  Scenario Outline: 7 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When the user continue from Start Now page
     And I select BRP number option and continue
@@ -105,7 +87,7 @@ Feature: EVC - Electronic Visa
       | 5           | No BRP number validation |
 
 
-  Scenario Outline:9 - Verify the back navigation from Reference number will navigates to BRP number page
+  Scenario Outline: 8 - Verify the back navigation from Reference number will navigates to BRP number page
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When the user continue from Start Now page
     And I select BRP number option and continue
@@ -116,7 +98,7 @@ Feature: EVC - Electronic Visa
       | 6           | Back navigation to BRP number page from Reference page |
 
 
-  Scenario Outline:10 - Verify the user can navigates to Your details page from Reference number page when he provide correct details
+  Scenario Outline: 9 - Verify the user can navigates to Your details page from Reference number page when he provide correct details
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When the user continue from Start Now page
     And I select BRP number option and continue
@@ -130,7 +112,7 @@ Feature: EVC - Electronic Visa
       | 10          | None of the above navigation from Reference page validation       |
 
 
-  Scenario Outline:11 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page
+  Scenario Outline: 10 - Verify the user clicks on continue by entering a valid data on Your details will navigates to Upload page
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When the user continue from Start Now page
     And I select BRP number option and continue
@@ -142,17 +124,17 @@ Feature: EVC - Electronic Visa
       | 11          | Unique reference number navigation from Reference page validation |
 
 
-  Scenario Outline:12 - Verify the back navigation from File Upload will navigates to Your details page
+  Scenario Outline: 11 - Verify the back navigation from File Upload will navigates to Your details page
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When I complete E-Visa form up your details page
     And User click on the back button from Upload page
     Then the user should be on the "Your details – Ask a question about getting access to your eVisa – GOV.UK" page
     Examples:
       | Scenario ID | Description                 |
-      | 12           | VALID BRP number validation |
+      | 12          | VALID BRP number validation |
 
 
-  Scenario Outline:13 - Verify the user clicks on continue by uploading a valid file type will navigates to Confirmation page
+  Scenario Outline: 12 - Verify the user clicks on continue by uploading a valid file type will navigates to Confirmation page
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When I complete E-Visa form up your details page
     Then I can upload files from Upload page
@@ -160,10 +142,10 @@ Feature: EVC - Electronic Visa
     Then the user should be on the "Question sent – GOV.UK" page
     Examples:
       | Scenario ID | Description             |
-      | 13           | Upload valid file types |
+      | 13          | Upload valid file types |
 
 
-  Scenario Outline:14 - Verify the user clicks on continue without uploading any files will navigates to Confirmation page
+  Scenario Outline: 13 - Verify the user clicks on continue without uploading any files will navigates to Confirmation page
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When I complete E-Visa form up your details page
     Then I can upload files from Upload page
@@ -174,7 +156,7 @@ Feature: EVC - Electronic Visa
       | 14          | Complete E-Visa without uploading any files |
 
 
-  Scenario Outline:15 - Verify the user can upload maximum of 5 files
+  Scenario Outline: 14 - Verify the user can upload maximum of 5 files
     And I selected the data for scenario "<Scenario ID>" - "<Description>"
     When I complete E-Visa form up your details page
     Then I can upload files from Upload page
@@ -184,3 +166,21 @@ Feature: EVC - Electronic Visa
     Examples:
       | Scenario ID | Description                 |
       | 15          | Upload a maximum of 5 files |
+
+
+  Scenario: 15 - User clicks on start now button and able to navigate to the ‘BRP number’
+    When I visit evc application Start now page
+    When I click on Start now button from Ask a Question page
+    Then the user should be on the "Do you know your biometric residence permit number? – Ask a question about getting access to your eVisa – GOV.UK" page
+
+
+  Scenario: 16 - EVC - Electronic Visa - click guidance link
+    When I visit the EVC Homepage and click the guidance link
+    Then the user should be on the "eVisas: access and use your online immigration status: Set up a UKVI account to access your eVisa - GOV.UK" page
+
+
+  Scenario: 17 - Verify the back navigation from BRP number page is redirecting to Ask a Question page
+    And I visit evc application Start now page
+    When I click on Start now button from Ask a Question page
+    And User click on the back button from BRP page
+    Then I should be on "Ask a question about getting access to your eVisa – Ask a question about getting access to your eVisa – GOV.UK" page and he can validate it
