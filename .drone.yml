@@ -93,6 +93,7 @@ github_app_token_step: &github_app_token_step
     - test -n "$GITHUB_APP_INSTALLATION_ID" || (echo "Missing GITHUB_APP_INSTALLATION_ID secret." && exit 1)
     - test -n "$OUTPUT_TOKEN_FILE" || (echo "Missing OUTPUT_TOKEN_FILE." && exit 1)
     - bash bin/generate_github_app_token.sh
+    - test -s "$OUTPUT_TOKEN_FILE" || (echo "GitHub App token generator did not create the output token file." && exit 1)
 
 github_app_token_secrets_ukho: &github_app_token_secrets_ukho
   GITHUB_APP_ID:
@@ -143,6 +144,8 @@ steps:
       branch:
         <<: *include_default_and_feature_branches
       event: [push, pull_request]
+    depends_on:
+      - generate_github_app_token_for_clone
 
   # Trivy Security Scannner for scanning OS related vulnerabilities in Base image of Dockerfile
   - name: scan_base_image_os
