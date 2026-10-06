@@ -21,6 +21,12 @@ RUN yarn cache clean && \
     yarn install --frozen-lockfile --production && \
     yarn run postinstall
 
+# Patch (golang.org/x/text) present in the pinned base image
+RUN apk upgrade --no-cache golang.org/x/text
+
+# Patch (stdlib) present in the pinned base image
+RUN apk upgrade --no-cache stdlib
+
 HEALTHCHECK --interval=5m --timeout=3s \
 CMD curl --fail http://localhost:8080 || exit 1
 
