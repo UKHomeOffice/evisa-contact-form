@@ -21,9 +21,6 @@ RUN yarn cache clean && \
     yarn install --frozen-lockfile --production && \
     yarn run postinstall
 
-# Patch (golang.org/x/text) present in the pinned base image
-RUN apk upgrade --no-cache golang.org/x/text
-
 # Patch (stdlib) present in the pinned base image
 RUN apk upgrade --no-cache stdlib
 
