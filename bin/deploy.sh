@@ -45,8 +45,15 @@ fi
 sleep $READY_FOR_TEST_DELAY
 
 if [[ ${KUBE_NAMESPACE} == ${BRANCH_ENV} ]]; then
-  echo "App Branch - $APP_NAME-$DRONE_SOURCE_BRANCH.internal.branch.sas-notprod.homeoffice.gov.uk"
+  BRANCH_HOST="$APP_NAME-$DRONE_SOURCE_BRANCH.internal.branch.sas-notprod.homeoffice.gov.uk"
+  echo "App Branch - $BRANCH_HOST"
   echo "File Vault Branch - fv-$DRONE_SOURCE_BRANCH.branch.sas-notprod.homeoffice.gov.uk"
+  if [[ -d /root/.dockersock ]]; then
+    case "$BRANCH_HOST" in
+      *internal*) printf '%s\n' "$BRANCH_HOST" > /root/.dockersock/branch_url.txt ;;
+      *) echo "Refusing to write a non-internal branch host for E2E tests." >&2; exit 1 ;;
+    esac
+  fi
 elif [[ ${KUBE_NAMESPACE} == ${UAT_ENV} ]]; then
   echo "UAT external - $APP_NAME.uat.sas-notprod.homeoffice.gov.uk"
   echo "UAT internal  - $APP_NAME.uat.internal.sas-notprod.homeoffice.gov.uk"
