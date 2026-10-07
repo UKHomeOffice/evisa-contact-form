@@ -26,7 +26,7 @@ export const test = base.extend<{ pages: Pages }>({
             evcBRPNumberPage: new evcBRPNumberPage(page),
             evcReferenceNumbersPage: new evcReferenceNumbersPage(page),
             evcYourDetailsPage: new evcYourDetailsPage(page),
-            evcUploadPage: new evcUploadPage(page, path.resolve(__dirname, '../test-data/user-upload-files')),
+            evcUploadPage: new evcUploadPage(page, path.resolve(__dirname, '../test-data')),
             evcConfirmationPage: new evcConfirmationPage(page)
         });
     }
