@@ -14,10 +14,7 @@ WORKDIR /app
 COPY --chown=999:998 . /app
 
 RUN yarn cache clean && \
-    yarn install --frozen-lockfile --production && \
-    find node_modules -type d \( -name esbuild -o -name @esbuild -o -name typescript -o -name @typescript \) -prune -exec rm -rf '{}' + && \
-    rm -f node_modules/.bin/esbuild node_modules/.bin/tsc node_modules/.bin/tsserver && \
-    yarn cache clean
+    yarn install --frozen-lockfile --production
 
 HEALTHCHECK --interval=5m --timeout=3s \
 CMD curl --fail http://localhost:8080 || exit 1
