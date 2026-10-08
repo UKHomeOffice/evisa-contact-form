@@ -9,7 +9,6 @@ test('test', async ({ page }) => {
   await page.getByLabel('None of the above').check();
   await page.getByRole('button', { name: 'Continue' }).click();
 
-
   // your-details
   await page.getByLabel('Full name').fill('');
   await page.getByLabel('Email address').fill('');
@@ -40,7 +39,6 @@ test('test', async ({ page }) => {
   await page.getByLabel('Full name').fill('some full name');
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.locator('#full-name-group')).not.toHaveClass(/error/);
-
 
   // /your-details - email-field
   await page.getByLabel('Email address').click();
@@ -94,7 +92,7 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.locator('#question-field-group')).toContainText('Error:Your question must be 2,000 characters or less');
 
-  await page.getByLabel('Full name').fill('');  // reset the full name so the error shifts away from question-field
+  await page.getByLabel('Full name').fill(''); // reset the full name so the error shifts away from question-field
   await page.getByLabel('Enter your question below.').fill('b'.repeat(2000));
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.locator('#question-field-group')).not.toHaveClass(/error/);
