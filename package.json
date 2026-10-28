@@ -4,7 +4,7 @@
   "description": "Contact form for eVisa when online chat is not available",
   "main": "index.js",
   "engines": {
-    "node": ">=24.21.0 <25.0.0"
+    "node": ">=24.22.1 <25.0.0"
   },
   "scripts": {
     "start": "node server.js",
@@ -68,6 +68,8 @@
     "morgan": "^1.12.0",
     "nanoid": "^3.3.18",
     "qs": "^6.16.0",
-    "serialize-javascript": "^7.0.5"
+    "serialize-javascript": "^7.0.5",
+    "body-parser": "^2.4.0",
+    "markdown-it": "^15.0.3"
   }
 }
