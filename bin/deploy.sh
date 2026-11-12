@@ -10,9 +10,13 @@ export FILEVAULT_INGRESS_EXTERNAL_ANNOTATIONS=$HOF_CONFIG/filevault-ingress-exte
 
 kd='kd --insecure-skip-tls-verify --timeout 10m --check-interval 10s'
 
+sanitize_branch_name() {
+  printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr '/.' '-'
+}
+
 if [[ $1 == 'tear_down' ]]; then
   export KUBE_NAMESPACE=$BRANCH_ENV
-  export DRONE_SOURCE_BRANCH=$(cat /root/.dockersock/branch_name.txt)
+  export DRONE_SOURCE_BRANCH=$(sanitize_branch_name "$(cat /root/.dockersock/branch_name.txt)")
 
   $kd --delete -f kube/configmaps/configmap.yml
   $kd --delete -f kube/file-vault -f kube/app -f kube/redis 
@@ -21,7 +25,7 @@ if [[ $1 == 'tear_down' ]]; then
 fi
 
 export KUBE_NAMESPACE=$1
-export DRONE_SOURCE_BRANCH=$(echo $DRONE_SOURCE_BRANCH | tr '[:upper:]' '[:lower:]' | tr '/' '-')
+export DRONE_SOURCE_BRANCH=$(sanitize_branch_name "$DRONE_SOURCE_BRANCH")
 
 if [[ ${KUBE_NAMESPACE} == ${BRANCH_ENV} ]]; then
   $kd -f kube/configmaps -f kube/certs
