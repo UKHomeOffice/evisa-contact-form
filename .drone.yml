@@ -35,7 +35,7 @@ trigger:
 node_image_name: &node_image_name quay.io/ukhomeofficedigital/hof-nodejs:24.22.3_1-alpine@sha256:8533bcedc2dc86aceadaa8bab422931e8a33a81504c67247392eeffec6603cd5
 
 linting: &linting
-  pull: if-not-exists
+  pull: always
   image: *node_image_name
   environment:
     NOTIFY_STUB: true
@@ -43,7 +43,7 @@ linting: &linting
     - yarn run test:lint
 
 unit_tests: &unit_tests
-  pull: if-not-exists
+  pull: always
   image: *node_image_name
   environment:
     NOTIFY_STUB: true
@@ -57,7 +57,7 @@ sonar_scanner: &sonar_scanner
     - sonar-scanner -Dproject.settings=./sonar-project.properties
   
 ui_integration_tests: &ui_integration_tests
-  pull: if-not-exists
+  pull: always
   image: *node_image_name
   environment:
     NOTIFY_STUB: true
@@ -65,7 +65,7 @@ ui_integration_tests: &ui_integration_tests
     - yarn run test:ui-integration
 
 accessibility_tests: &accessibility_tests
-  pull: if-not-exists
+  pull: always
   image: buildkite/puppeteer:8.0.0@sha256:b6cebc17bfa8e7a7abfc3ab14d6f2ddbdf42b9e81b8ad786c6693385665998d5
   environment:
     NOTIFY_STUB: true
