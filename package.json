@@ -16,7 +16,7 @@
     "test:e2e": "npm run test:e2e:generate && playwright test --config playwright.config.ts",
     "test:e2e:typecheck": "tsc --noEmit",
     "test:lint": "eslint . --config ./node_modules/eslint-config-hof/default.js",
-    "test:unit": "nyc _mocha \"test/_unit/**/*.spec.js\""
+    "test:unit": "nyc --reporter=text --reporter=lcov mocha \"test/_unit/**/*.spec.js\""
   },
   "repository": {
     "type": "git",
