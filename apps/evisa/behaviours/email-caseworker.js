@@ -11,40 +11,6 @@ module.exports = emailConfig => superclass => class EmailCaseworker extends supe
     this.emailer = new Emailer(emailConfig);
   }
 
-  line1() {
-    return 'test';
-  }
-  line2() {
-    return 'test';
-  }
-  line3() {
-    return 'test';
-  }
-  line4() {
-    return 'test';
-  }
-  line5() {
-    return 'test';
-  }
-  line6() {
-    return 'test';
-  }
-  line7() {
-    return 'test';
-  }
-  line8() {
-    return 'test';
-  }
-  line9() {
-    return 'test';
-  }
-  line10() {
-    return 'test';
-  }
-  line11() {
-    return 'test';
-  }
-
   async successHandler(req, res, next) {
     if (req.body['continue-button']) {
       let personalisation = this.getCaseworkerPersonalisation(req.sessionModel);
@@ -80,5 +46,96 @@ module.exports = emailConfig => superclass => class EmailCaseworker extends supe
       'customer-question': session.get(SESSION.QUESTION_FIELD) || notSupplied,
       'uploaded-files': uploadedFileLinks
     };
+  }
+
+  aLine1() {
+    return 'test';
+  }
+  aLine2() {
+    return 'test';
+  }
+  aLine3() {
+    return 'test';
+  }
+  aLine4() {
+    return 'test';
+  }
+  aLine5() {
+    return 'test';
+  }
+  aLine6() {
+    return 'test';
+  }
+  aLine7() {
+    return 'test';
+  }
+  aLine8() {
+    return 'test';
+  }
+  aLine9() {
+    return 'test';
+  }
+  aLine10() {
+    return 'test';
+  }
+  aLine11() {
+    return 'test';
+  }
+  aLine12() {
+    return 'test';
+  }
+  aLine13() {
+    return 'test';
+  }
+  aLine14() {
+    return 'test';
+  }
+  aLine15() {
+    return 'test';
+  }
+  aLine16() {
+    return 'test';
+  }
+  aLine17() {
+    return 'test';
+  }
+  aLine18() {
+    return 'test';
+  }
+  aLine19() {
+    return 'test';
+  }
+  aLine20() {
+    return 'test';
+  }
+  aLine21() {
+    return 'test';
+  }
+  aLine22() {
+    return 'test';
+  }
+  aLine23() {
+    return 'test';
+  }
+  aLine24() {
+    return 'test';
+  }
+  aLine25() {
+    return 'test';
+  }
+  aLine26() {
+    return 'test';
+  }
+  aLine27() {
+    return 'test';
+  }
+  aLine28() {
+    return 'test';
+  }
+  aLine29() {
+    return 'test';
+  }
+  aLine30() {
+    return 'test';
   }
 };
