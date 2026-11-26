@@ -11,6 +11,40 @@ module.exports = emailConfig => superclass => class EmailCaseworker extends supe
     this.emailer = new Emailer(emailConfig);
   }
 
+  line1() {
+    return 'test';
+  }
+  line2() {
+    return 'test';
+  }
+  line3() {
+    return 'test';
+  }
+  line4() {
+    return 'test';
+  }
+  line5() {
+    return 'test';
+  }
+  line6() {
+    return 'test';
+  }
+  line7() {
+    return 'test';
+  }
+  line8() {
+    return 'test';
+  }
+  line9() {
+    return 'test';
+  }
+  line10() {
+    return 'test';
+  }
+  line11() {
+    return 'test';
+  }
+
   async successHandler(req, res, next) {
     if (req.body['continue-button']) {
       let personalisation = this.getCaseworkerPersonalisation(req.sessionModel);
